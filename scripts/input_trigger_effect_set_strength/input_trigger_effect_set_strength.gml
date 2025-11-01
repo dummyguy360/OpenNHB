@@ -1,40 +1,34 @@
-function input_trigger_effect_set_strength(arg0, arg1 = 0)
+// Feather disable all
+/// @desc    Sets the strength of trigger effects for the player
+/// @param   strength
+/// @param   [playerIndex=0]
+
+function input_trigger_effect_set_strength(_strength, _player_index = 0)
 {
-    static _global = __input_global();
+    __INPUT_GLOBAL_STATIC_LOCAL  //Set static _global
     
-    if (arg1 == -3)
+    if (_player_index == all)
     {
         var _i = 0;
-        
-        repeat (1)
+        repeat(INPUT_MAX_PLAYERS)
         {
-            input_trigger_effect_set_strength(arg0, _i);
-            _i++;
+            input_trigger_effect_set_strength(_strength, _i);
+            ++_i;
         }
         
-        exit;
+        return;
     }
     
-    if (arg1 < 0)
-    {
-        __input_error("Invalid player index provided (", arg1, ")");
-        return undefined;
-    }
+    __INPUT_VERIFY_PLAYER_INDEX
     
-    if (arg1 >= 1)
-    {
-        __input_error("Player index too large (", arg1, " must be less than ", 1, ")\nIncrease INPUT_MAX_PLAYERS to support more players");
-        return undefined;
-    }
+    _strength = clamp(_strength, 0, 1);
     
-    arg0 = clamp(arg0, 0, 1);
-    
-    with (_global.__players[arg1])
+    with(_global.__players[_player_index])
     {
-        if (__trigger_effect_strength != arg0)
+        if (__trigger_effect_strength != _strength)
         {
-            __trigger_effect_strength = arg0;
-            __input_player_apply_trigger_effects(arg1);
+            __trigger_effect_strength = _strength;
+            __input_player_apply_trigger_effects(_player_index);
         }
     }
 }

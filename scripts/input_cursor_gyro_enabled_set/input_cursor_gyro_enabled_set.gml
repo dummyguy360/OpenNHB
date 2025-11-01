@@ -1,18 +1,12 @@
-function input_cursor_gyro_enabled_set(arg0, arg1 = 0)
+// Feather disable all
+/// @desc    Sets whether a player may use gamepad gyro to drive the cursor
+/// @param   State
+/// @param   [playerIndex=0]
+
+function input_cursor_gyro_enabled_set(_state, _player_index = 0)
 {
-    static _global = __input_global();
-    
-    if (arg1 < 0)
-    {
-        __input_error("Invalid player index provided (", arg1, ")");
-        return undefined;
-    }
-    
-    if (arg1 >= 1)
-    {
-        __input_error("Player index too large (", arg1, " must be less than ", 1, ")\nIncrease INPUT_MAX_PLAYERS to support more players");
-        return undefined;
-    }
-    
-    _global.__players[arg1].__gyro_enabled_set(arg0);
+    __INPUT_GLOBAL_STATIC_LOCAL  //Set static _global
+    __INPUT_VERIFY_PLAYER_INDEX
+
+    _global.__players[_player_index].__gyro_enabled_set(_state);
 }

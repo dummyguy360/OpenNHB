@@ -1,21 +1,19 @@
-function input_verb_group_active(arg0, arg1, arg2 = 0, arg3 = false)
+// Feather disable all
+/// @desc    Sets the state of a verb group, as defined by __input_config_verb_groups(). Verbs inside a deactivated verb group are also deactivated
+/// @param   verbGroup
+/// @param   state
+/// @param   [playerIndex=0]
+/// @param   [exclusive=false]
+
+function input_verb_group_active(_verb_group, _state, _player_index = 0, _exclusive = false)
 {
-    static _global = __input_global();
+    __INPUT_GLOBAL_STATIC_LOCAL  //Set static _global
+    __INPUT_VERIFY_PLAYER_INDEX
     
-    if (arg2 < 0)
+    if (!variable_struct_exists(_global.__group_to_verbs_dict, _verb_group))
     {
-        __input_error("Invalid player index provided (", arg2, ")");
-        return undefined;
+        __input_error("Verb group \"", _verb_group, "\" doesn't exist\nPlease make sure it has been defined in __input_config_verbs()");
     }
     
-    if (arg2 >= 1)
-    {
-        __input_error("Player index too large (", arg2, " must be less than ", 1, ")\nIncrease INPUT_MAX_PLAYERS to support more players");
-        return undefined;
-    }
-    
-    if (!variable_struct_exists(_global.__group_to_verbs_dict, arg0))
-        __input_error("Verb group \"", arg0, "\" doesn't exist\nPlease make sure it has been defined in __input_config_verbs()");
-    
-    _global.__players[arg2].__verb_group_active(arg0, arg1, arg3);
+    _global.__players[_player_index].__verb_group_active(_verb_group, _state, _exclusive);
 }

@@ -1,41 +1,41 @@
-function input_cursor_coord_space_set(arg0, arg1 = 0)
+// Feather disable all
+/// @desc    Sets the coordinate space for the player's cursor when using mouse input.
+///          The coordinate space should be a member of the INPUT_COORD_SPACE enum:
+///              .ROOM      Room coordinates; should be the same as mouse_x and mouse_y. This is the default value
+///              .GUI       GUI coordinates
+///              .DEVICE    Raw device-space coordinates
+/// @param   coordSpace
+/// @param   [playerIndex=0]
+
+function input_cursor_coord_space_set(_coord_space, _player_index = 0)
 {
-    static _global = __input_global();
+    __INPUT_GLOBAL_STATIC_LOCAL  //Set static _global
     
-    if (arg1 == -3)
+    if (_player_index == all)
     {
         var _p = 0;
-        
-        repeat (1)
+        repeat(INPUT_MAX_PLAYERS)
         {
-            input_cursor_coord_space_set(arg0, _p);
-            _p++;
+            input_cursor_coord_space_set(_coord_space, _p);
+            ++_p;
         }
         
-        exit;
+        return;
     }
     
-    if (arg1 < 0)
-    {
-        __input_error("Invalid player index provided (", arg1, ")");
-        return undefined;
-    }
+    __INPUT_VERIFY_PLAYER_INDEX
     
-    if (arg1 >= 1)
+    with(_global.__players[_player_index].__cursor)
     {
-        __input_error("Player index too large (", arg1, " must be less than ", 1, ")\nIncrease INPUT_MAX_PLAYERS to support more players");
-        return undefined;
-    }
-    
-    with (_global.__players[arg1].__cursor)
-    {
-        if (__coord_space != arg0)
+        if (__coord_space != _coord_space)
         {
-            __x = _global.__pointer_x[arg0];
-            __y = _global.__pointer_y[arg0];
-            __prev_x = __x - _global.__pointer_dx[arg0];
-            __prev_y = __y - _global.__pointer_dy[arg0];
-            __coord_space = arg0;
+            __x = _global.__pointer_x[_coord_space];
+            __y = _global.__pointer_y[_coord_space];
+            
+            __prev_x = __x - _global.__pointer_dx[_coord_space];
+            __prev_y = __y - _global.__pointer_dy[_coord_space];
+            
+            __coord_space = _coord_space;
         }
     }
 }

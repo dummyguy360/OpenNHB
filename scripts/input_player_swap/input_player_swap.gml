@@ -1,35 +1,43 @@
-function input_player_swap(arg0, arg1)
+// Feather disable all
+/// @desc    Swaps the player indexes over, including profiles, connected devices, and verb state
+/// @param   playerIndexA
+/// @param   playerIndexB
+
+function input_player_swap(_player_index_a, _player_index_b)
 {
-    static _global = __input_global();
+    __INPUT_GLOBAL_STATIC_LOCAL  //Set static _global
     
-    if (arg0 < 0)
+    if (_player_index_a < 0)
     {
-        __input_error("Invalid player index A provided (", arg0, ")");
+        __input_error("Invalid player index A provided (", _player_index_a, ")");
         return undefined;
     }
     
-    if (arg0 >= 1)
+    if (_player_index_a >= INPUT_MAX_PLAYERS)
     {
-        __input_error("Player index A too large (", arg0, " must be less than ", 1, ")\nIncrease INPUT_MAX_PLAYERS to support more players");
+        __input_error("Player index A too large (", _player_index_a, " must be less than ", INPUT_MAX_PLAYERS, ")\nIncrease INPUT_MAX_PLAYERS to support more players");
         return undefined;
     }
     
-    if (arg1 < 0)
+    if (_player_index_b < 0)
     {
-        __input_error("Invalid player index B provided (", arg1, ")");
+        __input_error("Invalid player index B provided (", _player_index_b, ")");
         return undefined;
     }
     
-    if (arg1 >= 1)
+    if (_player_index_b >= INPUT_MAX_PLAYERS)
     {
-        __input_error("Player index B too large (", arg1, " must be less than ", 1, ")\nIncrease INPUT_MAX_PLAYERS to support more players");
+        __input_error("Player index B too large (", _player_index_b, " must be less than ", INPUT_MAX_PLAYERS, ")\nIncrease INPUT_MAX_PLAYERS to support more players");
         return undefined;
     }
     
-    var _original_a = _global.__players[arg0];
-    var _original_b = _global.__players[arg1];
-    _original_a.__index = arg1;
-    _original_b.__index = arg0;
-    _global.__players[arg0] = _original_b;
-    _global.__players[arg1] = _original_a;
+    //Do the ol' swaperoo
+    var _original_a = _global.__players[_player_index_a];
+    var _original_b = _global.__players[_player_index_b];
+    
+    _original_a.__index = _player_index_b;
+    _original_b.__index = _player_index_a;
+    
+    _global.__players[@ _player_index_a] = _original_b;
+    _global.__players[@ _player_index_b] = _original_a;
 }

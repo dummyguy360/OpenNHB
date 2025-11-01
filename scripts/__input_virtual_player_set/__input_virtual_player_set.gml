@@ -1,16 +1,19 @@
-function __input_virtual_player_set(arg0)
+// Feather disable all
+/// @param playerStruct
+
+function __input_virtual_player_set(_playerStruct)
 {
-    static _global = __input_global();
+    __INPUT_GLOBAL_STATIC_LOCAL  //Set static _global
     
-    if (arg0 != _global.__touch_player)
+    if (_playerStruct != _global.__touch_player)
     {
-        _global.__touch_player = arg0;
-        var _i = 0;
+        _global.__touch_player = _playerStruct;
         
-        repeat (array_length(_global.__virtual_array))
+        var _i = 0;
+        repeat(array_length(_global.__virtual_array))
         {
             _global.__virtual_array[_i].__clear_state();
-            _i++;
+            ++_i;
         }
     }
 }

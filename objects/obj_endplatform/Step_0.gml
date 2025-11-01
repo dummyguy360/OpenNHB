@@ -26,7 +26,7 @@ if (global.pumpkintotal < 5)
             {
                 obj_player.image_xscale = 1;
                 obj_player.dir = 1;
-                scr_hurtplayer(0, UnknownEnum.Value_0, true, 1.5);
+                scr_hurtplayer(0, playerdeath.normal, true, 1.5);
             }
             
             mask_index = _prevmask;
@@ -78,7 +78,7 @@ if (global.pumpkintotal < 5)
             {
                 obj_player.image_xscale = -1;
                 obj_player.dir = -1;
-                scr_hurtplayer(0, UnknownEnum.Value_0, true, 1.5);
+                scr_hurtplayer(0, playerdeath.normal, true, 1.5);
             }
             
             mask_index = _prevmask;

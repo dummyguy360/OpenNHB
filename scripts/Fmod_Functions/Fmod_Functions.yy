@@ -5,7 +5,7 @@
   "isCompatibility": false,
   "isDnD": false,
   "parent": {
-    "name": "FMOD_TEMP",
-    "path": "folders/Scripts/FMOD_TEMP.yy",
+    "name": "FMOD",
+    "path": "folders/Extensions/FMOD.yy",
   },
 }

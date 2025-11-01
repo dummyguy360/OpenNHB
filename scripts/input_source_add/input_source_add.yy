@@ -5,7 +5,7 @@
   "isCompatibility": false,
   "isDnD": false,
   "parent": {
-    "name": "Input_TEMP",
-    "path": "folders/Scripts/Input_TEMP.yy",
+    "name": "18  Sources",
+    "path": "folders/Scripts/Input/18  Sources.yy",
   },
 }

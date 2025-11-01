@@ -1,226 +1,138 @@
-function ease(arg0, arg1 = "linear")
-{
-    return variable_struct_get(__easings(), arg1)(clamp(arg0, 0, 1));
-}
+// easings.gml, @offalynne 2021
+// github.com/offalynne/easings.gml
+//
+// refs
+//   solhsa.com/interpolation/
+//   github.com/ai/easings.net
 
-function tween(arg0, arg1, arg2, arg3 = "linear")
-{
-    return arg0 + ((arg1 - arg0) * ease(arg2, arg3));
-}
+function ease(_amount, _easing = EASE_LINEAR){
+    return __easings()[$ _easing](clamp(_amount, 0, 1)) }
 
-function __easings()
-{
-    static __instance = new function() constructor
-    {
-        var _set = function(arg0, arg1, arg2 = self)
-        {
-            variable_struct_set(arg2, arg0, arg1);
-            return variable_struct_get(arg2, arg0);
-        };
-        
-        __sqrt = function(arg0)
-        {
-            return (sign(arg0) == 1) ? sqrt(arg0) : 0;
-        };
-        
-        _set("linear", function(arg0)
-        {
-            return arg0;
-        });
-        _set("in quad", function(arg0)
-        {
-            return power(arg0, 2);
-        });
-        _set("in cubic", function(arg0)
-        {
-            return power(arg0, 3);
-        });
-        _set("in quart", function(arg0)
-        {
-            return power(arg0, 4);
-        });
-        _set("in quint", function(arg0)
-        {
-            return power(arg0, 5);
-        });
-        _set("out quad", function(arg0)
-        {
-            return 1 - power(1 - arg0, 2);
-        });
-        _set("out cubic", function(arg0)
-        {
-            return 1 - power(1 - arg0, 3);
-        });
-        _set("out quart", function(arg0)
-        {
-            return 1 - power(1 - arg0, 4);
-        });
-        _set("out quint", function(arg0)
-        {
-            return 1 - power(1 - arg0, 5);
-        });
-        _set("in out quad", function(arg0)
-        {
-            return (arg0 < 0.5) ? (power(arg0, 2) * 2) : (1 - (power((-2 * arg0) + 2, 2) / 2));
-        });
-        _set("in out cubic", function(arg0)
-        {
-            return (arg0 < 0.5) ? (power(arg0, 3) * 4) : (1 - (power((-2 * arg0) + 2, 3) / 2));
-        });
-        _set("in out quart", function(arg0)
-        {
-            return (arg0 < 0.5) ? (power(arg0, 4) * 8) : (1 - (power((-2 * arg0) + 2, 4) / 2));
-        });
-        _set("in out quint", function(arg0)
-        {
-            return (arg0 < 0.5) ? (power(arg0, 5) * 16) : (1 - (power((-2 * arg0) + 2, 5) / 2));
-        });
-        _set("in sine", function(arg0)
-        {
-            return 1 - cos((arg0 * pi) / 2);
-        });
-        _set("out sine", function(arg0)
-        {
-            return sin((arg0 * pi) / 2);
-        });
-        _set("in out sine", function(arg0)
-        {
-            return -(cos(arg0 * pi) - 1) / 2;
-        });
-        _set("in expo", function(arg0)
-        {
-            return (arg0 == 0) ? 0 : power(2, (10 * arg0) - 10);
-        });
-        _set("out expo", function(arg0)
-        {
-            return (arg0 == 1) ? 1 : (1 - power(2, -10 * arg0));
-        });
-        _set("in out expo", function(arg0)
-        {
-            if (arg0 == 0)
-                return 0;
-            
-            if (arg0 == 1)
-                return 1;
-            
-            if (arg0 >= 0.5)
-                return (2 - power(2, (-20 * arg0) + 10)) / 2;
-            
-            return power(2, (20 * arg0) - 10) / 2;
-        });
-        __out_bounce = _set("out bounce", function(arg0)
-        {
-            if (arg0 < 0.36363636363636365)
-            {
-                return 7.5625 * arg0 * arg0;
-            }
-            else if (arg0 < 0.7272727272727273)
-            {
-                arg0 -= 0.5454545454545454;
-                return (7.5625 * arg0 * arg0) + 0.75;
-            }
-            else if (arg0 < 0.9090909090909091)
-            {
-                arg0 -= 0.8181818181818182;
-                return (7.5625 * arg0 * arg0) + 0.9375;
-            }
-            
-            arg0 -= 0.9545454545454546;
-            return (7.5625 * arg0 * arg0) + 0.984375;
-        });
-        _set("in out bounce", function(arg0)
-        {
-            if (arg0 < 0.5)
-                return (1 - __out_bounce(1 - (2 * arg0))) / 2;
-            
-            return (1 + __out_bounce((2 * arg0) - 1)) / 2;
-        });
-        _set("in bounce", function(arg0)
-        {
-            return 1 - __out_bounce(1 - arg0);
-        });
-        _set("in circ", function(arg0)
-        {
-            return 1 - __sqrt(1 - power(arg0, 2));
-        });
-        _set("out circ", function(arg0)
-        {
-            return __sqrt(1 - power(arg0 - 1, 2));
-        });
-        _set("in out circ", function(arg0)
-        {
-            if (arg0 >= 0.5)
-                return (1 + __sqrt(1 - power((-2 * arg0) + 2, 2))) / 2;
-            
-            return (1 - __sqrt(1 - power(2 * arg0, 2))) / 2;
-        });
-        _set("in back", function(arg0)
-        {
-            return (2.70158 * power(arg0, 3)) - (1.70158 * power(arg0, 2));
-        });
-        _set("out back", function(arg0)
-        {
-            return 1 + (2.70158 * power(arg0 - 1, 3)) + (1.70158 * power(arg0 - 1, 2));
-        });
-        _set("in out back", function(arg0)
-        {
-            if (arg0 >= 0.5)
-                return ((power((2 * arg0) - 2, 2) * ((3.5949095 * ((arg0 * 2) - 2)) + 2.5949095)) + 2) / 2;
-            
-            return (power(2 * arg0, 2) * ((3.5949095 * (arg0 * 2)) - 2.5949095)) / 2;
-        });
-        _set("in elastic", function(arg0)
-        {
-            static __c = 2.0943951023931953;
-            
-            if (arg0 == 0)
-                return 0;
-            
-            if (arg0 == 1)
-                return 1;
-            
-            return -power(2, (10 * arg0) - 10) * sin(((arg0 * 10) - 10.75) * __c);
-        });
-        _set("out elastic", function(arg0)
-        {
-            static __c = 2.0943951023931953;
-            
-            if (arg0 == 0)
-                return 0;
-            
-            if (arg0 == 1)
-                return 1;
-            
-            return (power(2, -10 * arg0) * sin(((arg0 * 10) - 0.75) * __c)) + 1;
-        });
-        _set("in out elastic", function(arg0)
-        {
-            static __c = 1.3962634015954636;
-            
-            if (arg0 == 0)
-                return 0;
-            
-            if (arg0 == 1)
-                return 1;
-            
-            if (arg0 >= 0.5)
-                return ((power(2, (-20 * arg0) + 10) * sin(((20 * arg0) - 11.125) * __c)) / 2) + 1;
-            
-            return -(power(2, (20 * arg0) - 10) * sin(((20 * arg0) - 11.125) * __c)) / 2;
-        });
-        _set("smootheststep", function(arg0)
-        {
-            return (((-20 * power(arg0, 7)) + (70 * power(arg0, 6))) - (84 * power(arg0, 5))) + (35 * power(arg0, 4));
-        });
-        _set("smootherstep", function(arg0)
-        {
-            return arg0 * arg0 * arg0 * ((arg0 * ((arg0 * 6) - 15)) + 10);
-        });
-        _set("smoothstep", function(arg0)
-        {
-            return arg0 * arg0 * (3 - (2 * arg0));
-        });
-    }();
+function tween(_from, _to, _amount, _easing = EASE_LINEAR){
+    return _from + (_to - _from)*ease(_amount, _easing) }
+
+//Library singleton
+function __easings(){ static __instance = new (function() constructor {
+
+    //Set library key
+    var _set = function(_name, _function, _struct = self){ 
+        variable_struct_set(_struct, _name, _function);
+        return variable_struct_get(_struct, _name) };
+
+    //Epsilon-safe square root
+    __sqrt = function(_z){ 
+        return (sign(_z) == 1)? sqrt(_z) : 0 };
     
-    return __instance;
-}
+    //Easings functions    
+    _set(EASE_LINEAR,      function(_z){ return _z });
+
+    _set(EASE_IN_QUAD,     function(_z){ return power(_z, 2) });
+    _set(EASE_IN_CUBIC,    function(_z){ return power(_z, 3) });
+    _set(EASE_IN_QUART,    function(_z){ return power(_z, 4) });
+    _set(EASE_IN_QUINT,    function(_z){ return power(_z, 5) });
+
+    _set(EASE_OUT_QUAD,    function(_z){ return 1 - power(1 - _z, 2) });
+    _set(EASE_OUT_CUBIC,   function(_z){ return 1 - power(1 - _z, 3) });
+    _set(EASE_OUT_QUART,   function(_z){ return 1 - power(1 - _z, 4) });
+    _set(EASE_OUT_QUINT,   function(_z){ return 1 - power(1 - _z, 5) });
+
+    _set(EASE_INOUT_QUAD,  function(_z){ return _z < 0.5 ? power(_z, 2)* 2 : 1 - power(-2*_z + 2, 2)/2 });
+    _set(EASE_INOUT_CUBIC, function(_z){ return _z < 0.5 ? power(_z, 3)* 4 : 1 - power(-2*_z + 2, 3)/2 });
+    _set(EASE_INOUT_QUART, function(_z){ return _z < 0.5 ? power(_z, 4)* 8 : 1 - power(-2*_z + 2, 4)/2 });
+    _set(EASE_INOUT_QUINT, function(_z){ return _z < 0.5 ? power(_z, 5)*16 : 1 - power(-2*_z + 2, 5)/2 });
+
+    _set(EASE_IN_SINE,     function(_z){ return 1 - cos((_z*pi)     /2) });
+    _set(EASE_OUT_SINE,    function(_z){ return     sin((_z*pi)     /2) });
+    _set(EASE_INOUT_SINE,  function(_z){ return   -(cos( _z*pi) - 1)/2  });
+
+    _set(EASE_IN_EXPO,     function(_z){ return (_z == 0) ? 0 :     power(2,  10*_z - 10) });
+    _set(EASE_OUT_EXPO,    function(_z){ return (_z == 1) ? 1 : 1 - power(2, -10*_z     ) });
+    _set(EASE_INOUT_EXPO,  function(_z){
+        if (_z == 0.0) { return 0 }
+        if (_z == 1.0) { return 1 }
+        if (_z >= 0.5) { return (2 - power(2, -20*_z + 10))/2 }
+                         return      power(2,  20*_z - 10) /2 });
+
+    __out_bounce = _set(EASE_OUT_BOUNCE, function(_z){
+             if (_z < 1.0/2.75){                     return 7.5625*_z*_z            }
+        else if (_z < 2.0/2.75){ _z -= (1.5  /2.75); return 7.5625*_z*_z + 0.75     }
+        else if (_z < 2.5/2.75){ _z -= (2.25 /2.75); return 7.5625*_z*_z + 0.9375   }
+                                 _z -= (2.625/2.75); return 7.5625*_z*_z + 0.984375 });
+    
+    _set(EASE_INOUT_BOUNCE, function(_z){
+        if (_z < 0.5) return (1 - __out_bounce(1 -  2*_z))/2
+                      return (1 + __out_bounce(2*_z -  1))/2 });
+    
+    _set(EASE_IN_BOUNCE, function(_z){ return 1 - __out_bounce(1 - _z) });
+
+    _set(EASE_IN_CIRC,    function(_z){ return 1 - __sqrt(1 - power( _z,      2)) });
+    _set(EASE_OUT_CIRC,   function(_z){ return     __sqrt(1 - power((_z - 1), 2)) });
+    _set(EASE_INOUT_CIRC, function(_z){
+        if (_z >= 0.5) { return (1 + __sqrt(1 - power(-2*_z + 2, 2)))/2 }
+                         return (1 - __sqrt(1 - power( 2*_z,     2)))/2 });
+
+    _set(EASE_IN_BACK,    function(_z){ return     2.70158*power(_z,     3) - 1.70158*power(_z,     2) });
+    _set(EASE_OUT_BACK,   function(_z){ return 1 + 2.70158*power(_z - 1, 3) + 1.70158*power(_z - 1, 2) });
+    _set(EASE_INOUT_BACK, function(_z){
+        if (_z >= 0.5) { return (power(2*_z - 2, 2)*(3.5949095*(_z*2 - 2) + 2.5949095) + 2)/2 }
+                         return (power(2*_z,     2)*(3.5949095*(_z*2    ) - 2.5949095)    )/2 });
+
+    _set(EASE_IN_ELASTIC, function(_z){
+    	static __c = 2*pi/3;
+        if (_z == 0.0) { return 0 }
+        if (_z == 1.0) { return 1 }
+        return -power(2, 10*_z - 10)*sin((_z*10 - 10.75)*__c) });
+
+    _set(EASE_OUT_ELASTIC, function(_z){
+    	static __c = 2*pi/3;
+        if (_z == 0.0) { return 0 }
+        if (_z == 1.0) { return 1 }
+        return power(2, -10*_z) * sin((_z*10 - 0.75)*__c) + 1 });        
+
+    _set(EASE_INOUT_ELASTIC, function(_z){
+    	static __c = 2*pi/4.5;
+        if (_z == 0.0) { return 0 }
+        if (_z == 1.0) { return 1 }
+        if (_z >= 0.5) { return   power(2, -20*_z + 10)*sin((20*_z - 11.125)*__c) /2 + 1 }
+                         return -(power(2,  20*_z - 10)*sin((20*_z - 11.125)*__c))/2     });
+       
+    _set(EASE_SMOOTHESTSTEP, function(_z){ return -20*power(_z, 7) + 70*power(_z, 6) - 84*power(_z, 5) + 35*power(_z, 4) });
+    _set(EASE_SMOOTHERSTEP,  function(_z){ return _z*_z*_z*(_z*(_z*6 - 15) + 10) });
+    _set(EASE_SMOOTHSTEP,    function(_z){ return _z*_z*(3 - 2*_z) });
+
+})(); return __instance }
+
+#macro EASE_LINEAR         "linear"
+#macro EASE_IN_QUAD        "in quad"
+#macro EASE_IN_CUBIC       "in cubic"
+#macro EASE_IN_QUART       "in quart"
+#macro EASE_IN_QUINT       "in quint"
+#macro EASE_IN_SINE        "in sine"
+#macro EASE_IN_EXPO        "in expo"
+#macro EASE_IN_BOUNCE      "in bounce"
+#macro EASE_IN_CIRC        "in circ"
+#macro EASE_IN_BACK        "in back"
+#macro EASE_IN_ELASTIC     "in elastic"
+#macro EASE_OUT_QUAD       "out quad"
+#macro EASE_OUT_CUBIC      "out cubic"
+#macro EASE_OUT_QUART      "out quart"
+#macro EASE_OUT_QUINT      "out quint"
+#macro EASE_OUT_SINE       "out sine"
+#macro EASE_OUT_EXPO       "out expo"
+#macro EASE_OUT_BOUNCE     "out bounce"
+#macro EASE_OUT_CIRC       "out circ"
+#macro EASE_OUT_BACK       "out back"
+#macro EASE_OUT_ELASTIC    "out elastic"
+#macro EASE_INOUT_QUAD     "in out quad"
+#macro EASE_INOUT_CUBIC    "in out cubic"
+#macro EASE_INOUT_QUART    "in out quart"
+#macro EASE_INOUT_QUINT    "in out quint"
+#macro EASE_INOUT_SINE     "in out sine"
+#macro EASE_INOUT_EXPO     "in out expo"
+#macro EASE_INOUT_BOUNCE   "in out bounce"
+#macro EASE_INOUT_CIRC     "in out circ"
+#macro EASE_INOUT_BACK     "in out back"
+#macro EASE_INOUT_ELASTIC  "in out elastic"
+#macro EASE_SMOOTHSTEP     "smoothstep"
+#macro EASE_SMOOTHERSTEP   "smootherstep"
+#macro EASE_SMOOTHESTSTEP  "smootheststep"

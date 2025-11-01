@@ -5,9 +5,7 @@ if (global.musicattenuation)
     if (global.attenuationwait > 0)
     {
         if (media_playback_get_state() == UnknownEnum.Value_4)
-        {
             attenuationwait = floor(global.attenuationwait * 60);
-        }
         else
         {
             attenuationwait--;
@@ -17,14 +15,10 @@ if (global.musicattenuation)
         }
     }
     else
-    {
         attenuationwait = media_playback_get_state() == UnknownEnum.Value_4;
-    }
 }
 else
-{
     attenuationwait = 0;
-}
 
 fmod_studio_system_set_parameter_by_name("musicmute", attenuationwait > 0, false);
 soundtestmuted = instance_exists(obj_soundtest) || instance_exists(obj_devvideos);
@@ -39,9 +33,9 @@ if (!dsp_init)
 {
     var _group = fmod_studio_bus_get_channel_group(soundtestbus);
     
-    if (fmod_last_result() != UnknownEnum.Value_76)
+    if (fmod_last_result() != FMOD_RESULT.ERR_STUDIO_NOT_LOADED)
     {
-        fmod_channel_control_add_dsp(_group, UnknownEnum.Value_m1, global.dsp);
+        fmod_channel_control_add_dsp(_group, FMOD_CHANNELCONTROL_DSP_INDEX.HEAD, global.dsp);
         fmod_dsp_set_parameter_int(global.dsp, UnknownEnum.Value_1, UnknownEnum.Value_0);
         fmod_dsp_set_parameter_int(global.dsp, UnknownEnum.Value_0, resolution);
         dsp_init = true;
@@ -49,7 +43,7 @@ if (!dsp_init)
 }
 else if (instance_exists(obj_soundtest))
 {
-    if (obj_soundtest.muevent != -4)
+    if (obj_soundtest.muevent != noone)
     {
         var _reqsize = fmod_dsp_get_parameter_data(global.dsp, UnknownEnum.Value_4, global.dspbuff);
         

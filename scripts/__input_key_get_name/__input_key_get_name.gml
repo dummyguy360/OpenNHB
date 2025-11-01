@@ -1,14 +1,20 @@
-function __input_key_get_name(arg0)
+// Feather disable all
+function __input_key_get_name(_key)
 {
-    static _global = __input_global();
+    __INPUT_GLOBAL_STATIC_LOCAL  //Set static _global
     
-    if (is_string(arg0))
-        arg0 = ord(string_upper(arg0));
-    
-    var _lookup_name = variable_struct_get(_global.__key_name_dict, arg0);
-    
+    //Fix uses of straight strings instead of ord("A")
+    if (is_string(_key)) _key = ord(string_upper(_key));
+
+    var _lookup_name = _global.__key_name_dict[$ _key];
     if (_lookup_name == undefined)
-        return chr(arg0);
+    {
+        //Return UTF8 character
+        return chr(_key);    
+    }
     else
+    {
+        //Return from lookup
         return _lookup_name;
+    }
 }

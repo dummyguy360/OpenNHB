@@ -1,16 +1,20 @@
-function input_icon_empty(arg0)
+// Feather disable all
+/// @param   icon
+
+function input_icon_empty(_icon)
 {
-    static _global = __input_global();
+    __INPUT_GLOBAL_STATIC_LOCAL  //Set static _global
     
     var _name = "empty";
-    var _icon_holder = variable_struct_get(_global.__icons, _name);
     
+    var _icon_holder = _global.__icons[$ _name];
     if (!is_struct(_icon_holder))
     {
         _icon_holder = new __input_class_icon_category(_name);
-        variable_struct_set(_global.__icons, string(_name), _icon_holder);
+        _global.__icons[$ string(_name)] = _icon_holder;
     }
     
-    _icon_holder.add(-3, arg0);
+    _icon_holder.add(all, _icon);
+    
     return _icon_holder;
 }

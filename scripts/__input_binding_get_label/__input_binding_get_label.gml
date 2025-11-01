@@ -1,187 +1,96 @@
-function __input_binding_get_label(arg0, arg1, arg2)
+// Feather disable all
+
+function __input_binding_get_label(_type, _value, _axis_negative)
 {
-    if (!__input_global().__on_desktop)
+    if (!INPUT_ON_PC)
     {
-        if (os_type == os_ps4 || os_type == os_ps5)
+        //Touch bindings
+        if (__INPUT_ON_PS)
         {
-            if ((arg0 == "gamepad button" && arg1 == 32777) || (arg0 == "mouse button" && arg1 == 1))
+            if (((_type == __INPUT_BINDING_GAMEPAD_BUTTON) && (_value == gp_select))
+            ||  ((_type == __INPUT_BINDING_MOUSE_BUTTON  ) && (_value == mb_left  )))
+            {
                 return "gamepad touchpad click";
+            }
         }
-        else if (arg0 == "mouse button" && arg1 == 1)
+        else if ((_type == __INPUT_BINDING_MOUSE_BUTTON) && (_value == mb_left))
         {
             return "touchscreen press";
         }
     }
     
-    switch (arg0)
+    switch(_type)
     {
-        case "key":
-            return __input_key_get_name(arg1);
-            break;
+        case __INPUT_BINDING_KEY:
+            return __input_key_get_name(_value);
+        break;
         
-        case "mouse button":
-            switch (arg1)
+        case __INPUT_BINDING_MOUSE_BUTTON:
+            switch(_value)
             {
-                case 1:
-                    return "mouse button left";
-                    break;
+                case mb_left:    return "mouse button left";    break;
+                case mb_middle:  return "mouse button middle";  break;
+                case mb_right:   return "mouse button right";   break;
+                case mb_side1:   return "mouse button back";    break;
+                case mb_side2:   return "mouse button forward"; break;
                 
-                case 3:
-                    return "mouse button middle";
-                    break;
-                
-                case 2:
-                    return "mouse button right";
-                    break;
-                
-                case 4:
-                    return "mouse button back";
-                    break;
-                
-                case 5:
-                    return "mouse button forward";
-                    break;
-                
-                default:
-                    return "mouse button unknown";
-                    break;
+                default: return "mouse button unknown"; break;
             }
-            
-            break;
+        break;
         
-        case "mouse wheel up":
+        case __INPUT_BINDING_MOUSE_WHEEL_UP:
             return "mouse wheel up";
-            break;
+        break;
         
-        case "mouse wheel down":
+        case __INPUT_BINDING_MOUSE_WHEEL_DOWN:
             return "mouse wheel down";
-            break;
+        break;
         
-        case "gamepad button":
-        case "gamepad axis":
-            switch (arg1)
+        case __INPUT_BINDING_GAMEPAD_BUTTON:
+        case __INPUT_BINDING_GAMEPAD_AXIS:
+            switch(_value)
             {
-                case 32769:
-                    return "gamepad face south";
-                    break;
+                case gp_face1:      return "gamepad face south";         break; //Xbox A, Nintendo B, PlayStation Cross
+                case gp_face2:      return "gamepad face east";          break; //Xbox B, Nintendo A, PlayStation Circle
+                case gp_face3:      return "gamepad face west";          break; //Xbox X, Nintendo Y, PlayStation Square
+                case gp_face4:      return "gamepad face north";         break; //Xbox Y, Nintendo X, PlayStation Triangle
+                case gp_shoulderl:  return "gamepad shoulder l";         break;
+                case gp_shoulderr:  return "gamepad shoulder r";         break;
+                case gp_shoulderlb: return "gamepad trigger l";          break;
+                case gp_shoulderrb: return "gamepad trigger r";          break;
+                case gp_start:      return "gamepad start";              break;
+                case gp_stickl:     return "gamepad thumbstick l click"; break;
+                case gp_stickr:     return "gamepad thumbstick r click"; break;
+                case gp_padu:       return "gamepad dpad up";            break;
+                case gp_padd:       return "gamepad dpad down";          break;
+                case gp_padl:       return "gamepad dpad left";          break;
+                case gp_padr:       return "gamepad dpad right"          break;
                 
-                case 32770:
-                    return "gamepad face east";
-                    break;
+                case gp_guide:      return "gamepad guide";              break;
+                case gp_misc1:      return "gamepad misc 1";             break;
+                case gp_touchpad:   return "gamepad touchpad click";     break;
+                case gp_paddle1:    return "gamepad paddle 1";           break;
+                case gp_paddle2:    return "gamepad paddle 2";           break;
+                case gp_paddle3:    return "gamepad paddle 3";           break;
+                case gp_paddle4:    return "gamepad paddle 4";           break;
+
+                case gp_axislh: return _axis_negative? "gamepad thumbstick l left" : "gamepad thumbstick l right"; break;
+                case gp_axislv: return _axis_negative? "gamepad thumbstick l up"   : "gamepad thumbstick l down";  break;
+                case gp_axisrh: return _axis_negative? "gamepad thumbstick r left" : "gamepad thumbstick r right"; break;
+                case gp_axisrv: return _axis_negative? "gamepad thumbstick r up"   : "gamepad thumbstick r down";  break;                
                 
-                case 32771:
-                    return "gamepad face west";
-                    break;
+                case gp_select: return (__INPUT_ON_PS? "gamepad touchpad click" : "gamepad select"); break;
                 
-                case 32772:
-                    return "gamepad face north";
-                    break;
-                
-                case 32773:
-                    return "gamepad shoulder l";
-                    break;
-                
-                case 32774:
-                    return "gamepad shoulder r";
-                    break;
-                
-                case 32775:
-                    return "gamepad trigger l";
-                    break;
-                
-                case 32776:
-                    return "gamepad trigger r";
-                    break;
-                
-                case 32778:
-                    return "gamepad start";
-                    break;
-                
-                case 32779:
-                    return "gamepad thumbstick l click";
-                    break;
-                
-                case 32780:
-                    return "gamepad thumbstick r click";
-                    break;
-                
-                case 32781:
-                    return "gamepad dpad up";
-                    break;
-                
-                case 32782:
-                    return "gamepad dpad down";
-                    break;
-                
-                case 32783:
-                    return "gamepad dpad left";
-                    break;
-                
-                case 32784:
-                    return "gamepad dpad right";
-                    break;
-                
-                case __input_global().__gp_guide:
-                    return "gamepad guide";
-                    break;
-                
-                case __input_global().__gp_misc1:
-                    return "gamepad misc 1";
-                    break;
-                
-                case __input_global().__gp_touchpad:
-                    return "gamepad touchpad click";
-                    break;
-                
-                case __input_global().__gp_paddle1:
-                    return "gamepad paddle 1";
-                    break;
-                
-                case __input_global().__gp_paddle2:
-                    return "gamepad paddle 2";
-                    break;
-                
-                case __input_global().__gp_paddle3:
-                    return "gamepad paddle 3";
-                    break;
-                
-                case __input_global().__gp_paddle4:
-                    return "gamepad paddle 4";
-                    break;
-                
-                case 32785:
-                    return arg2 ? "gamepad thumbstick l left" : "gamepad thumbstick l right";
-                    break;
-                
-                case 32786:
-                    return arg2 ? "gamepad thumbstick l up" : "gamepad thumbstick l down";
-                    break;
-                
-                case 32787:
-                    return arg2 ? "gamepad thumbstick r left" : "gamepad thumbstick r right";
-                    break;
-                
-                case 32788:
-                    return arg2 ? "gamepad thumbstick r up" : "gamepad thumbstick r down";
-                    break;
-                
-                case 32777:
-                    return (os_type == os_ps4 || os_type == os_ps5) ? "gamepad touchpad click" : "gamepad select";
-                    break;
-                
-                default:
-                    return "gamepad input unknown";
-                    break;
+                default: return "gamepad input unknown"; break;
             }
-            
-            break;
+        break;
         
-        case "virtual button":
+        case __INPUT_BINDING_VIRTUAL_BUTTON:
             return "virtual button";
-            break;
+        break;
         
         default:
             return "binding unknown";
-            break;
+        break;
     }
 }

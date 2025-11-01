@@ -9,12 +9,12 @@ Packages Used
 - NekoPresence
 - GameFrame
 - GMLive?
-- JujuAdam's Input System
-- DotObj
+- Input v8.0.3
+- DotObj v5.5.0
 - Easings
 
 This Project uses a lot of code from '19 Plus
-So that's convienant
+So that's convenient
 
 --------------------------------------------------------
 Project Decompiled by Ultimate_GMS2_Decompiler_v3.csx

@@ -184,9 +184,7 @@ if ((movespeed > 9 || afterimagegroundpoundcheck) && state != states.rope)
         }
     }
     else
-    {
         afterimagetime--;
-    }
 }
 
 var _onslippy = scr_solid(x, y + 1, obj_slipperyplatform) || scr_solid(x, y + 1, obj_slipperyplatformslope);
@@ -217,9 +215,9 @@ else if (state != states.wall)
 if (player_collideable() && scr_solid(x, y + 1, obj_movingplatformguy))
     movingplatID = instance_place(x, y + 1, obj_movingplatformguy);
 else
-    movingplatID = -4;
+    movingplatID = noone;
 
-if (movingplatID != -4)
+if (movingplatID != noone)
 {
     if (movingplatID.synced)
     {
@@ -227,9 +225,7 @@ if (movingplatID != -4)
             landed |= synced;
     }
     else
-    {
         movingplatID.landed = true;
-    }
 }
 
 if (instance_exists(speedlinesobj))
@@ -248,7 +244,7 @@ if (state != states.endplatform && state != states.levelintro && room != RankRoo
 onslipperyplat = vsp >= 0 && _onslippy;
 
 if (!onslipperyplat || !lastslipperyplat || !scr_solid(x, y + 1, lastslipperyplat))
-    lastslipperyplat = -4;
+    lastslipperyplat = noone;
 
 if (onslipperyplat && sprite_index != spr_player_move && sprite_index != spr_player_slopmove)
 {

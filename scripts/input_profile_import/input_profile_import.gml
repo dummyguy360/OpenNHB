@@ -1,18 +1,13 @@
-function input_profile_import(arg0, arg1, arg2 = 0)
+// Feather disable all
+/// @desc    Reads a JSON (string or struct) that contains profile data and replaces the given profile's data with it
+/// @param   stringOrStruct
+/// @param   profileName
+/// @param   [playerIndex=0]
+
+function input_profile_import(_json, _profile_name, _player_index = 0)
 {
-    static _global = __input_global();
+    __INPUT_GLOBAL_STATIC_LOCAL  //Set static _global
+    __INPUT_VERIFY_PLAYER_INDEX
     
-    if (arg2 < 0)
-    {
-        __input_error("Invalid player index provided (", arg2, ")");
-        return undefined;
-    }
-    
-    if (arg2 >= 1)
-    {
-        __input_error("Player index too large (", arg2, " must be less than ", 1, ")\nIncrease INPUT_MAX_PLAYERS to support more players");
-        return undefined;
-    }
-    
-    return _global.__players[arg2].__profile_import(arg0, arg1);
+    return _global.__players[_player_index].__profile_import(_json, _profile_name);
 }

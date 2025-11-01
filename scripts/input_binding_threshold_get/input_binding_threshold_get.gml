@@ -1,12 +1,17 @@
-function input_binding_threshold_get(arg0)
+// Feather disable all
+/// @desc    Returns a struct containing the specific analogue activation threshold for this binding
+///          If no threshold has been set for the binding then this function returns <undefined>
+/// @param   binding
+
+function input_binding_threshold_get(_binding)
 {
-    static _global = __input_global();
+    __INPUT_GLOBAL_STATIC_LOCAL  //Set static _global
     
-    if (!input_value_is_binding(arg0))
+    if (!input_value_is_binding(_binding))
     {
-        __input_error("Parameter is not a binding (typeof=", typeof(arg0), ")");
-        exit;
+        __input_error("Parameter is not a binding (typeof=", typeof(_binding), ")");
+        return;
     }
     
-    return arg0.__threshold_get();
+    return _binding.__threshold_get();
 }

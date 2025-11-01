@@ -1,32 +1,36 @@
-function input_binding_swap(arg0, arg1, arg2, arg3, arg4 = 0, arg5 = undefined)
+// Feather disable all
+/// @desc    Swaps over two bindings within the same profile. This is useful to resolve binding conflicts
+/// @param   verbA
+/// @param   alternateA
+/// @param   verbB
+/// @param   alternateB
+/// @param   [playerIndex=0]
+/// @param   [profileName]
+
+function input_binding_swap(_verb_a, _alternate_a, _verb_b, _alternate_b, _player_index = 0, _profile_name = undefined)
 {
-    static _global = __input_global();
+    __INPUT_GLOBAL_STATIC_LOCAL  //Set static _global
+    __INPUT_VERIFY_PLAYER_INDEX
+    __INPUT_VERIFY_PROFILE_NAME
     
-    if (arg4 < 0)
-    {
-        __input_error("Invalid player index provided (", arg4, ")");
-        return undefined;
-    }
-    
-    if (arg4 >= 1)
-    {
-        __input_error("Player index too large (", arg4, " must be less than ", 1, ")\nIncrease INPUT_MAX_PLAYERS to support more players");
-        return undefined;
-    }
-    
-    if (!input_profile_exists(arg5, arg4))
-        __input_error("Profile name \"", arg5, "\" doesn't exist");
-    
-    var _binding_a = input_binding_get(arg0, arg4, arg1, arg5);
-    var _binding_b = input_binding_get(arg2, arg4, arg3, arg5);
+    var _binding_a = input_binding_get(_verb_a, _player_index, _alternate_a, _profile_name);
+    var _binding_b = input_binding_get(_verb_b, _player_index, _alternate_b, _profile_name);
     
     if (_binding_b == undefined)
-        input_binding_remove(arg0, arg4, arg1, arg5);
+    {
+        input_binding_remove(_verb_a, _player_index, _alternate_a, _profile_name);
+    }
     else
-        input_binding_set(arg0, _binding_b, arg4, arg1, arg5);
+    {
+        input_binding_set(_verb_a, _binding_b, _player_index, _alternate_a, _profile_name);
+    }
     
     if (_binding_a == undefined)
-        input_binding_remove(arg2, arg4, arg3, arg5);
+    {
+        input_binding_remove(_verb_b, _player_index, _alternate_b, _profile_name);
+    }
     else
-        input_binding_set(arg2, _binding_a, arg4, arg3, arg5);
+    {
+        input_binding_set(_verb_b, _binding_a, _player_index, _alternate_b, _profile_name);
+    }
 }

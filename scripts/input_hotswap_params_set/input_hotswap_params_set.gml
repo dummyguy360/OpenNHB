@@ -1,9 +1,16 @@
-function input_hotswap_params_set(arg0)
+// Feather disable all
+/// @desc    Sets the function to call when a player hotswaps their device
+///          Set the callback to <undefined> to not call a function at all
+/// @param   callback
+
+function input_hotswap_params_set(_callback)
 {
-    static _global = __input_global();
+    __INPUT_GLOBAL_STATIC_LOCAL  //Set static _global
     
-    if (!is_method(arg0) && !(is_numeric(arg0) && script_exists(arg0)) && !is_undefined(arg0))
+    if (!is_method(_callback) && !(is_numeric(_callback) && script_exists(_callback)) && !is_undefined(_callback))
+    {
         __input_error("Hotswap callback must be a function, a script, or <undefined>");
+    }
     
-    _global.__hotswap_callback = arg0;
+    _global.__hotswap_callback = _callback;
 }

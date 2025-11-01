@@ -1,14 +1,20 @@
+// Feather disable all
+/// @desc    Hides virtual keyboard
+///          This covers mobile platforms as well as Steam
+
 function input_keyboard_virtual_hide()
 {
-    static _global = __input_global();
+    __INPUT_GLOBAL_STATIC_LOCAL  //Set static _global  
     
     if (_global.__using_steamworks)
     {
         steam_dismiss_floating_gamepad_text_input();
     }
-    else if (keyboard_virtual_status() || os_type == os_android)
+    else if (keyboard_virtual_status() || __INPUT_ON_ANDROID) //Status detect is unreliable on Android platform
     {
-        if (!(os_type == os_windows))
+        if not (__INPUT_ON_WINDOWS)
+        {
             keyboard_virtual_hide();
+        }
     }
 }

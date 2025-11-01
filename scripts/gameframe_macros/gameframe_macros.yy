@@ -5,7 +5,7 @@
   "isCompatibility": false,
   "isDnD": false,
   "parent": {
-    "name": "Gameframe_TEMP",
-    "path": "folders/Scripts/Gameframe_TEMP.yy",
+    "name": "Gameframe",
+    "path": "folders/Extensions/Gameframe.yy",
   },
 }

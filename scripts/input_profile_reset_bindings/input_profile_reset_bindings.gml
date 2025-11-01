@@ -1,18 +1,13 @@
-function input_profile_reset_bindings(arg0, arg1 = 0)
+// Feather disable all
+/// @desc    Resets all bindings for the profile to those found in __input_config_verbs()
+///          This will only work for default profiles
+/// @param   profileName
+/// @param   [playerIndex=0]
+
+function input_profile_reset_bindings(_profile_name, _player_index = 0)
 {
-    static _global = __input_global();
+    __INPUT_GLOBAL_STATIC_LOCAL  //Set static _global
+    __INPUT_VERIFY_PLAYER_INDEX
     
-    if (arg1 < 0)
-    {
-        __input_error("Invalid player index provided (", arg1, ")");
-        return undefined;
-    }
-    
-    if (arg1 >= 1)
-    {
-        __input_error("Player index too large (", arg1, " must be less than ", 1, ")\nIncrease INPUT_MAX_PLAYERS to support more players");
-        return undefined;
-    }
-    
-    return _global.__players[arg1].__profile_reset_bindings(arg0);
+    return _global.__players[_player_index].__profile_reset_bindings(_profile_name);
 }

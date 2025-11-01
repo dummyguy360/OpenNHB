@@ -1,18 +1,12 @@
-function input_player_import(arg0, arg1 = 0)
+// Feather disable all
+/// @desc    Reads a JSON (string or struct) that contains player data and replaces the given player's data with it
+/// @param   stringOrStruct
+/// @param   [playerIndex=0]
+
+function input_player_import(_json, _player_index = 0)
 {
-    static _global = __input_global();
+    __INPUT_GLOBAL_STATIC_LOCAL  //Set static _global
+    __INPUT_VERIFY_PLAYER_INDEX
     
-    if (arg1 < 0)
-    {
-        __input_error("Invalid player index provided (", arg1, ")");
-        return undefined;
-    }
-    
-    if (arg1 >= 1)
-    {
-        __input_error("Player index too large (", arg1, " must be less than ", 1, ")\nIncrease INPUT_MAX_PLAYERS to support more players");
-        return undefined;
-    }
-    
-    return _global.__players[arg1].__import(arg0);
+    return _global.__players[_player_index].__import(_json);
 }

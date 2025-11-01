@@ -28,7 +28,7 @@ switch (type)
 
 if (type == UnknownEnum.Value_1 || type == UnknownEnum.Value_2)
 {
-    image_xscale = tween(2, 1, 1 - (abs(x - middlex) / middlex), "out cubic");
+    image_xscale = tween(2, 1, 1 - (abs(x - middlex) / middlex), EASE_OUT_CUBIC);
     image_yscale = image_xscale;
     depth = startdepth - ((image_xscale - 1) * 32);
 }

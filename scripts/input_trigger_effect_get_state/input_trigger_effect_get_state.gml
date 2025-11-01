@@ -1,58 +1,43 @@
-function input_trigger_effect_get_state(arg0, arg1 = 0)
+// Feather disable all
+/// @desc    Gets gamepad trigger effect state for a player
+/// @param   trigger
+/// @param   [playerIndex=0]
+
+function input_trigger_effect_get_state(_trigger, _player_index = 0)
 {
-    static _global = __input_global();
-    
-    if (arg1 < 0)
+    __INPUT_GLOBAL_STATIC_LOCAL  //Set static _global
+    __INPUT_VERIFY_PLAYER_INDEX
+
+    if not ((_trigger == gp_shoulderlb) || (_trigger == gp_shoulderrb))
     {
-        __input_error("Invalid player index provided (", arg1, ")");
-        return undefined;
+        __input_error("Value ", _trigger ," not a gamepad trigger");
     }
+
+    var _player  = _global.__players[_player_index];
+    var _gamepad = input_player_get_gamepad(_player_index);
+    if (_gamepad < 0) return undefined;
     
-    if (arg1 >= 1)
-    {
-        __input_error("Player index too large (", arg1, " must be less than ", 1, ")\nIncrease INPUT_MAX_PLAYERS to support more players");
-        return undefined;
-    }
+    if (_player.__trigger_effect_paused) return INPUT_TRIGGER_STATE.EFFECT_INTERCEPTED;
     
-    if (!(arg0 == 32775 || arg0 == 32776))
-        __input_error("Value ", arg0, " not a gamepad trigger");
-    
-    var _player = _global.__players[arg1];
-    var _gamepad = input_player_get_gamepad(arg1);
-    
-    if (_gamepad < 0)
-        return undefined;
-    
-    if (_player.__trigger_effect_paused)
-        return UnknownEnum.Value_m1;
-    
-    if (os_type == os_ps5)
-        return ps5_gamepad_get_trigger_effect_state(_gamepad, arg0);
+    if (os_type == os_ps5) return ps5_gamepad_get_trigger_effect_state(_gamepad, _trigger);
     
     var _effect = undefined;
-    
-    if (arg0 == 32775)
+    if (_trigger == gp_shoulderlb)
     {
-        if (_player.__trigger_intercepted_left)
-            return UnknownEnum.Value_m1;
-        
+        if (_player.__trigger_intercepted_left) return INPUT_TRIGGER_STATE.EFFECT_INTERCEPTED;        
         _effect = _player.__trigger_effect_left;
     }
-    else if (arg0 == 32776)
+    else if (_trigger == gp_shoulderrb)
     {
-        if (_player.__trigger_intercepted_right)
-            return UnknownEnum.Value_m1;
-        
+        if (_player.__trigger_intercepted_right) return INPUT_TRIGGER_STATE.EFFECT_INTERCEPTED;        
         _effect = _player.__trigger_effect_right;
     }
     else
     {
-        __input_error("Value ", arg0, " not a gamepad trigger");
+        __input_error("Value ", _trigger ," not a gamepad trigger");
         return false;
     }
-    
-    if (!is_struct(_effect))
-        return UnknownEnum.Value_0;
-    
-    return _effect.__steam_get_state(_gamepad, arg0);
+
+    if not (is_struct(_effect)) return __INPUT_TRIGGER_EFFECT.__TYPE_OFF;
+    return _effect.__steam_get_state(_gamepad, _trigger);
 }

@@ -245,7 +245,7 @@ var _baseoptions = new DEBUGFolder("DebugJr v0.1", [new DEBUGMenuItem("Toggle Co
         ds_stack_pop(arg0.optionstack);
 }), new DEBUGMenuItem("Explosion Death", function(arg0)
 {
-    scr_hurtplayer(5, UnknownEnum.Value_1);
+    scr_hurtplayer(5, playerdeath.gibdeath);
     instance_create_depth(obj_player.x, obj_player.y, 10, obj_explosion);
     arg0.open = false;
     
@@ -254,7 +254,7 @@ var _baseoptions = new DEBUGFolder("DebugJr v0.1", [new DEBUGMenuItem("Toggle Co
 }), new DEBUGMenuItem("Fire Death", function(arg0)
 {
     with (obj_player)
-        scr_hurtplayer(5, UnknownEnum.Value_2);
+        scr_hurtplayer(5, playerdeath.firedeath);
     
     arg0.open = false;
     

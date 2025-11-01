@@ -1,18 +1,18 @@
-function input_cursor_translate(arg0 = undefined, arg1 = undefined, arg2, arg3 = 0, arg4 = false)
+// Feather disable all
+/// @desc    Moves a player's virtual cursor to a position, blocking input whilst the cursor is moving
+///          If an axis isn't specified (<undefined> is used as a the argument value) then that axis
+///          will be unbound.
+///          
+/// @param   [x]
+/// @param   [y]
+/// @param   duration
+/// @param   [playerIndex=0]
+/// @param   [relative=false]
+
+function input_cursor_translate(_x = undefined, _y = undefined, _duration, _player_index = 0, _relative = false)
 {
-    static _global = __input_global();
+    __INPUT_GLOBAL_STATIC_LOCAL  //Set static _global
+    __INPUT_VERIFY_PLAYER_INDEX
     
-    if (arg3 < 0)
-    {
-        __input_error("Invalid player index provided (", arg3, ")");
-        return undefined;
-    }
-    
-    if (arg3 >= 1)
-    {
-        __input_error("Player index too large (", arg3, " must be less than ", 1, ")\nIncrease INPUT_MAX_PLAYERS to support more players");
-        return undefined;
-    }
-    
-    return _global.__players[arg3].__cursor.__translate(arg0, arg1, arg2, arg4);
+    return _global.__players[_player_index].__cursor.__translate(_x, _y, _duration, _relative);
 }

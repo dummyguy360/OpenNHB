@@ -1,21 +1,27 @@
-function input_player_gamepad_type_override_set(arg0, arg1 = 0)
+// Feather disable all
+/// @desc    Sets the a gamepad type for the player for icon display
+///          Set the gamepadType to <undefined> to not set an override
+/// @param   gamepadType
+/// @param   [playerIndex=0]
+
+function input_player_gamepad_type_override_set(_type, _player_index = 0)
 {
-    static _global = __input_global();
+    __INPUT_GLOBAL_STATIC_LOCAL  //Set static _global
+    __INPUT_VERIFY_PLAYER_INDEX
     
-    if (arg1 < 0)
+    if ((_type != undefined)
+    &&  (_type != INPUT_GAMEPAD_TYPE_XBOX_ONE)
+    &&  (_type != INPUT_GAMEPAD_TYPE_XBOX_360)
+    &&  (_type != INPUT_GAMEPAD_TYPE_PS5)
+    &&  (_type != INPUT_GAMEPAD_TYPE_PS4)
+    &&  (_type != INPUT_GAMEPAD_TYPE_PSX)
+    &&  (_type != INPUT_GAMEPAD_TYPE_SWITCH)
+    &&  (_type != INPUT_GAMEPAD_TYPE_JOYCON_LEFT)
+    &&  (_type != INPUT_GAMEPAD_TYPE_JOYCON_RIGHT)
+    &&  (_type != INPUT_GAMEPAD_TYPE_GAMECUBE))
     {
-        __input_error("Invalid player index provided (", arg1, ")");
-        return undefined;
+        __input_error("Gamepad type \"", _type, "\" not supported");
     }
     
-    if (arg1 >= 1)
-    {
-        __input_error("Player index too large (", arg1, " must be less than ", 1, ")\nIncrease INPUT_MAX_PLAYERS to support more players");
-        return undefined;
-    }
-    
-    if (arg0 != undefined && arg0 != "xbox one" && arg0 != "xbox 360" && arg0 != "ps5" && arg0 != "ps4" && arg0 != "psx" && arg0 != "switch" && arg0 != "switch joycon left" && arg0 != "switch joycon right" && arg0 != "gamecube")
-        __input_error("Gamepad type \"", arg0, "\" not supported");
-    
-    _global.__players[arg1].__gamepad_type_override = arg0;
+    _global.__players[_player_index].__gamepad_type_override = _type;
 }

@@ -1,12 +1,12 @@
-function input_verb_get_group(arg0)
+// Feather disable all
+/// @desc    Returns the name of the verb group the verb is in, as defined by __input_config_verb_groups()
+///          If the verb is in no verb group, this function returns <undefined>
+/// @param   verb
+
+function input_verb_get_group(_verb_name)
 {
-    static _global = __input_global();
+    __INPUT_GLOBAL_STATIC_LOCAL  //Set static _global
+    __INPUT_VERIFY_BASIC_VERB_NAME
     
-    if (variable_struct_exists(_global.__chord_verb_dict, arg0))
-        __input_error("\"", arg0, "\" is a chord verb. Verbs passed to this function must be basic verb");
-    
-    if (!variable_struct_exists(_global.__basic_verb_dict, arg0))
-        __input_error("Verb \"", arg0, "\" not recognised");
-    
-    return variable_struct_get(_global.__verb_to_group_dict, arg0);
+    return _global.__verb_to_group_dict[$ _verb_name];
 }

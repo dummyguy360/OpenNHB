@@ -1,9 +1,17 @@
-function input_value_is_binding(arg0)
+// Feather disable all
+/// @desc    Returns if the given value is a valid Input binding
+/// @param   value
+
+function input_value_is_binding(_value)
 {
-    static _global = __input_global();
+    __INPUT_GLOBAL_STATIC_LOCAL  //Set static _global
     
     if (_global.__use_is_instanceof)
-        return is_struct(arg0) && is_instanceof(arg0, __input_class_binding);
+    {
+        return (is_struct(_value) && is_instanceof(_value, __input_class_binding));
+    }
     else
-        return is_struct(arg0) && instanceof(arg0) == "__input_class_binding";
+    {
+        return (is_struct(_value) && (instanceof(_value) == "__input_class_binding"));
+    }
 }

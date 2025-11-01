@@ -1,42 +1,41 @@
-function input_cursor_limit_circle(arg0, arg1, arg2, arg3 = 0)
+// Feather disable all
+/// @desc    Limits the cursor’s motion inside a circle centred at the given point
+/// @param   x
+/// @param   y
+/// @param   radius
+/// @param   [playerIndex=0]
+
+function input_cursor_limit_circle(_x, _y, _radius, _player_index = 0)
 {
-    static _global = __input_global();
+    __INPUT_GLOBAL_STATIC_LOCAL  //Set static _global
     
-    if (arg3 == -3)
+    if (_player_index == all)
     {
         var _p = 0;
-        
-        repeat (1)
+        repeat(INPUT_MAX_PLAYERS)
         {
-            input_cursor_limit_circle(arg0, arg1, arg2, _p);
-            _p++;
+            input_cursor_limit_circle(_x, _y, _radius, _p);
+            ++_p;
         }
         
-        exit;
+        return;
     }
     
-    if (arg3 < 0)
-    {
-        __input_error("Invalid player index provided (", arg3, ")");
-        return undefined;
-    }
+    __INPUT_VERIFY_PLAYER_INDEX
     
-    if (arg3 >= 1)
-    {
-        __input_error("Player index too large (", arg3, " must be less than ", 1, ")\nIncrease INPUT_MAX_PLAYERS to support more players");
-        return undefined;
-    }
-    
-    with (_global.__players[arg3].__cursor)
+    with(_global.__players[_player_index].__cursor)
     {
         __limit_l = undefined;
         __limit_t = undefined;
         __limit_r = undefined;
         __limit_b = undefined;
-        __limit_x = arg0;
-        __limit_y = arg1;
-        __limit_radius = arg2;
+        
+        __limit_x      = _x;
+        __limit_y      = _y;
+        __limit_radius = _radius;
+        
         __limit_boundary_margin = undefined;
+        
         __limit();
     }
 }

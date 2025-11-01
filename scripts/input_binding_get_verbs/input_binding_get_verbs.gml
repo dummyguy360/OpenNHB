@@ -1,23 +1,16 @@
-function input_binding_get_verbs(arg0, arg1 = 0, arg2 = undefined)
+// Feather disable all
+/// @desc    Returns an array of structs containing verb/alternate indexes matching a binding
+/// @param   binding
+/// @param   [playerIndex=0]
+/// @param   [profileName]
+
+function input_binding_get_verbs(_binding, _player_index = 0, _profile_name = undefined)
 {
-    static _global = __input_global();
+    __INPUT_GLOBAL_STATIC_LOCAL  //Set static _global
+    __INPUT_VERIFY_PLAYER_INDEX
+    __INPUT_VERIFY_PROFILE_NAME
     
-    if (arg1 < 0)
-    {
-        __input_error("Invalid player index provided (", arg1, ")");
-        return undefined;
-    }
-    
-    if (arg1 >= 1)
-    {
-        __input_error("Player index too large (", arg1, " must be less than ", 1, ")\nIncrease INPUT_MAX_PLAYERS to support more players");
-        return undefined;
-    }
-    
-    if (!input_profile_exists(arg2, arg1))
-        __input_error("Profile name \"", arg2, "\" doesn't exist");
-    
-    if (!input_value_is_binding(arg0))
+    if (!input_value_is_binding(_binding))
     {
         __input_error("Value provided is not a binding");
         return undefined;
@@ -25,40 +18,41 @@ function input_binding_get_verbs(arg0, arg1 = 0, arg2 = undefined)
     
     var _output_array = [];
     
-    with (_global.__players[arg1])
+    with(_global.__players[_player_index])
     {
-        arg2 = __profile_get(arg2);
+        //Get the profile for this particular binding
+        _profile_name = __profile_get(_profile_name);
         
-        if (arg2 == undefined)
+        if (_profile_name == undefined)
         {
             __input_trace("Warning! Cannot get verbs from binding, profile was <undefined>");
             return _output_array;
         }
         
+        //Iterate over every verb
         var _v = 0;
-        
-        repeat (array_length(_global.__basic_verb_array))
+        repeat(array_length(_global.__basic_verb_array))
         {
             var _verb = _global.__basic_verb_array[_v];
-            var _alternate_index = 0;
             
-            repeat (3)
+            //Iterate over every alternate binding
+            var _alternate_index = 0;
+            repeat(INPUT_MAX_ALTERNATE_BINDINGS)
             {
-                var _extant_binding = __binding_get(arg2, _verb, _alternate_index, false);
-                
-                if (is_struct(_extant_binding) && _extant_binding.__label == arg0.__label)
+                //Pick up a binding
+                //If this hasn't been defined for the player then it falls through and uses the default binding
+                var _extant_binding = __binding_get(_profile_name, _verb, _alternate_index, false);
+                    
+                //A lot of alternate binding slots don't get used so they return <undefined>
+                if (is_struct(_extant_binding) && (_extant_binding.__label == _binding.__label))
                 {
-                    array_push(_output_array, 
-                    {
-                        __verb: _verb,
-                        __alternate: _alternate_index
-                    });
+                    array_push(_output_array, { __verb: _verb, __alternate: _alternate_index });
                 }
-                
-                _alternate_index++;
+                    
+                ++_alternate_index;
             }
             
-            _v++;
+            ++_v;
         }
     }
     

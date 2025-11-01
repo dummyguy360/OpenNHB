@@ -5,7 +5,7 @@
   "isCompatibility": false,
   "isDnD": false,
   "parent": {
-    "name": "Input_TEMP",
-    "path": "folders/Scripts/Input_TEMP.yy",
+    "name": "06  Binding Access",
+    "path": "folders/Scripts/Input/06  Binding Access.yy",
   },
 }

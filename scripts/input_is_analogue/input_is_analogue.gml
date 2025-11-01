@@ -1,41 +1,27 @@
-function input_is_analogue(arg0, arg1 = 0)
+// Feather disable all
+/// @desc    Returns whether the given verb is currently received analogue input (e.g. from a gamepad thumbstick)
+///          If an array of verbs is provided, this function will return <true> if ANY of the verbs have analogue input
+/// @param   {any} verb/array
+/// @param   [playerIndex=0]
+
+function input_is_analogue(_verb, _player_index = 0)
 {
-    static _global = __input_global();
+    __INPUT_GLOBAL_STATIC_LOCAL  //Set static _global
+    __INPUT_VERIFY_PLAYER_INDEX
     
-    if (arg1 < 0)
-    {
-        __input_error("Invalid player index provided (", arg1, ")");
-        return undefined;
-    }
-    
-    if (arg1 >= 1)
-    {
-        __input_error("Player index too large (", arg1, " must be less than ", 1, ")\nIncrease INPUT_MAX_PLAYERS to support more players");
-        return undefined;
-    }
-    
-    if (is_array(arg0))
+    if (is_array(_verb))
     {
         var _i = 0;
-        
-        repeat (array_length(arg0))
+        repeat(array_length(_verb))
         {
-            if (input_is_analogue(arg0[_i], arg1))
-                return true;
-            
-            _i++;
+            if (input_is_analogue(_verb[_i], _player_index)) return true;
+            ++_i;
         }
         
         return false;
     }
     
-    var _verb_struct = variable_struct_get(_global.__players[arg1].__verb_state_dict, arg0);
-    
-    if (!is_struct(_verb_struct))
-    {
-        __input_error("Verb not recognised (", arg0, ")");
-        return undefined;
-    }
+    __INPUT_GET_VERB_STRUCT
     
     return _verb_struct.__analogue;
 }

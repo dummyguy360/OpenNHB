@@ -13,11 +13,9 @@ if (!discsquash)
     }
 }
 else
-{
     discanim = approach(discanim, 1, 0.05);
-}
 
-if (input_keyboard_check_pressed(112) || (input_gamepad_check_pressed(input_player_get_gamepad(), 32779) && input_gamepad_check_pressed(input_player_get_gamepad(), 32780)))
+if (input_keyboard_check_pressed(vk_f1) || (input_gamepad_check_pressed(input_player_get_gamepad(), gp_stickl) && input_gamepad_check_pressed(input_player_get_gamepad(), gp_stickr)))
 {
     input_profile_reset_bindings("keyboard_and_mouse");
     input_profile_reset_bindings("gamepad");
@@ -26,7 +24,7 @@ if (input_keyboard_check_pressed(112) || (input_gamepad_check_pressed(input_play
     scr_tiptext(string_get("tips/menu/options/allbindsreset"), -13500, false);
 }
 
-if (input_check_pressed("jump") && get_savestate() == UnknownEnum.Value_0)
+if (input_check_pressed("jump") && get_savestate() == save_state.idle)
 {
     instance_destroy();
     instance_create_depth(x, y, depth, obj_logos);

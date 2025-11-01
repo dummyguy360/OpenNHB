@@ -1,4 +1,7 @@
-function __input_axis_is_directional(arg0)
+// Feather disable all
+
+function __input_axis_is_directional(_axis)
 {
-    return arg0 == 32781 || arg0 == 32782 || arg0 == 32783 || arg0 == 32784 || arg0 == 32785 || arg0 == 32786 || arg0 == 32787 || arg0 == 32788;
+    return ((_axis == gp_padu)   || (_axis == gp_padd)   || (_axis == gp_padl)   || (_axis == gp_padr)
+         || (_axis == gp_axislh) || (_axis == gp_axislv) || (_axis == gp_axisrh) || (_axis == gp_axisrv));
 }

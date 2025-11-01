@@ -1,6 +1,8 @@
-function DotobjTryCache(arg0)
+/// param objFilename
+
+function DotobjTryCache(_filename)
 {
-    var _sha1 = sha1_file(arg0);
+    var _sha1 = sha1_file(_filename);
     var _cacheFilename = "dotobj" + _sha1 + ".dat";
     
     if (file_exists(_cacheFilename))
@@ -9,7 +11,7 @@ function DotobjTryCache(arg0)
     }
     else
     {
-        var _model = DotobjModelLoadFile(arg0);
+        var _model = DotobjModelLoadFile(_filename);
         DotobjModelRawSave(_model, _cacheFilename);
         return _model;
     }

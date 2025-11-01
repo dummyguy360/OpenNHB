@@ -1,54 +1,47 @@
-function input_binding_test_collisions(arg0, arg1, arg2 = 0, arg3 = undefined)
+// Feather disable all
+/// @desc    Returns an array of structs containing conflicting verb/alternate indexes, after taking into account __input_config_verb_groups()
+/// @param   verb
+/// @param   binding
+/// @param   [playerIndex=0]
+/// @param   [profileName]
+
+function input_binding_test_collisions(_verb_name, _src_binding, _player_index = 0, _profile_name = undefined)
 {
-    static _global = __input_global();
+    __INPUT_GLOBAL_STATIC_LOCAL  //Set static _global
+    __INPUT_VERIFY_BASIC_VERB_NAME
+    __INPUT_VERIFY_PLAYER_INDEX
+    __INPUT_VERIFY_PROFILE_NAME
     
-    if (variable_struct_exists(_global.__chord_verb_dict, arg0))
-        __input_error("\"", arg0, "\" is a chord verb. Verbs passed to this function must be basic verb");
-    
-    if (!variable_struct_exists(_global.__basic_verb_dict, arg0))
-        __input_error("Verb \"", arg0, "\" not recognised");
-    
-    if (arg2 < 0)
-    {
-        __input_error("Invalid player index provided (", arg2, ")");
-        return undefined;
-    }
-    
-    if (arg2 >= 1)
-    {
-        __input_error("Player index too large (", arg2, " must be less than ", 1, ")\nIncrease INPUT_MAX_PLAYERS to support more players");
-        return undefined;
-    }
-    
-    if (!input_profile_exists(arg3, arg2))
-        __input_error("Profile name \"", arg3, "\" doesn't exist");
-    
-    if (!input_value_is_binding(arg1))
+    if (!input_value_is_binding(_src_binding))
     {
         __input_error("Value provided is not a binding");
         return undefined;
     }
     
-    var _src_group = input_verb_get_group(arg0);
+    var _src_group = input_verb_get_group(_verb_name);
+    
     var _output_array = [];
     
-    with (_global.__players[arg2])
+    with(_global.__players[_player_index])
     {
-        arg3 = __profile_get(arg3);
+        //Get the profile for this particular binding
+        _profile_name = __profile_get(_profile_name);
         
-        if (arg3 == undefined)
+        if (_profile_name == undefined)
         {
             __input_trace("Warning! Cannot test binding collisions, profile was <undefined>");
             return _output_array;
         }
         
+        //Iterate over every verb
         var _v = 0;
-        
-        repeat (array_length(_global.__basic_verb_array))
+        repeat(array_length(_global.__basic_verb_array))
         {
             var _verb = _global.__basic_verb_array[_v];
+            
             var _group_matches = false;
             
+            //If the incoming groups array is undefined then the incoming binding is in every group
             if (_src_group == undefined)
             {
                 _group_matches = true;
@@ -57,37 +50,44 @@ function input_binding_test_collisions(arg0, arg1, arg2 = 0, arg3 = undefined)
             {
                 var _dst_group = input_verb_get_group(_verb);
                 
+                //If the incoming groups array is undefined then the incoming binding is in every group
                 if (_dst_group == undefined)
-                    _group_matches = true;
-                else
-                    _group_matches = _src_group == _dst_group;
-            }
-            
-            if (_group_matches)
-            {
-                var _alternate_index = 0;
-                
-                repeat (3)
                 {
-                    var _extant_binding = __binding_get(arg3, _verb, _alternate_index, false);
-                    
-                    if (is_struct(_extant_binding))
-                    {
-                        if (_extant_binding.__label == arg1.__label && (_global.__source_mode != UnknownEnum.Value_4 || _extant_binding.__gamepad_index == arg1.__gamepad_index || _extant_binding.__gamepad_index == undefined || arg1.__gamepad_index == undefined))
-                        {
-                            array_push(_output_array, 
-                            {
-                                __verb: _verb,
-                                __alternate: _alternate_index
-                            });
-                        }
-                    }
-                    
-                    _alternate_index++;
+                    _group_matches = true;
+                }
+                else
+                {
+                    //Check if there's any overlap between the incoming group array and the verb
+                    _group_matches = (_src_group == _dst_group);
                 }
             }
             
-            _v++;
+            //Only check for specific binding collisions if the verb groups collide
+            if (_group_matches)
+            {
+                //Iterate over every alternate binding
+                var _alternate_index = 0;
+                repeat(INPUT_MAX_ALTERNATE_BINDINGS)
+                {
+                    //Pick up a binding
+                    //If this hasn't been defined for the player then it falls through and uses the default binding
+                    var _extant_binding = __binding_get(_profile_name, _verb, _alternate_index, false);
+                    
+                    //A lot of alternate binding slots don't get used so they return <undefined>
+                    if (is_struct(_extant_binding))
+                    {
+                        if ((_extant_binding.__label == _src_binding.__label)
+                        &&  ((_global.__source_mode != INPUT_SOURCE_MODE.MULTIDEVICE) || (_extant_binding.__gamepad_index == _src_binding.__gamepad_index) || (_extant_binding.__gamepad_index == undefined) || (_src_binding.__gamepad_index == undefined)))
+                        {
+                            array_push(_output_array, { __verb: _verb, __alternate: _alternate_index });
+                        }
+                    }
+                    
+                    ++_alternate_index;
+                }
+            }
+            
+            ++_v;
         }
     }
     

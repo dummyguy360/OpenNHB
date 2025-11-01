@@ -1,20 +1,35 @@
+// Feather disable all
+
 function __input_class_binding() constructor
 {
-    static __global = __input_global();
+    __INPUT_GLOBAL_STATIC_VARIABLE  //Set static __global
+    
+    __set_empty();
     
     static __set_empty = function()
     {
-        __type = undefined;
-        __value = undefined;
+        __type          = undefined;
+        __value         = undefined;
         __axis_negative = undefined;
-        __label = "empty binding";
-        __gamepad_index = undefined;
+        __label       = "empty binding";
+        
+        __gamepad_index       = undefined;
         __gamepad_description = undefined;
+        
+        //We have an additional field on Android
+        //This is used to check for uppercase *and* lowercase letters as Android checks for both individually
         __android_lowercase = undefined;
+        
+        //Accessibility features
         __threshold_min = undefined;
         __threshold_max = undefined;
+        
         return self;
-    };
+    }
+    
+    
+    
+    #region Public
     
     static toString = function()
     {
@@ -23,422 +38,372 @@ function __input_class_binding() constructor
         if (__gamepad_index != undefined)
         {
             if (__gamepad_description != undefined)
-                _string += (", gamepad=" + string(__gamepad_index) + " \"" + __gamepad_description + "\"");
+            {
+                _string += ", gamepad=" + string(__gamepad_index) + " \"" + __gamepad_description + "\"";
+            }
             else
-                _string += (", gamepad=" + string(__gamepad_index));
+            {
+                _string += ", gamepad=" + string(__gamepad_index);
+            }
         }
         else if (__gamepad_description != undefined)
         {
-            _string += (", gamepad=\"" + __gamepad_description + "\"");
+            _string += ", gamepad=\"" + __gamepad_description + "\"";
         }
         
-        if (__threshold_min != undefined || __threshold_max != undefined)
-            _string += (", threshold=" + __threshold_min + "->" + string(__threshold_max));
+        if ((__threshold_min != undefined) || (__threshold_max != undefined))
+        {
+            _string += ", threshold=" + __threshold_min + "->" + string(__threshold_max);
+        }
         
         return _string;
-    };
+    }
+
+    #endregion
     
+    #region Private
+
     static __source_type_get = function()
     {
-        switch (__type)
+        switch(__type)
         {
-            case "key":
-                return __input_global().__source_keyboard;
-                break;
-            
-            case "mouse button":
-                return __input_global().__source_mouse;
-                break;
-            
-            case "mouse wheel up":
-                return __input_global().__source_mouse;
-                break;
-            
-            case "mouse wheel down":
-                return __input_global().__source_mouse;
-                break;
-            
-            case "virtual button":
-                return __input_global().__source_touch;
-                break;
-            
-            case "gamepad button":
-                return __input_global().__source_gamepad;
-                break;
-            
-            case "gamepad axis":
-                return __input_global().__source_gamepad;
-                break;
+            case __INPUT_BINDING_KEY:              return INPUT_KEYBOARD; break;
+            case __INPUT_BINDING_MOUSE_BUTTON:     return INPUT_MOUSE;    break;
+            case __INPUT_BINDING_MOUSE_WHEEL_UP:   return INPUT_MOUSE;    break;
+            case __INPUT_BINDING_MOUSE_WHEEL_DOWN: return INPUT_MOUSE;    break;
+            case __INPUT_BINDING_VIRTUAL_BUTTON:   return INPUT_TOUCH;    break;
+            case __INPUT_BINDING_GAMEPAD_BUTTON:   return INPUT_GAMEPAD;  break;
+            case __INPUT_BINDING_GAMEPAD_AXIS:     return INPUT_GAMEPAD;  break;
             
             case undefined:
                 __input_trace("Warning! Binding type has not been defined");
                 return undefined;
-                break;
+            break;
             
             default:
                 __input_error("Unhandled binding type \"", __type, "\"");
-                break;
+            break;
         }
-    };
+    }
     
-    static __gamepad_set = function(arg0)
+    static __gamepad_set = function(_gamepad)
     {
-        if (input_gamepad_is_connected(arg0))
+        if (input_gamepad_is_connected(_gamepad))
         {
-            __gamepad_index = arg0;
-            __gamepad_description = gamepad_get_description(arg0);
+            __gamepad_index = _gamepad;
+            __gamepad_description = gamepad_get_description(_gamepad);
         }
         
         return self;
-    };
+    }
     
     static __gamepad_get = function()
     {
         return __gamepad_index;
-    };
+    }
     
-    static __threshold_set = function(arg0, arg1)
+    /// @param min
+    /// @param max
+    static __threshold_set = function(_min, _max)
     {
-        __threshold_min = arg0;
-        __threshold_max = arg1;
+        __threshold_min = _min
+        __threshold_max = _max;
         return self;
-    };
+    }
     
     static __threshold_get = function()
     {
-        return 
-        {
+        return {
             mini: __threshold_min,
-            maxi: __threshold_max
+            maxi: __threshold_max,
         };
-    };
+    }
     
     static __export = function()
     {
         var _binding_shell = {};
         
-        if (__type != undefined)
-            _binding_shell.__type = __type;
-        
-        if (__value != undefined)
-            _binding_shell.__value = __value;
-        
-        if (__axis_negative != undefined)
-            _binding_shell.__axis_negative = __axis_negative;
-        
-        if (__gamepad_description != undefined)
-            _binding_shell.__gamepad_description = __gamepad_description;
-        
-        if (__threshold_min != undefined)
-            _binding_shell.__threshold_min = __threshold_min;
-        
-        if (__threshold_max != undefined)
-            _binding_shell.__threshold_max = __threshold_max;
+        if (__type                != undefined) _binding_shell.__type                = __type;
+        if (__value               != undefined) _binding_shell.__value               = __value;
+        if (__axis_negative       != undefined) _binding_shell.__axis_negative       = __axis_negative;
+        if (__gamepad_description != undefined) _binding_shell.__gamepad_description = __gamepad_description;
+        if (__threshold_min       != undefined) _binding_shell.__threshold_min       = __threshold_min;
+        if (__threshold_max       != undefined) _binding_shell.__threshold_max       = __threshold_max;
         
         return _binding_shell;
-    };
+    }
     
-    static __import = function(arg0)
+    static __import = function(_binding_shell)
     {
-        var _type_var = variable_struct_exists(arg0, "type") ? "type" : "__type";
-        var _value_var = variable_struct_exists(arg0, "value") ? "value" : "__value";
-        var _axis_negative_var = variable_struct_exists(arg0, "axis_negative") ? "axis_negative" : "__axis_negative";
-        var _gamepad_description_var = variable_struct_exists(arg0, "gamepad_description") ? "gamepad_description" : "__gamepad_description";
-        var _threshold_min_var = variable_struct_exists(arg0, "threshold_min") ? "threshold_min" : "__threshold_min";
-        var _threshold_max_var = variable_struct_exists(arg0, "threshold_max") ? "threshold_max" : "__threshold_max";
-        
-        if (!is_struct(arg0))
+        var _type_var                   = variable_struct_exists(_binding_shell, "type")                ? "type"                : "__type";
+        var _value_var                  = variable_struct_exists(_binding_shell, "value")               ? "value"               : "__value";
+        var _axis_negative_var          = variable_struct_exists(_binding_shell, "axis_negative")       ? "axis_negative"       : "__axis_negative";
+        var _gamepad_description_var    = variable_struct_exists(_binding_shell, "gamepad_description") ? "gamepad_description" : "__gamepad_description";
+        var _threshold_min_var          = variable_struct_exists(_binding_shell, "threshold_min")       ? "threshold_min"       : "__threshold_min";
+        var _threshold_max_var          = variable_struct_exists(_binding_shell, "threshold_max")       ? "threshold_max"       : "__threshold_max";
+
+        if (!is_struct(_binding_shell))
         {
-            __input_trace("Warning! Could not import binding, clearing this binding (typeof=", typeof(arg0), ")");
-            arg0 = {};
+            __input_trace("Warning! Could not import binding, clearing this binding (typeof=", typeof(_binding_shell), ")");
+            _binding_shell = {};
         }
         
-        if (variable_struct_names_count(arg0) <= 0)
+        if (variable_struct_names_count(_binding_shell) <= 0)
         {
             __set_empty();
-            exit;
+            return;
         }
         
-        if (!variable_struct_exists(arg0, _type_var))
+        if (!variable_struct_exists(_binding_shell, _type_var))
         {
             __input_error("Binding \"type\" not found; binding is corrupted");
-            exit;
+            return;
         }
         
-        var _type = variable_struct_get(arg0, _type_var);
-        
-        if (!variable_struct_exists(arg0, _value_var) && _type != "mouse wheel up" && _type != "mouse wheel down" && _type != "virtual button")
+        var _type = _binding_shell[$ _type_var];
+        if (!variable_struct_exists(_binding_shell, _value_var)
+        && (_type != __INPUT_BINDING_MOUSE_WHEEL_UP)
+        && (_type != __INPUT_BINDING_MOUSE_WHEEL_DOWN)
+        && (_type != __INPUT_BINDING_VIRTUAL_BUTTON))
         {
             __input_error("Binding \"value\" not found; binding is corrupted");
-            exit;
+            return;
         }
         
-        if (_type == "gamepad axis" && !variable_struct_exists(arg0, _axis_negative_var))
+        if ((_type == __INPUT_BINDING_GAMEPAD_AXIS) && !variable_struct_exists(_binding_shell, _axis_negative_var))
         {
             __input_error("Binding \"axis_negative\" not found; binding is corrupted");
-            exit;
+            return;
         }
         
-        var _value = variable_struct_get(arg0, _value_var);
-        
-        if (_type == "gamepad axis" || _type == "gamepad button")
+        var _value = _binding_shell[$ _value_var];
+        if ((_type == __INPUT_BINDING_GAMEPAD_AXIS) || (_type == __INPUT_BINDING_GAMEPAD_BUTTON))
         {
-            switch (_value)
+            switch(_value)
             {
-                case 32789:
-                case 32889:
-                    _value = __input_global().__gp_guide;
-                    __input_trace("Warning! Legacy gamepad constant found, updating value (= ", _value, ")");
-                    break;
-                
-                case 32790:
-                case 32890:
-                    _value = __input_global().__gp_misc1;
-                    __input_trace("Warning! Legacy gamepad constant found, updating value (= ", _value, ")");
-                    break;
-                
-                case 32791:
-                case 32891:
-                    _value = __input_global().__gp_touchpad;
-                    __input_trace("Warning! Legacy gamepad constant found, updating value (= ", _value, ")");
-                    break;
-                
-                case 32792:
-                case 32892:
-                    _value = __input_global().__gp_paddle1;
-                    __input_trace("Warning! Legacy gamepad constant found, updating value (= ", _value, ")");
-                    break;
-                
-                case 32793:
-                case 32893:
-                    _value = __input_global().__gp_paddle2;
-                    __input_trace("Warning! Legacy gamepad constant found, updating value (= ", _value, ")");
-                    break;
-                
-                case 32794:
-                case 32894:
-                    _value = __input_global().__gp_paddle3;
-                    __input_trace("Warning! Legacy gamepad constant found, updating value (= ", _value, ")");
-                    break;
-                
-                case 32795:
-                case 32895:
-                    _value = __input_global().__gp_paddle4;
-                    __input_trace("Warning! Legacy gamepad constant found, updating value (= ", _value, ")");
-                    break;
+                case __INPUT_LEGACY_GP_GUIDE:    case __INPUT_LEGACY_GP_ALT_GUIDE:    _value = gp_guide;    __input_trace("Warning! Legacy gamepad constant found, updating value (= ", _value, ")"); break;
+                case __INPUT_LEGACY_GP_MISC1:    case __INPUT_LEGACY_GP_ALT_MISC1:    _value = gp_misc1;    __input_trace("Warning! Legacy gamepad constant found, updating value (= ", _value, ")"); break;
+                case __INPUT_LEGACY_GP_TOUCHPAD: case __INPUT_LEGACY_GP_ALT_TOUCHPAD: _value = gp_touchpad; __input_trace("Warning! Legacy gamepad constant found, updating value (= ", _value, ")"); break;
+                case __INPUT_LEGACY_GP_PADDLE1:  case __INPUT_LEGACY_GP_ALT_PADDLE1:  _value = gp_paddle1;  __input_trace("Warning! Legacy gamepad constant found, updating value (= ", _value, ")"); break;
+                case __INPUT_LEGACY_GP_PADDLE2:  case __INPUT_LEGACY_GP_ALT_PADDLE2:  _value = gp_paddle2;  __input_trace("Warning! Legacy gamepad constant found, updating value (= ", _value, ")"); break;
+                case __INPUT_LEGACY_GP_PADDLE3:  case __INPUT_LEGACY_GP_ALT_PADDLE3:  _value = gp_paddle3;  __input_trace("Warning! Legacy gamepad constant found, updating value (= ", _value, ")"); break;
+                case __INPUT_LEGACY_GP_PADDLE4:  case __INPUT_LEGACY_GP_ALT_PADDLE4:  _value = gp_paddle4;  __input_trace("Warning! Legacy gamepad constant found, updating value (= ", _value, ")"); break;
             }
         }
         
-        __type = _type;
-        __value = _value;
-        __axis_negative = variable_struct_get(arg0, _axis_negative_var);
-        __gamepad_description = variable_struct_get(arg0, _gamepad_description_var);
-        __threshold_min = variable_struct_get(arg0, _threshold_min_var);
-        __threshold_max = variable_struct_get(arg0, _threshold_max_var);
+        __type                = _type;
+        __value               = _value;
+        __axis_negative       = _binding_shell[$ _axis_negative_var         ];
+        __gamepad_description = _binding_shell[$ _gamepad_description_var   ];
+        __threshold_min       = _binding_shell[$ _threshold_min_var         ];
+        __threshold_max       = _binding_shell[$ _threshold_max_var         ];
         
+        //If we have a gamepad description then try to match that to a connected gamepad
         if (__gamepad_description != undefined)
         {
             var _g = 0;
-            
-            repeat (array_length(__global.__gamepads))
+            repeat(array_length(__global.__gamepads))
             {
                 var _gamepad = __global.__gamepads[_g];
                 
-                if (is_struct(_gamepad) && _gamepad.description == __gamepad_description)
+                if (is_struct(_gamepad) && (_gamepad.description == __gamepad_description))
                 {
                     __gamepad_index = _g;
                     break;
                 }
                 
-                _g++;
+                ++_g;
             }
         }
         
-        __set_android_lowercase();
+        __set_android_lowercase(); //This also edits .__value
         __set_label();
-    };
+    }
     
     static __set_android_lowercase = function()
     {
-        if (os_type == os_android && __type == "key")
+        //If we're on Android
+        if (__INPUT_ON_ANDROID && (__type == __INPUT_BINDING_KEY))
         {
+            //Force binding to uppercase
             __value = ord(string_upper(chr(__value)));
-            var _android_lowercase = ord(string_lower(chr(__value)));
-            __android_lowercase = (_android_lowercase != __value) ? _android_lowercase : undefined;
             
-            if (__value == 10 || __value == 13)
+            //Grab the keyboard character for this key and force it into lowercase
+            //If the lowercase and uppercase keys are different then we'll want to check the lowercase key as well
+            var _android_lowercase = ord(string_lower(chr(__value)));
+            __android_lowercase = (_android_lowercase != __value)? _android_lowercase : undefined;
+            
+            //Some Android devices and soft keyboards use carriage return for Enter, some use newline
+            if ((__value == 10) || (__value == 13))
             {
                 __value = 10;
                 __android_lowercase = 13;
             }
         }
-    };
+    }
     
     static __duplicate = function()
     {
-        with (new __input_class_binding())
+        with(new __input_class_binding())
         {
-            __type = other.__type;
-            __value = other.__value;
-            __axis_negative = other.__axis_negative;
-            __label = other.__label;
-            __gamepad_index = other.__gamepad_index;
+            __type                = other.__type;
+            __value               = other.__value;
+            __axis_negative       = other.__axis_negative;
+            __label               = other.__label;
+            __gamepad_index       = other.__gamepad_index;
             __gamepad_description = other.__gamepad_description;
-            __android_lowercase = other.__android_lowercase;
-            __threshold_min = other.__threshold_min;
-            __threshold_max = other.__threshold_max;
+            __android_lowercase   = other.__android_lowercase;
+            __threshold_min       = other.__threshold_min;
+            __threshold_max       = other.__threshold_max;
             return self;
         }
-    };
+    }
     
-    static __set_key = function(arg0, arg1)
+    static __set_key = function(_key, _player_set)
     {
-        if (is_string(arg0))
-            arg0 = ord(string_upper(arg0));
+        //Fix uses of straight strings instead of ord("A")
+        if (is_string(_key)) _key = ord(string_upper(_key));
         
-        if (arg1)
+        if (_player_set)
         {
+            if (INPUT_MERGE_CONTROL_KEYS)
+            {
+                switch(_key)
+                {
+                    //Combine player-bound control keys
+                    case vk_lcontrol: case vk_rcontrol:  _key = vk_control; break;
+                    case vk_lalt:     case vk_ralt:      _key = vk_alt;     break;
+                    case vk_lshift:   case vk_rshift:    _key = vk_shift;   break;
+                }
+            }
         }
         else
         {
-            if (os_type == os_switch || os_type == os_linux || os_type == os_macosx)
+            if (__INPUT_ON_SWITCH || __INPUT_ON_LINUX || __INPUT_ON_MACOS)
             {
-                if (arg0 == 122)
-                    arg0 = 128;
-                else if (arg0 == 123)
-                    arg0 = 129;
+                //Fix F11 and F12 constants
+                if      (_key == vk_f11)  _key = 128;
+                else if (_key == vk_f12)  _key = 129;
             }
             
-            if (!(__input_global().__on_desktop || (false || os_type == os_gxgames) || os_type == os_switch))
+            if (!__INPUT_KEYBOARD_NORMATIVE)
             {
-                if (arg0 == 188)
-                    arg0 = 44;
-                else if (arg0 == (((os_type == os_macosx || os_type == os_switch) && !(false || os_type == os_gxgames)) ? 109 : 189))
-                    arg0 = 45;
-                else if (arg0 == ((os_type == os_switch) ? 110 : 190))
-                    arg0 = 46;
-                else if (arg0 == 191)
-                    arg0 = 47;
-                else if (arg0 == 186)
-                    arg0 = 59;
-                else if (arg0 == ((os_type == os_macosx && !(false || os_type == os_gxgames)) ? 24 : 187))
-                    arg0 = 61;
-                else if (arg0 == 219)
-                    arg0 = 91;
-                else if (arg0 == 220)
-                    arg0 = 92;
-                else if (arg0 == 221)
-                    arg0 = 93;
-                else if (arg0 == (!(os_type == os_macosx) ? ((os_type == os_linux) ? 223 : 192) : 50))
-                    arg0 = 96;
+                //Fix UTF-8 where used
+                if      (_key == vk_comma    )  _key = 44;
+                else if (_key == vk_hyphen   )  _key = 45;
+                else if (_key == vk_period   )  _key = 46;
+                else if (_key == vk_fslash   )  _key = 47;
+                else if (_key == vk_semicolon)  _key = 59;
+                else if (_key == vk_equals   )  _key = 61;
+                else if (_key == vk_lbracket )  _key = 91;
+                else if (_key == vk_bslash   )  _key = 92;
+                else if (_key == vk_rbracket )  _key = 93;
+                else if (_key == vk_backtick )  _key = 96;
             }
         }
         
-        __type = "key";
-        __value = arg0;
-        __set_android_lowercase();
-        __set_label();
-        return self;
-    };
-    
-    static __set_gamepad_axis = function(arg0, arg1)
-    {
-        __type = "gamepad axis";
-        __value = arg0;
-        __axis_negative = arg1;
-        __set_label();
-        return self;
-    };
-    
-    static __set_gamepad_button = function(arg0)
-    {
-        __type = "gamepad button";
-        __value = arg0;
-        __set_label();
-        return self;
-    };
-    
-    static __set_mouse_button = function(arg0)
-    {
-        if (arg0 == 0)
-            __input_error("Cannot use mb_none as a mouse button binding\nInstead please use mb_any and then invert the result");
+        __type  = __INPUT_BINDING_KEY;
+        __value = _key;
         
-        __type = "mouse button";
-        __value = arg0;
+        __set_android_lowercase(); //This also edits .__value
         __set_label();
+        
         return self;
-    };
+    }
+    
+    static __set_gamepad_axis = function(_axis, _negative)
+    {
+        __type          = __INPUT_BINDING_GAMEPAD_AXIS;
+        __value         = _axis;
+        __axis_negative = _negative;
+        
+        __set_label();
+        
+        return self;
+    }
+    
+    static __set_gamepad_button = function(_button)
+    {
+        __type   = __INPUT_BINDING_GAMEPAD_BUTTON;
+        __value  = _button;
+        
+        __set_label();
+        
+        return self;
+    }
+    
+    static __set_mouse_button = function(_button)
+    {
+        if (_button == mb_none)
+        {
+            __input_error("Cannot use mb_none as a mouse button binding\nInstead please use mb_any and then invert the result");
+        }
+        
+        __type  = __INPUT_BINDING_MOUSE_BUTTON;
+        __value = _button;
+        
+        __set_label();
+        
+        return self;
+    }
     
     static __set_mouse_wheel_down = function()
     {
-        __type = "mouse wheel down";
+        __type = __INPUT_BINDING_MOUSE_WHEEL_DOWN;
+        
         __set_label();
+        
         return self;
-    };
+    }
     
     static __set_mouse_wheel_up = function()
     {
-        __type = "mouse wheel up";
+        __type = __INPUT_BINDING_MOUSE_WHEEL_UP;
+        
         __set_label();
+        
         return self;
-    };
+    }
     
     static __set_virtual_button = function()
     {
-        __type = "virtual button";
+        __type = __INPUT_BINDING_VIRTUAL_BUTTON;
+        
         __set_label();
-        return self;
-    };
-    
-    static __set_label = function(arg0)
-    {
-        if (arg0 == undefined)
-            __label = __input_binding_get_label(__type, __value, __axis_negative);
-        else
-            __label = arg0;
         
         return self;
-    };
+    }
+    
+    static __set_label = function(_label)
+    {
+        if (_label == undefined)
+        {
+            __label = __input_binding_get_label(__type, __value, __axis_negative);
+        }
+        else
+        {
+            __label = _label;
+        }
+        
+        return self;
+    }
     
     static __get_source_type = function()
     {
-        switch (__type)
+        switch(__type)
         {
-            case "key":
-                return UnknownEnum.Value_0;
-                break;
-            
-            case "mouse button":
-                return UnknownEnum.Value_1;
-                break;
-            
-            case "mouse wheel up":
-                return UnknownEnum.Value_1;
-                break;
-            
-            case "mouse wheel down":
-                return UnknownEnum.Value_1;
-                break;
-            
-            case "virtual button":
-                return UnknownEnum.Value_3;
-                break;
-            
-            case "gamepad button":
-                return UnknownEnum.Value_2;
-                break;
-            
-            case "gamepad axis":
-                return UnknownEnum.Value_2;
-                break;
-            
-            case undefined:
-                return undefined;
-                break;
+            case __INPUT_BINDING_KEY:              return __INPUT_SOURCE.KEYBOARD; break;
+            case __INPUT_BINDING_MOUSE_BUTTON:     return __INPUT_SOURCE.MOUSE;    break;
+            case __INPUT_BINDING_MOUSE_WHEEL_UP:   return __INPUT_SOURCE.MOUSE;    break;
+            case __INPUT_BINDING_MOUSE_WHEEL_DOWN: return __INPUT_SOURCE.MOUSE;    break;
+            case __INPUT_BINDING_VIRTUAL_BUTTON:   return __INPUT_SOURCE.TOUCH;    break;
+            case __INPUT_BINDING_GAMEPAD_BUTTON:   return __INPUT_SOURCE.GAMEPAD;  break;
+            case __INPUT_BINDING_GAMEPAD_AXIS:     return __INPUT_SOURCE.GAMEPAD;  break;
+            case undefined:                        return undefined;               break;
         }
         
         __input_error("Binding type \"", __type, "\" not recognised");
-    };
+    }
     
-    __set_empty();
+    #endregion
 }

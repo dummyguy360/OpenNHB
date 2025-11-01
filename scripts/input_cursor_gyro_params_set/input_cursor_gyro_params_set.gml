@@ -1,44 +1,35 @@
-function input_cursor_gyro_params_set(arg0 = undefined, arg1 = undefined, arg2 = undefined, arg3 = undefined, arg4 = 0, arg5 = undefined)
+// Feather disable all
+/// @desc    Sets parameters for the cursor when gamepad gyro is in use
+/// @param   [gyroAxisX=undefined]
+/// @param   [gyroAxisY=undefined]
+/// @param   [gyroSensitivityX=undefined]
+/// @param   [gyroSensitivityY=undefined]
+/// @param   [playerIndex=0]
+/// @param   [gamepad=undefined]
+
+function input_cursor_gyro_params_set(_gyro_axis_x = undefined, _gyro_axis_y = undefined, _gyro_sensitivity_x = undefined, _gyro_sensitivity_y = undefined, _player_index = 0, _gamepad = undefined)
 {
-    static _global = __input_global();
+    __INPUT_GLOBAL_STATIC_LOCAL  //Set static _global
     
-    if (arg4 == -3)
+    if (_player_index == all)
     {
         var _p = 0;
-        
-        repeat (1)
+        repeat(INPUT_MAX_PLAYERS)
         {
-            input_cursor_gyro_params_set(arg0, arg1, arg2, arg3, _p, arg5);
-            _p++;
+            input_cursor_gyro_params_set(_gyro_axis_x, _gyro_axis_y, _gyro_sensitivity_x, _gyro_sensitivity_y, _p, _gamepad);
+            ++_p;
         }
         
-        exit;
+        return;
     }
     
-    if (arg4 < 0)
-    {
-        __input_error("Invalid player index provided (", arg4, ")");
-        return undefined;
-    }
+    __INPUT_VERIFY_PLAYER_INDEX
     
-    if (arg4 >= 1)
-    {
-        __input_error("Player index too large (", arg4, " must be less than ", 1, ")\nIncrease INPUT_MAX_PLAYERS to support more players");
-        return undefined;
-    }
-    
-    if (arg5 != undefined)
-        _global.__players[arg4].__gyro_gamepad = arg5;
-    
-    if (arg0 != undefined)
-        _global.__players[arg4].__gyro_axis_x = arg0;
-    
-    if (arg1 != undefined)
-        _global.__players[arg4].__gyro_axis_y = arg1;
-    
-    if (arg2 != undefined)
-        _global.__players[arg4].__gyro_sensitivity_x = arg2;
-    
-    if (arg3 != undefined)
-        _global.__players[arg4].__gyro_sensitivity_y = arg3;
+    if (_gamepad != undefined) _global.__players[_player_index].__gyro_gamepad = _gamepad;
+
+    if (_gyro_axis_x != undefined) _global.__players[_player_index].__gyro_axis_x = _gyro_axis_x;
+    if (_gyro_axis_y != undefined) _global.__players[_player_index].__gyro_axis_y = _gyro_axis_y;
+
+    if (_gyro_sensitivity_x != undefined) _global.__players[_player_index].__gyro_sensitivity_x = _gyro_sensitivity_x;
+    if (_gyro_sensitivity_y != undefined) _global.__players[_player_index].__gyro_sensitivity_y = _gyro_sensitivity_y;
 }

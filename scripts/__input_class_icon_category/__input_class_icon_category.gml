@@ -1,23 +1,21 @@
-function __input_class_icon_category(arg0) constructor
+// Feather disable all
+function __input_class_icon_category(_name) constructor
 {
-    static add = function(arg0, arg1)
+    __name       = _name;
+    __dictionary = {};
+    __swap_ab    = __input_gamepad_type_swap_ab(_name);
+    
+    static add = function(_binding_name, _icon)
     {
-        static _a = __input_binding_get_label("gamepad button", 32769, false);
-        static _b = __input_binding_get_label("gamepad button", 32770, false);
-        
         if (__swap_ab)
         {
-            if (arg0 == _a)
-                arg0 = _b;
-            else if (arg0 == _b)
-                arg0 = _a;
+            static _a = __input_binding_get_label(__INPUT_BINDING_GAMEPAD_BUTTON, gp_face1, false);
+            static _b = __input_binding_get_label(__INPUT_BINDING_GAMEPAD_BUTTON, gp_face2, false);
+            if      (_binding_name == _a) { _binding_name = _b; }
+            else if (_binding_name == _b) { _binding_name = _a; }
         }
         
-        variable_struct_set(__dictionary, arg0, arg1);
+        __dictionary[$ _binding_name] = _icon;
         return self;
-    };
-    
-    __name = arg0;
-    __dictionary = {};
-    __swap_ab = __input_gamepad_type_swap_ab(arg0);
+    }
 }

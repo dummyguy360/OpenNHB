@@ -1,58 +1,41 @@
-function input_binding_get(arg0, arg1 = 0, arg2 = 0, arg3 = undefined)
+// Feather disable all
+/// @desc    Returns the binding for the given verb. If no binding has been set, this function will return <undefined>
+///          If no profile is provided, the current profile is used
+/// @param   verb
+/// @param   [playerIndex=0]
+/// @param   [alternate=0]
+/// @param   [profileName]
+
+function input_binding_get(_verb_name, _player_index = 0, _alternate = 0, _profile_name = undefined)
 {
-    static _global = __input_global();
+    __INPUT_GLOBAL_STATIC_LOCAL  //Set static _global
+    __INPUT_VERIFY_ALTERNATE_INDEX
+    __INPUT_VERIFY_BASIC_VERB_NAME
+    __INPUT_VERIFY_PROFILE_NAME
     
-    if (arg2 < 0)
+    if (is_string(_player_index))
     {
-        __input_error("Invalid \"alternate\" argument (", arg2, ")");
-        return undefined;
-    }
-    
-    if (arg2 >= 3)
-    {
-        __input_error("\"alternate\" argument too large (", arg2, " must be less than ", 3, ")\nIncrease INPUT_MAX_ALTERNATE_BINDINGS for more alternate binding slots");
-        return undefined;
-    }
-    
-    if (variable_struct_exists(_global.__chord_verb_dict, arg0))
-        __input_error("\"", arg0, "\" is a chord verb. Verbs passed to this function must be basic verb");
-    
-    if (!variable_struct_exists(_global.__basic_verb_dict, arg0))
-        __input_error("Verb \"", arg0, "\" not recognised");
-    
-    if (!input_profile_exists(arg3, arg1))
-        __input_error("Profile name \"", arg3, "\" doesn't exist");
-    
-    if (is_string(arg1))
-    {
-        if (arg1 == "default")
+        if (_player_index == "default")
         {
-            if (arg3 == undefined)
-                __input_error("Source must be specified when getting a binding from the default player");
+            if (_profile_name == undefined) __input_error("Source must be specified when getting a binding from the default player");
             
-            with (_global.__default_player)
-                return __binding_get(arg3, arg0, arg2, false).__duplicate();
+            with(_global.__default_player)
+            {
+                return __binding_get(_profile_name, _verb_name, _alternate, false).__duplicate();
+            }
         }
         else
         {
-            __input_error("Player \"", arg1, "\" not supported");
+            __input_error("Player \"", _player_index, "\" not supported");
         }
     }
     
-    if (arg1 < 0)
-    {
-        __input_error("Invalid player index provided (", arg1, ")");
-        return undefined;
-    }
+    __INPUT_VERIFY_PLAYER_INDEX
     
-    if (arg1 >= 1)
+    with(_global.__players[_player_index])
     {
-        __input_error("Player index too large (", arg1, " must be less than ", 1, ")\nIncrease INPUT_MAX_PLAYERS to support more players");
-        return undefined;
+        return __binding_get(_profile_name, _verb_name, _alternate, true);
     }
-    
-    with (_global.__players[arg1])
-        return __binding_get(arg3, arg0, arg2, true);
     
     return undefined;
 }

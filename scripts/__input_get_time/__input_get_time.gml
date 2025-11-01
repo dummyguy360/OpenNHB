@@ -1,6 +1,6 @@
+// Feather disable all
 function __input_get_time()
 {
-    static _global = __input_global();
-    
-    return _global.__frame;
+    __INPUT_GLOBAL_STATIC_LOCAL  //Set static _global
+    return (INPUT_TIMER_MILLISECONDS? _global.__current_time : _global.__frame);
 }

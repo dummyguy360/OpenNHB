@@ -1,14 +1,15 @@
-function __input_gamepad_value_internal(arg0, arg1)
+//Feather disable all
+
+function __input_gamepad_value_internal(_index, _gm)
 {
-    static _global = __input_global();
+    __INPUT_GLOBAL_STATIC_LOCAL  //Set static _global
     
-    if (arg0 == undefined || arg0 < 0 || arg0 >= array_length(_global.__gamepads))
-        return 0;
+    if ((_index == undefined) || (_index < 0) || (_index >= array_length(_global.__gamepads)))
+    {
+        return 0.0;
+    }
     
-    var _gamepad = _global.__gamepads[arg0];
-    
-    if (!is_struct(_gamepad))
-        return false;
-    
-    return _gamepad.__get_value(arg1);
+    var _gamepad = _global.__gamepads[_index];
+    if (!is_struct(_gamepad)) return false;
+    return _gamepad.__get_value(_gm);
 }

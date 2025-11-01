@@ -1,20 +1,26 @@
-function __input_load_sdl2_from_file(arg0)
+// Feather disable all
+function __input_load_sdl2_from_file(_filename)
 {
-    static _global = __input_global();
+    __INPUT_GLOBAL_STATIC_LOCAL  //Set static _global
     
-    __input_trace("Loading SDL2 database from \"", arg0, "\"");
-    var _buffer = buffer_load(arg0);
+    if (!__INPUT_SILENT)__input_trace("Loading SDL2 database from \"", _filename, "\"");
     
+    var _buffer = buffer_load(_filename);
     if (_buffer < 0)
     {
-        show_message("Could not load external SDL2 database \"" + string(arg0) + "\"");
+        show_message("Could not load external SDL2 database \"" + string(_filename) + "\"");
         return false;
     }
     
-    if (buffer_get_size(_buffer) >= 4 && (buffer_peek(_buffer, 0, buffer_u32) & 16777215) == 12565487)
+    //In case of manual editing, skip UTF-8 BOM
+    if ((buffer_get_size(_buffer) >= 4) && ((buffer_peek(_buffer, 0, buffer_u32) & 0xFFFFFF) == 0xBFBBEF))
+    {
         buffer_seek(_buffer, buffer_seek_start, 3);
-    
+    }
+        
+    //Read file as text
     var _string = buffer_read(_buffer, buffer_text);
     buffer_delete(_buffer);
+        
     return __input_load_sdl2_from_string_internal(_string);
 }

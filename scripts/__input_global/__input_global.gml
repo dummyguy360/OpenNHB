@@ -1,7 +1,8 @@
+// Feather disable all
 function __input_global()
 {
-    static _struct = {};
-    
     __input_initialize();
+    
+    static _struct = {};
     return _struct;
 }

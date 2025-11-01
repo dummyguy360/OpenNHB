@@ -1,37 +1,27 @@
-function input_player_ghost_set(arg0, arg1 = 0)
+// Feather disable all
+/// @desc    Sets whether the player is a "ghost" or not
+/// @param   state
+/// @param   [playerIndex=0]
+
+function input_player_ghost_set(_state, _player_index = 0)
 {
-    static _global = __input_global();
+    __INPUT_GLOBAL_STATIC_LOCAL  //Set static _global
+    __INPUT_VERIFY_PLAYER_INDEX
     
-    if (arg1 < 0)
-    {
-        __input_error("Invalid player index provided (", arg1, ")");
-        return undefined;
-    }
-    
-    if (arg1 >= 1)
-    {
-        __input_error("Player index too large (", arg1, " must be less than ", 1, ")\nIncrease INPUT_MAX_PLAYERS to support more players");
-        return undefined;
-    }
-    
-    if (arg1 == -3)
+    if (_player_index == all)
     {
         var _i = 0;
-        
-        repeat (1)
+        repeat(INPUT_MAX_PLAYERS)
         {
-            input_player_ghost_set(arg0, _i);
-            _i++;
+            input_player_ghost_set(_state, _i);
+            ++_i;
         }
         
-        exit;
+        return;
     }
     
-    if (_global.__players[arg1].__ghost == arg0)
-        exit;
+    if (_global.__players[_player_index].__ghost == _state) return;
+    _global.__players[_player_index].__ghost = _state;
     
-    _global.__players[arg1].__ghost = arg0;
-    
-    if (arg0)
-        input_source_clear(arg1);
+    if (_state) input_source_clear(_player_index);
 }

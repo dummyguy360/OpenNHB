@@ -1,18 +1,15 @@
-function input_player_active_set(arg0, arg1 = 0)
+// Feather disable all
+/// @desc    Sets whether the player is active or not
+/// 
+/// An inactive player will have all their verbs "consumed" until the player is reactivated
+/// 
+/// @param   state
+/// @param   [playerIndex=0]
+
+function input_player_active_set(_state, _player_index = 0)
 {
-    static _global = __input_global();
+    __INPUT_GLOBAL_STATIC_LOCAL  //Set static _global
+    __INPUT_VERIFY_PLAYER_INDEX
     
-    if (arg1 < 0)
-    {
-        __input_error("Invalid player index provided (", arg1, ")");
-        return undefined;
-    }
-    
-    if (arg1 >= 1)
-    {
-        __input_error("Player index too large (", arg1, " must be less than ", 1, ")\nIncrease INPUT_MAX_PLAYERS to support more players");
-        return undefined;
-    }
-    
-    _global.__players[arg1].__active = arg0;
+    _global.__players[_player_index].__active = _state;
 }

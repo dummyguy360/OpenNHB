@@ -1,42 +1,42 @@
-function input_cursor_limit_aabb(arg0, arg1, arg2, arg3, arg4 = 0)
+// Feather disable all
+/// @desc    Limits the cursor’s motion inside an axis-aligned bounding box with the given coordinates
+/// @param   left
+/// @param   top
+/// @param   right
+/// @param   bottom
+/// @param   [playerIndex=0]
+
+function input_cursor_limit_aabb(_l, _t, _r, _b, _player_index = 0)
 {
-    static _global = __input_global();
+    __INPUT_GLOBAL_STATIC_LOCAL  //Set static _global
     
-    if (arg4 == -3)
+    if (_player_index == all)
     {
         var _p = 0;
-        
-        repeat (1)
+        repeat(INPUT_MAX_PLAYERS)
         {
-            input_cursor_limit_aabb(arg0, arg1, arg2, arg3, _p);
-            _p++;
+            input_cursor_limit_aabb(_l, _t, _r, _b, _p);
+            ++_p;
         }
         
-        exit;
+        return;
     }
     
-    if (arg4 < 0)
-    {
-        __input_error("Invalid player index provided (", arg4, ")");
-        return undefined;
-    }
+    __INPUT_VERIFY_PLAYER_INDEX
     
-    if (arg4 >= 1)
+    with(_global.__players[_player_index].__cursor)
     {
-        __input_error("Player index too large (", arg4, " must be less than ", 1, ")\nIncrease INPUT_MAX_PLAYERS to support more players");
-        return undefined;
-    }
-    
-    with (_global.__players[arg4].__cursor)
-    {
-        __limit_l = arg0;
-        __limit_t = arg1;
-        __limit_r = arg2;
-        __limit_b = arg3;
-        __limit_x = undefined;
-        __limit_y = undefined;
+        __limit_l = _l;
+        __limit_t = _t;
+        __limit_r = _r;
+        __limit_b = _b;
+        
+        __limit_x      = undefined;
+        __limit_y      = undefined;
         __limit_radius = undefined;
+        
         __limit_boundary_margin = undefined;
+        
         __limit();
     }
 }

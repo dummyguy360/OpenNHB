@@ -1,12 +1,21 @@
-function input_gamepad_tester_set(arg0)
+//Feather disable all
+
+/// Opens or closes the gamepad tester debug view
+/// 
+/// Please note that Input verb checker functions will not work when GameMaker's debug
+/// overlay is open (by design)
+/// 
+/// @param state
+
+function input_gamepad_tester_set(_state)
 {
-    static _global = __input_global();
+    __INPUT_GLOBAL_STATIC_LOCAL
     
     if (_global.__allow_gamepad_tester)
     {
-        if (_global.__gamepad_tester_data.__enabled != arg0)
+        if (_global.__gamepad_tester_data.__enabled != _state)
         {
-            if (arg0)
+            if (_state)
             {
                 __input_gamepad_tester_build_gui();
                 _global.__gamepad_tester_data.__enabled = true;

@@ -26,7 +26,7 @@ function event_play_oneshot(arg0)
 function event_isplaying(arg0)
 {
     var _playback = fmod_studio_event_instance_get_playback_state(arg0);
-    return _playback != UnknownEnum.Value_2 && _playback != UnknownEnum.Value_4;
+    return _playback != FMOD_STUDIO_PLAYBACK_STATE.STOPPED && _playback != FMOD_STUDIO_PLAYBACK_STATE.STOPPING;
 }
 
 function event_count_description(arg0)
@@ -71,7 +71,7 @@ function event_set_3d_position_struct(arg0, arg1)
 
 function event_stop(arg0, arg1)
 {
-    fmod_studio_event_instance_stop(arg0, arg1 ? UnknownEnum.Value_1 : UnknownEnum.Value_0);
+    fmod_studio_event_instance_stop(arg0, arg1 ? FMOD_STUDIO_STOP_MODE.IMMEDIATE : FMOD_STUDIO_STOP_MODE.ALLOWFADEOUT);
 }
 
 function event_stop_description(arg0, arg1)

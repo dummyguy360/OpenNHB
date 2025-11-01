@@ -5,7 +5,7 @@
   "isCompatibility": false,
   "isDnD": false,
   "parent": {
-    "name": "Input_TEMP",
-    "path": "folders/Scripts/Input_TEMP.yy",
+    "name": "00  Configuration - Please edit these scripts!",
+    "path": "folders/Scripts/Input/00  Configuration - Please edit these scripts!.yy",
   },
 }

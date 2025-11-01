@@ -5,7 +5,7 @@ if ((openanim + closeanim) > 0)
     var _gw = get_game_width();
     var _gh = get_game_height();
     var _scale = min(_gw / _width, _gh / _height) * 0.9;
-    _scale = tween(_scale, 1, zoom, "in sine");
+    _scale = tween(_scale, 1, zoom, EASE_IN_SINE);
     var _xoff = (((_width + panx) / 2) + mapcorners[0].x) * _scale;
     var _yoff = (((_height + pany) / 2) + mapcorners[0].y) * _scale;
     var _roomind = array_find_pos(global.levelrooms, playerroom);

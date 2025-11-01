@@ -6,6 +6,6 @@
   "isDnD": false,
   "parent": {
     "name": "GMLive_TEMP",
-    "path": "folders/Scripts/GMLive_TEMP.yy",
+    "path": "folders/Extensions/GMLive_TEMP.yy",
   },
 }

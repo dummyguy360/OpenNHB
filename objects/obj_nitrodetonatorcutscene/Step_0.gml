@@ -19,7 +19,7 @@ if (sequencetimer <= 0)
     else
     {
         finish_explosion_chains();
-        fmod_studio_bus_stop_all_events(sfxbus, UnknownEnum.Value_1);
+        fmod_studio_bus_stop_all_events(sfxbus, FMOD_STUDIO_STOP_MODE.IMMEDIATE);
         
         if (nextroom >= array_length(rooms))
         {

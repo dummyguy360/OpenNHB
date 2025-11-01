@@ -40,7 +40,7 @@ if (input_check_pressed("jump"))
         
         curmusic = selected;
         muevent = event_instance(musiclist[selected][0]);
-        fmod_studio_event_instance_set_callback(muevent, UnknownEnum.Value_4096);
+        fmod_studio_event_instance_set_callback(muevent, FMOD_STUDIO_EVENT_CALLBACK.TIMELINE_BEAT);
         fmod_studio_event_instance_start(muevent);
         flowstate = false;
         vinylspin = 0;

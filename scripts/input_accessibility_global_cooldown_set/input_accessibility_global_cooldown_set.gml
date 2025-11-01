@@ -1,6 +1,10 @@
-function input_accessibility_global_cooldown_set(arg0)
+// Feather disable all
+/// @desc    Sets whether verb cooldowns should be permitted across the game at all
+/// @param   state
+
+function input_accessibility_global_cooldown_set(_state)
 {
-    static _global = __input_global();
+    __INPUT_GLOBAL_STATIC_LOCAL  //Set static _global
     
-    _global.__cooldown_state = arg0;
+    _global.__cooldown_state = _state;
 }

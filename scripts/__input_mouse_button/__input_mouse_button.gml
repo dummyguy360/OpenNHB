@@ -1,40 +1,46 @@
+// Feather disable all
 function __input_mouse_button()
 {
-    static _global = __input_global();
+    __INPUT_GLOBAL_STATIC_LOCAL  //Set static _global
     
     if (!_global.__mouse_allowed || !_global.__game_input_allowed || _global.__window_focus_block_mouse)
-        return 0;
+    {
+        //Mouse not alllowed
+        return mb_none;
+    }
     
     if (_global.__pointer_index > 0)
     {
         if (device_mouse_check_button(_global.__pointer_index, mb_left))
-            return 1;
+        {
+            //Touch
+            return mb_left;
+        }
     }
-    else if (__input_global().__on_desktop && !(false || os_type == os_gxgames))
+    else if (INPUT_ON_PC && !INPUT_ON_WEB)
     {
+        //Desktop native
         if (mouse_button != mb_none)
+        {
+            //Mouse
             return mouse_button;
-        
+        }
+
         if (_global.__tap_click)
-            return 1;
+        {
+            //Trackpad
+            return mb_left;
+        }
     }
     else
     {
-        if (device_mouse_check_button(0, 5))
-            return 5;
-        
-        if (device_mouse_check_button(0, 4))
-            return 4;
-        
-        if (device_mouse_check_button(0, mb_middle))
-            return 3;
-        
-        if (device_mouse_check_button(0, mb_right))
-            return 2;
-        
-        if (device_mouse_check_button(0, mb_left))
-            return 1;
+        //Web and non-desktop mouse
+        if (device_mouse_check_button(0, mb_side2))  return mb_side2;
+        if (device_mouse_check_button(0, mb_side1))  return mb_side1;
+        if (device_mouse_check_button(0, mb_middle)) return mb_middle;
+        if (device_mouse_check_button(0, mb_right))  return mb_right;
+        if (device_mouse_check_button(0, mb_left))   return mb_left;
     }
     
-    return 0;
+    return mb_none;
 }

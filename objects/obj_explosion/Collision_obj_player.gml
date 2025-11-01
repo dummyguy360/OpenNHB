@@ -4,7 +4,7 @@ if (game_paused() || !player_collideable() || pow)
 if (image_index < 9)
 {
     with (other.id)
-        scr_hurtplayer(1, UnknownEnum.Value_1);
+        scr_hurtplayer(1, playerdeath.gibdeath);
     
     shakecam(80, 7);
 }

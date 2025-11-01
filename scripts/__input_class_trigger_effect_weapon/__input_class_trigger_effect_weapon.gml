@@ -1,27 +1,31 @@
-function __input_class_trigger_effect_weapon(arg0, arg1, arg2, arg3) constructor
+// Feather disable all
+function __input_class_trigger_effect_weapon(_trigger, _start, _end, _strength) constructor
 {
     static __mode_name = "weapon";
-    static __mode = UnknownEnum.Value_2;
-    
-    static __apply_ps5 = function(arg0, arg1, arg2)
-    {
-        return ps5_gamepad_set_trigger_effect_weapon(arg0, arg1, variable_struct_get(__params, "start_position"), variable_struct_get(__params, "end_position"), variable_struct_get(__params, "strength") * arg2);
-    };
-    
-    static __steam_get_state = function(arg0, arg1)
-    {
-        var _trigger_value = input_gamepad_value(arg0, arg1);
-        
-        if (_trigger_value > (min(9.9, variable_struct_get(__params, "end_position") + 2) / 10))
-            return UnknownEnum.Value_5;
-        else if (_trigger_value >= (variable_struct_get(__params, "start_position") / 10))
-            return UnknownEnum.Value_4;
-        
-        return UnknownEnum.Value_3;
-    };
+    static __mode      = __INPUT_TRIGGER_EFFECT.__TYPE_WEAPON;
     
     __params = {};
-    variable_struct_set(__params, "start_position", clamp(arg1 * 10, 2, 7));
-    variable_struct_set(__params, "end_position", clamp(arg2 * 10, max(arg2 * 10, arg1 * 10), 8));
-    variable_struct_set(__params, "strength", clamp(arg3 * 8, 0, 8));
+    __params[$ __INPUT_STEAMWORKS_KEY_START_POSITION] = clamp(_start*10, 2, 7);
+    __params[$ __INPUT_STEAMWORKS_KEY_END_POSITION  ] = clamp(_end*10, max(_end*10, _start*10), 8);
+    __params[$ __INPUT_STEAMWORKS_KEY_STRENGTH      ] = clamp(_strength*8, 0, 8);
+    
+    static __apply_ps5 = function(_gamepad, _trigger, _strength)
+    {
+        return ps5_gamepad_set_trigger_effect_weapon(_gamepad, _trigger, __params[$ __INPUT_STEAMWORKS_KEY_START_POSITION], __params[$ __INPUT_STEAMWORKS_KEY_END_POSITION], __params[$ __INPUT_STEAMWORKS_KEY_STRENGTH] * _strength);
+    };
+
+    static __steam_get_state = function(_gamepad, _trigger)
+    {
+        var _trigger_value = input_gamepad_value(_gamepad, _trigger);
+        if (_trigger_value > min(9.9, __params[$ __INPUT_STEAMWORKS_KEY_END_POSITION] + 2)/10)
+        {
+            return INPUT_TRIGGER_STATE.EFFECT_WEAPON_FIRED;
+        }
+        else if (_trigger_value >= __params[$ __INPUT_STEAMWORKS_KEY_START_POSITION]/10)
+        {
+            return INPUT_TRIGGER_STATE.EFFECT_WEAPON_PULLING;
+        }
+
+        return INPUT_TRIGGER_STATE.EFFECT_WEAPON_STANDBY;
+    };
 }

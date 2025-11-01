@@ -26,7 +26,7 @@ if (instance_exists(currcheckpoint.id) && sendtocheckpoint)
             y = currcheckpoint.y;
     }
 }
-else if (targetouthouse != -4)
+else if (targetouthouse != noone)
 {
     with (targetouthouse)
     {
@@ -39,7 +39,7 @@ else if (targetouthouse != -4)
     }
     
     scr_fmod_soundeffectONESHOT("event:/sfx/misc/outhouseflush", outhousestartx, outhousestarty);
-    targetouthouse = -4;
+    targetouthouse = noone;
 }
 else if (targetdoor != "")
 {
@@ -114,7 +114,7 @@ with (obj_nitrodetonatorcutscene)
 
 with (obj_drawcontroller)
 {
-    curlock = -4;
+    curlock = noone;
     curlockbboxdata = [];
     
     if (obj_player.state != states.noclip)
@@ -148,12 +148,12 @@ with (obj_drawcontroller)
             }
             else
             {
-                other.curlock = -4;
+                other.curlock = noone;
                 other.curlockbboxdata = [];
             }
         }
         
-        if (curlock != -4)
+        if (curlock != noone)
         {
             var _lock = lock_cam(camX, camY, curlock, curlockbboxdata);
             camX = _lock[0];

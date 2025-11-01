@@ -41,8 +41,8 @@
   "optionsFile": null,
   "packageId": "",
   "parent": {
-    "name": "Extensions",
-    "path": "folders/Extensions.yy",
+    "name": "GMLive_TEMP",
+    "path": "folders/Extensions/GMLive_TEMP.yy",
   },
   "productId": "",
   "sourcedir": "",

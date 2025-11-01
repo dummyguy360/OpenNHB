@@ -1,31 +1,24 @@
-function input_source_clear(arg0 = 0)
+// Feather disable all
+/// @desc    Unassigns all sources for the player
+/// @param   [playerIndex=0]
+
+function input_source_clear(_player_index = 0)
 {
-    static _global = __input_global();
+    __INPUT_GLOBAL_STATIC_LOCAL  //Set static _global
     
-    if (arg0 == -3)
+    if (_player_index == all)
     {
         var _i = 0;
-        
-        repeat (1)
+        repeat(INPUT_MAX_PLAYERS)
         {
             _global.__players[_i].__sources_clear();
-            _i++;
+            ++_i;
         }
         
-        exit;
+        return;
     }
     
-    if (arg0 < 0)
-    {
-        __input_error("Invalid player index provided (", arg0, ")");
-        return undefined;
-    }
+    __INPUT_VERIFY_PLAYER_INDEX
     
-    if (arg0 >= 1)
-    {
-        __input_error("Player index too large (", arg0, " must be less than ", 1, ")\nIncrease INPUT_MAX_PLAYERS to support more players");
-        return undefined;
-    }
-    
-    _global.__players[arg0].__sources_clear();
+    _global.__players[_player_index].__sources_clear();
 }

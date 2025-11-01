@@ -5,7 +5,7 @@
   "isCompatibility": false,
   "isDnD": false,
   "parent": {
-    "name": "Input_TEMP",
-    "path": "folders/Scripts/Input_TEMP.yy",
+    "name": "17  Source Modes",
+    "path": "folders/Scripts/Input/17  Source Modes.yy",
   },
 }

@@ -1,140 +1,155 @@
+/// @param name
+/// @param line
+
 function DotobjClassGroup() constructor
 {
+    //Groups collect together meshes. Most groups will only have a single mesh!
+    //The DOTOBJ_OBJECTS_ARE_GROUPS macro allows for objects to be read as groups.
+    
+    line         = 0;
+    name         = undefined;
+    meshes_array = [];
+    
     static Submit = function()
     {
+        //Call the Submit() method for meshes
         var _m = 0;
-        
-        repeat (array_length(meshes_array))
+        repeat(array_length(meshes_array))
         {
             meshes_array[_m].Submit();
-            _m++;
+            ++_m;
         }
         
         return self;
-    };
+    }
     
     static Freeze = function()
     {
+        //Call the Freeze() method for meshes
         var _m = 0;
-        
-        repeat (array_length(meshes_array))
+        repeat(array_length(meshes_array))
         {
-            meshes_array[_m].Freeze();
-            _m++;
+             meshes_array[_m].Freeze();
+            ++_m;
         }
         
         return self;
-    };
+    }
     
     static Duplicate = function()
     {
         var _new_group = new DotobjClassGroup();
-        
-        with (_new_group)
+        with(_new_group)
         {
             name = other.name;
             line = other.line;
         }
         
         var _i = 0;
-        
-        repeat (array_length(meshes_array))
+        repeat(array_length(meshes_array))
         {
             meshes_array[_i].Duplicate().AddTo(_new_group);
-            _i++;
+            ++_i;
         }
         
         return _new_group;
-    };
+    }
     
-    static Serialize = function(arg0)
+    static Serialize = function(_buffer)
     {
-        buffer_write(arg0, buffer_string, name);
-        buffer_write(arg0, buffer_u32, line);
-        var _size = array_length(meshes_array);
-        buffer_write(arg0, buffer_u16, _size);
-        var _i = 0;
+        buffer_write(_buffer, buffer_string, name);
+        buffer_write(_buffer, buffer_u32,    line);
         
-        repeat (_size)
+        var _size = array_length(meshes_array);
+        buffer_write(_buffer, buffer_u16, _size);
+        var _i = 0;
+        repeat(_size)
         {
-            meshes_array[_i].Serialize(arg0);
-            _i++;
+            meshes_array[_i].Serialize(_buffer);
+            ++_i;
         }
         
         return self;
-    };
+    }
     
-    static Deserialize = function(arg0)
+    static Deserialize = function(_buffer)
     {
-        name = buffer_read(arg0, buffer_string);
-        line = buffer_read(arg0, buffer_u32);
+        name = buffer_read(_buffer, buffer_string);
+        line = buffer_read(_buffer, buffer_u32);
         
-        repeat (buffer_read(arg0, buffer_u16))
+        repeat(buffer_read(_buffer, buffer_u16))
         {
-            with (new DotobjClassMesh())
+            with(new DotobjClassMesh())
             {
-                Deserialize(arg0);
+                Deserialize(_buffer);
                 AddTo(other);
             }
         }
         
         return self;
-    };
+    }
     
     static Destroy = function()
     {
         var _m = 0;
-        
-        repeat (array_length(meshes_array))
+        repeat(array_length(meshes_array))
         {
             meshes_array[_m].Destroy();
-            _m++;
+            ++_m;
         }
         
         meshes_array = [];
+        
         return undefined;
-    };
+    }
     
-    static AddTo = function(arg0)
+    static AddTo = function(_model)
     {
-        variable_struct_set(arg0.groups_struct, name, self);
-        array_push(arg0.groups_array, self);
+        _model.groups_struct[$ name] = self;
+        array_push(_model.groups_array, self);
+        
         return self;
-    };
+    }
     
-    static SetMaterialForMeshes = function(arg0, arg1)
+    static SetMaterialForMeshes = function(_library_name, _material_name)
     {
         var _i = 0;
-        
-        repeat (array_length(meshes_array))
+        repeat(array_length(meshes_array))
         {
-            meshes_array[_i].SetMaterial(arg0, arg1);
-            _i++;
+            meshes_array[_i].SetMaterial(_library_name, _material_name);
+            ++_i;
         }
         
         return self;
-    };
-    
-    line = 0;
-    name = undefined;
-    meshes_array = [];
+    }
 }
 
-function __DotobjEnsureGroup(arg0, arg1, arg2)
+
+
+
+
+/// @param model
+/// @param name
+/// @param line
+
+function __DotobjEnsureGroup(_model, _name, _line)
 {
-    if (variable_struct_exists(arg0.groups_struct, arg1))
+    if (variable_struct_exists(_model.groups_struct, _name))
     {
-        return variable_struct_get(arg0.groups_struct, arg1);
+        if (DOTOBJ_OUTPUT_WARNINGS) show_debug_message("__DotobjEnsureGroup(): Warning! Group \"" + string(_name) + "\" has the same name as another group. (ln=" + string(_line) + ")");
+        return _model.groups_struct[$ _name];
     }
     else
     {
         var _group = new DotobjClassGroup();
-        
-        with (_group)
+        with(_group)
         {
-            name = arg1;
-            line = arg2;
-            AddTo(arg0);
+            name = _name;
+            line = _line;
+            
+            if (DOTOBJ_OUTPUT_DEBUG) show_debug_message("DotobjClassGroup(): Created group \"" + string(name) + "\"");
+            
+            AddTo(_model);
         }
         
         return _group;

@@ -1,7 +1,12 @@
-function __input_steam_type_set(arg0, arg1, arg2)
+// Feather disable all
+/// @param steamType
+/// @param simpleType
+/// @param description
+
+function __input_steam_type_set(_steam_type, _simple_type, _description)
 {
-    static _global = __input_global();
+    __INPUT_GLOBAL_STATIC_LOCAL  //Set static _global
     
-    variable_struct_set(_global.__steam_type_to_raw, string(arg0), arg1);
-    variable_struct_set(_global.__steam_type_to_name, string(arg0), arg2);
+    _global.__steam_type_to_raw[$  string(_steam_type)] = _simple_type;   
+    _global.__steam_type_to_name[$ string(_steam_type)] = _description; 
 }

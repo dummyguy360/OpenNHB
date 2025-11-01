@@ -14,7 +14,14 @@ function player_voice_hurt()
         scr_fmod_soundeffect(voicehurt, x, y);
 }
 
-function scr_hurtplayer(arg0 = 1, arg1 = UnknownEnum.Value_0, arg2 = false, arg3 = 1)
+enum playerdeath
+{
+	normal,
+	gibdeath,
+	firedeath
+}
+
+function scr_hurtplayer(arg0 = 1, arg1 = playerdeath.normal, arg2 = false, arg3 = 1)
 {
     with (obj_player)
     {
@@ -69,7 +76,7 @@ function scr_hurtplayer(arg0 = 1, arg1 = UnknownEnum.Value_0, arg2 = false, arg3
                 
                 switch (arg1)
                 {
-                    case UnknownEnum.Value_2:
+                    case playerdeath.firedeath:
                         scr_fmod_soundeffectONESHOT("event:/sfx/player/firedeath", x, y);
                         state = states.dead;
                         sprite_index = spr_player_firedeath;
@@ -78,7 +85,7 @@ function scr_hurtplayer(arg0 = 1, arg1 = UnknownEnum.Value_0, arg2 = false, arg3
                         gamepadvibrate(0.4, 0, 35);
                         break;
                     
-                    case UnknownEnum.Value_0:
+                    case playerdeath.normal:
                         state = states.dead;
                         sprite_index = spr_player_dead;
                         image_index = 0;
@@ -87,7 +94,7 @@ function scr_hurtplayer(arg0 = 1, arg1 = UnknownEnum.Value_0, arg2 = false, arg3
                         gamepadvibrate(0.2, 0, 20);
                         break;
                     
-                    case UnknownEnum.Value_1:
+                    case playerdeath.gibdeath:
                         state = states.dead;
                         sprite_index = spr_player_nothing;
                         image_index = 0;

@@ -5,7 +5,7 @@
   "isCompatibility": false,
   "isDnD": false,
   "parent": {
-    "name": "Input_TEMP",
-    "path": "folders/Scripts/Input_TEMP.yy",
+    "name": "02  2D Checkers",
+    "path": "folders/Scripts/Input/02  2D Checkers.yy",
   },
 }

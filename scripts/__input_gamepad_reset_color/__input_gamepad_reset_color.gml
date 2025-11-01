@@ -1,10 +1,12 @@
-function __input_gamepad_reset_color(arg0)
-{
-    static _global = __input_global();
+// Feather disable all
+function __input_gamepad_reset_color(_gamepad_index)
+{ 
+    __INPUT_GLOBAL_STATIC_LOCAL
     
-    if (arg0 < 0)
-        exit;
+    if (_gamepad_index < 0) return;
     
-    with (_global.__gamepads[arg0])
+    with(_global.__gamepads[_gamepad_index])
+    {
         __color_set(undefined);
+    }
 }

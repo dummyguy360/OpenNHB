@@ -1,21 +1,13 @@
-function input_player_get_invalid_gamepad_bindings(arg0 = 0, arg1 = undefined)
+// Feather disable all
+/// @desc    Returns an array of structs, gamepad bindings that are invalid due to the gamepad lacking certain mapped inputs
+/// @param   [playerIndex=0]
+/// @param   [profileName]
+
+function input_player_get_invalid_gamepad_bindings(_player_index = 0, _profile_name = undefined)
 {
-    static _global = __input_global();
+    __INPUT_GLOBAL_STATIC_LOCAL  //Set static _global
+    __INPUT_VERIFY_PLAYER_INDEX
+    __INPUT_VERIFY_PROFILE_NAME
     
-    if (arg0 < 0)
-    {
-        __input_error("Invalid player index provided (", arg0, ")");
-        return undefined;
-    }
-    
-    if (arg0 >= 1)
-    {
-        __input_error("Player index too large (", arg0, " must be less than ", 1, ")\nIncrease INPUT_MAX_PLAYERS to support more players");
-        return undefined;
-    }
-    
-    if (!input_profile_exists(arg1, arg0))
-        __input_error("Profile name \"", arg1, "\" doesn't exist");
-    
-    return _global.__players[arg0].__get_invalid_gamepad_bindings(arg1);
+    return _global.__players[_player_index].__get_invalid_gamepad_bindings(_profile_name);
 }

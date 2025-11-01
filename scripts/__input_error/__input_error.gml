@@ -1,13 +1,20 @@
+// Feather disable all
 function __input_error()
 {
     var _string = "";
     var _i = 0;
-    
-    repeat (argument_count)
+    repeat(argument_count)
     {
         _string += string(argument[_i]);
-        _i++;
+        ++_i;
     }
     
-    show_error("Input 8.0.3:\n" + _string + "\n ", false);
+    if (os_browser == browser_not_a_browser)
+    {
+        show_error("Input " + __INPUT_VERSION + ":\n" + _string + "\n ", false);
+    }
+    else
+    {
+        show_error("Input " + __INPUT_VERSION + ":\n" + _string + "\n" + string(debug_get_callstack()), false);
+    }
 }

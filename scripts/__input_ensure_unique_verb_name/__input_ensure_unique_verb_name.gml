@@ -1,16 +1,17 @@
-function __input_ensure_unique_verb_name(arg0)
+// Feather disable all
+function __input_ensure_unique_verb_name(_name)
 {
-    static _global = __input_global();
+    __INPUT_GLOBAL_STATIC_LOCAL  //Set static _global
     
-    if (variable_struct_exists(_global.__basic_verb_dict, arg0))
+    if (variable_struct_exists(_global.__basic_verb_dict, _name))
     {
-        __input_error("A basic verb named \"", arg0, "\" already exists");
-        exit;
+        __input_error("A basic verb named \"", _name, "\" already exists");
+        return;
     }
     
-    if (variable_struct_exists(_global.__chord_verb_dict, arg0))
+    if (variable_struct_exists(_global.__chord_verb_dict, _name))
     {
-        __input_error("A chord named \"", arg0, "\" already exists");
-        exit;
+        __input_error("A chord named \"", _name, "\" already exists");
+        return;
     }
 }

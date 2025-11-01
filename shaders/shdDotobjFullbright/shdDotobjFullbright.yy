@@ -3,8 +3,8 @@
   "resourceVersion": "1.0",
   "name": "shdDotobjFullbright",
   "parent": {
-    "name": "Shaders",
-    "path": "folders/Shaders.yy",
+    "name": "dotobj",
+    "path": "folders/Scripts/dotobj.yy",
   },
   "type": 1,
 }

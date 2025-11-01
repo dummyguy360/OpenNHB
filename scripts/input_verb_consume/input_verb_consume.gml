@@ -1,69 +1,72 @@
-function input_verb_consume(arg0, arg1 = 0)
+// Feather disable all
+/// @desc    Deactivates a verb until the button (or other physical input) is released and pressed again
+///          If an array of verbs is given then this function will consume all verbs in the array
+///          If the keyword <all> is used then all exant verbs are consumed
+/// @param   {any} verb/array
+/// @param   [playerIndex]
+
+function input_verb_consume(_verb, _player_index = 0)
 {
-    static _global = __input_global();
+    __INPUT_GLOBAL_STATIC_LOCAL  //Set static _global
     
-    if (arg1 == -3)
+    if (_player_index == all)
     {
         var _i = 0;
-        
-        repeat (1)
+        repeat(INPUT_MAX_PLAYERS)
         {
-            input_verb_consume(arg0, _i);
-            _i++;
+            input_verb_consume(_verb, _i);
+            ++_i;
         }
         
-        exit;
+        return;
     }
     
-    if (arg1 < 0)
+    if (_player_index < 0)
     {
-        __input_error("Invalid player index provided (", arg1, ")");
+        __input_error("Invalid player index provided (", _player_index, ")");
         return undefined;
     }
     
-    if (arg1 >= 1)
+    if (_player_index >= INPUT_MAX_PLAYERS)
     {
-        __input_error("Player index too large (", arg1, " must be less than ", 1, ")\nIncrease INPUT_MAX_PLAYERS to support more players");
+        __input_error("Player index too large (", _player_index, " must be less than ", INPUT_MAX_PLAYERS, ")\nIncrease INPUT_MAX_PLAYERS to support more players");
         return undefined;
     }
     
-    if (arg0 == -3)
+    if (_verb == all)
     {
-        var _verb_names = variable_struct_get_names(_global.__players[arg1].__verb_state_dict);
+        var _verb_names = variable_struct_get_names(_global.__players[_player_index].__verb_state_dict);
         var _v = 0;
-        
-        repeat (array_length(_verb_names))
+        repeat(array_length(_verb_names))
         {
-            input_verb_consume(_verb_names[_v], arg1);
-            _v++;
+            input_verb_consume(_verb_names[_v], _player_index);
+            ++_v;
         }
     }
-    else if (is_array(arg0))
+    else if (is_array(_verb))
     {
         var _v = 0;
-        
-        repeat (array_length(arg0))
+        repeat(array_length(_verb))
         {
-            input_verb_consume(arg0[_v], arg1);
-            _v++;
+            input_verb_consume(_verb[_v], _player_index);
+            ++_v;
         }
     }
     else
     {
-        var _verb_struct = variable_struct_get(_global.__players[arg1].__verb_state_dict, arg0);
-        
+        var _verb_struct = _global.__players[_player_index].__verb_state_dict[$ _verb];
         if (!is_struct(_verb_struct))
         {
-            __input_error("Verb not recognised (", arg0, ")");
+            __input_error("Verb not recognised (", _verb, ")");
             return undefined;
         }
         
-        with (_verb_struct)
+        with(_verb_struct)
         {
-            __consumed = true;
-            __previous_held = true;
-            __inactive = true;
-            __toggle_state = false;
+            __consumed       = true;
+            __previous_held  = true; //Force the held state on to avoid unwanted early reset of a __consumed verb
+            __inactive       = true;
+            __toggle_state   = false; //Used for "toggle momentary" accessibility feature
         }
     }
 }

@@ -1,24 +1,18 @@
-function input_color_set(arg0, arg1 = 0)
+// Feather disable all
+/// @desc    Sets the player device color
+/// @param   color
+/// @param   [playerIndex=0]
+
+function input_color_set(_color, _player_index = 0)
 {
-    static _global = __input_global();
+    __INPUT_GLOBAL_STATIC_LOCAL  //Set static _global
+    __INPUT_VERIFY_PLAYER_INDEX
     
-    if (arg1 < 0)
+    if (!is_numeric(_color) || (_color < c_black) || (_color > c_white))
     {
-        __input_error("Invalid player index provided (", arg1, ")");
-        return undefined;
+        __input_error("Invalid color value ", _color);
+        return;
     }
     
-    if (arg1 >= 1)
-    {
-        __input_error("Player index too large (", arg1, " must be less than ", 1, ")\nIncrease INPUT_MAX_PLAYERS to support more players");
-        return undefined;
-    }
-    
-    if (!is_numeric(arg0) || arg0 < 0 || arg0 > 16777215)
-    {
-        __input_error("Invalid color value ", arg0);
-        exit;
-    }
-    
-    _global.__players[arg1].__color_set(arg0);
+    _global.__players[_player_index].__color_set(_color);
 }

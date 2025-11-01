@@ -1,18 +1,14 @@
-function input_source_using(arg0, arg1 = 0)
+// Feather disable all
+/// @desc    Returns if the player is using the given source. If INPUT_GAMEPAD is used without
+///          specifying a particular gamepad then this function will return <true> if any gamepad
+///          is being used by the player
+/// @param   source
+/// @param   [playerIndex=0]
+
+function input_source_using(_source, _player_index = 0)
 {
-    static _global = __input_global();
+    __INPUT_GLOBAL_STATIC_LOCAL  //Set static _global
+    __INPUT_VERIFY_PLAYER_INDEX
     
-    if (arg1 < 0)
-    {
-        __input_error("Invalid player index provided (", arg1, ")");
-        return undefined;
-    }
-    
-    if (arg1 >= 1)
-    {
-        __input_error("Player index too large (", arg1, " must be less than ", 1, ")\nIncrease INPUT_MAX_PLAYERS to support more players");
-        return undefined;
-    }
-    
-    return _global.__players[arg1].__source_contains(arg0);
+    return _global.__players[_player_index].__source_contains(_source);
 }

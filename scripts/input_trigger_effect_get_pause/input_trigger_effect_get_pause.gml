@@ -1,18 +1,11 @@
-function input_trigger_effect_get_pause(arg0 = 0)
+// Feather disable all
+/// @desc    Gets pause state for gamepad trigger effects for a player
+/// @param   [playerIndex=0]
+
+function input_trigger_effect_get_pause(_player_index = 0)
 {
-    static _global = __input_global();
+    __INPUT_GLOBAL_STATIC_LOCAL  //Set static _global
+    __INPUT_VERIFY_PLAYER_INDEX    
     
-    if (arg0 < 0)
-    {
-        __input_error("Invalid player index provided (", arg0, ")");
-        return undefined;
-    }
-    
-    if (arg0 >= 1)
-    {
-        __input_error("Player index too large (", arg0, " must be less than ", 1, ")\nIncrease INPUT_MAX_PLAYERS to support more players");
-        return undefined;
-    }
-    
-    return _global.__players[arg0].__trigger_effect_paused;
+    return _global.__players[_player_index].__trigger_effect_paused;
 }

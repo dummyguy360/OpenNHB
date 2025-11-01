@@ -5,7 +5,7 @@
   "isCompatibility": false,
   "isDnD": false,
   "parent": {
-    "name": "DotObj_TEMP",
-    "path": "folders/Scripts/DotObj_TEMP.yy",
+    "name": "Settings",
+    "path": "folders/Scripts/dotobj/Settings.yy",
   },
 }

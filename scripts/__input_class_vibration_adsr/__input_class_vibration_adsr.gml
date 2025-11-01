@@ -1,64 +1,69 @@
-function __input_class_vibration_adsr(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7) constructor
+// Feather disable all
+function __input_class_vibration_adsr(_peak_strength, _sustain_level, _pan, _attack, _decay, _sustain, _release, _force) constructor
 {
-    static __tick = function(arg0)
+    __force = _force;
+    
+    __output_left  = 0;
+    __output_right = 0;
+    
+    __strength_left  = _peak_strength*clamp(1 - _pan, 0, 1);
+    __strength_right = _peak_strength*clamp(1 + _pan, 0, 1);
+    __sustain_level  = _sustain_level;
+    __pan            = _pan;
+    
+    __attack  = _attack;
+    __decay   = _decay;
+    __sustain = _sustain;
+    __release = _release;
+    
+    __phase         = 0;
+    __time_in_phase = 0;
+    
+    static __tick = function(_time_step)
     {
-        __time_in_phase += arg0;
-        var _min = 0;
-        var _max = 0;
-        var _phase_time = infinity;
+        __time_in_phase += _time_step;
         
-        switch (__phase)
+        var _min        = 0;
+        var _max        = 0;
+        var _phase_time = infinity;
+        switch(__phase)
         {
-            case 0:
-                _min = 0;
-                _max = 1;
+            case 0: //Attack
+                _min        = 0;
+                _max        = 1;
                 _phase_time = __attack;
-                break;
+            break;
             
-            case 1:
-                _min = 1;
-                _max = __sustain_level;
+            case 1: //Decay
+                _min        = 1;
+                _max        = __sustain_level;
                 _phase_time = __decay;
-                break;
+            break;
             
-            case 2:
-                _min = __sustain_level;
-                _max = __sustain_level;
+            case 2: //Sustain
+                _min        = __sustain_level;
+                _max        = __sustain_level;
                 _phase_time = __sustain;
-                break;
+            break;
             
-            case 3:
-                _min = __sustain_level;
-                _max = 0;
+            case 3: //Release
+                _min        = __sustain_level;
+                _max        = 0;
                 _phase_time = __release;
-                break;
+            break;
         }
         
         var _output = lerp(_min, _max, clamp(__time_in_phase / _phase_time, 0, 1));
-        __output_left = _output * __strength_left;
-        __output_right = _output * __strength_right;
-        __time_in_phase += arg0;
+        __output_left  = _output*__strength_left;
+        __output_right = _output*__strength_right;
         
+        __time_in_phase += _time_step;
         if (__time_in_phase > _phase_time)
         {
             __time_in_phase -= _phase_time;
-            __phase++;
+            ++__phase;
         }
         
-        return __phase <= 3;
-    };
-    
-    __force = arg7;
-    __output_left = 0;
-    __output_right = 0;
-    __strength_left = arg0 * clamp(1 - arg2, 0, 1);
-    __strength_right = arg0 * clamp(1 + arg2, 0, 1);
-    __sustain_level = arg1;
-    __pan = arg2;
-    __attack = arg3;
-    __decay = arg4;
-    __sustain = arg5;
-    __release = arg6;
-    __phase = 0;
-    __time_in_phase = 0;
+        return (__phase <= 3);
+    }
 }

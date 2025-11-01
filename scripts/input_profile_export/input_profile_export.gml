@@ -1,18 +1,14 @@
-function input_profile_export(arg0, arg1 = 0, arg2 = true, arg3 = false)
+// Feather disable all
+/// @desc    Outputs a string or struct containing the bindings and axis thresholds for the given profile
+/// @param   profileName
+/// @param   [playerIndex=0]
+/// @param   [outputString=true]
+/// @param   [prettify=false]
+
+function input_profile_export(_profile_name, _player_index = 0, _output_string = true, _prettify = false)
 {
-    static _global = __input_global();
+    __INPUT_GLOBAL_STATIC_LOCAL  //Set static _global
+    __INPUT_VERIFY_PLAYER_INDEX
     
-    if (arg1 < 0)
-    {
-        __input_error("Invalid player index provided (", arg1, ")");
-        return undefined;
-    }
-    
-    if (arg1 >= 1)
-    {
-        __input_error("Player index too large (", arg1, " must be less than ", 1, ")\nIncrease INPUT_MAX_PLAYERS to support more players");
-        return undefined;
-    }
-    
-    return _global.__players[arg1].__profile_export(arg0, arg2, arg3);
+    return _global.__players[_player_index].__profile_export(_profile_name, _output_string, _prettify);
 }

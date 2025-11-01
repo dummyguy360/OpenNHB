@@ -1,14 +1,17 @@
-function __input_class_vibration_constant(arg0, arg1, arg2, arg3) constructor
+// Feather disable all
+function __input_class_vibration_constant(_strength, _pan, _duration, _force) constructor
 {
-    static __tick = function(arg0)
-    {
-        __time += arg0;
-        return __time < __duration;
-    };
+    __force = _force;
     
-    __force = arg3;
-    __output_left = arg0 * clamp(1 - arg1, 0, 1);
-    __output_right = arg0 * clamp(1 + arg1, 0, 1);
-    __time = 0;
-    __duration = arg2;
+    __output_left  = _strength*clamp(1 - _pan, 0, 1);
+    __output_right = _strength*clamp(1 + _pan, 0, 1);
+    
+    __time     = 0;
+    __duration = _duration;
+    
+    static __tick = function(_time_step)
+    {
+        __time += _time_step;
+        return (__time < __duration);
+    }
 }

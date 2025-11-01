@@ -5,7 +5,7 @@
   "isCompatibility": false,
   "isDnD": false,
   "parent": {
-    "name": "Input_TEMP",
-    "path": "folders/Scripts/Input_TEMP.yy",
+    "name": "21  Gyro & Motion",
+    "path": "folders/Scripts/Input/21  Gyro & Motion.yy",
   },
 }

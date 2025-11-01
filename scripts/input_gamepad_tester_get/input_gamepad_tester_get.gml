@@ -1,6 +1,10 @@
+//Feather disable all
+
+/// Returns whether the gamepad tester debug view is open
+
 function input_gamepad_tester_get()
 {
-    static _global = __input_global();
+    __INPUT_GLOBAL_STATIC_LOCAL
     
-    return _global.__allow_gamepad_tester && _global.__gamepad_tester_data.__enabled;
+    return (_global.__allow_gamepad_tester && _global.__gamepad_tester_data.__enabled);
 }

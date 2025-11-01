@@ -1,6 +1,9 @@
-function __input_key_name_set(arg0, arg1)
+// Feather disable all
+/// @param key
+/// @param name
+
+function __input_key_name_set(_key, _name)
 {
-    static _global = __input_global();
-    
-    variable_struct_set(_global.__key_name_dict, string(arg0), string(arg1));
+    __INPUT_GLOBAL_STATIC_LOCAL  //Set static _global
+    _global.__key_name_dict[$ string(_key)] = string(_name);
 }

@@ -1,37 +1,39 @@
-function input_player_get_gamepad(arg0 = 0, arg1 = undefined)
+// Feather disable all
+/// @desc    Returns the gamepad index for the first gamepad assigned to the player. If the player
+///          has no assigned gamepad, this function returns <undefined>
+/// @param   [playerIndex=0]
+/// @param   [binding]
+
+function input_player_get_gamepad(_player_index = 0, _binding = undefined)
 {
-    static _global = __input_global();
+    __INPUT_GLOBAL_STATIC_LOCAL  //Set static _global
+    __INPUT_VERIFY_PLAYER_INDEX
     
-    if (arg0 < 0)
+    //If we're not in multidevice mode then ignore the binding argument
+    if (_global.__source_mode == INPUT_SOURCE_MODE.MULTIDEVICE)
     {
-        __input_error("Invalid player index provided (", arg0, ")");
-        return undefined;
+        _binding = undefined;
     }
     
-    if (arg0 >= 1)
+    if (_binding != undefined)
     {
-        __input_error("Player index too large (", arg0, " must be less than ", 1, ")\nIncrease INPUT_MAX_PLAYERS to support more players");
-        return undefined;
-    }
-    
-    if (_global.__source_mode == UnknownEnum.Value_4)
-        arg1 = undefined;
-    
-    if (arg1 != undefined)
-    {
-        if (!input_value_is_binding(arg1))
+        if (!input_value_is_binding(_binding))
         {
-            __input_error("Parameter is not a binding (typeof=", typeof(arg1), ")");
-            exit;
+            __input_error("Parameter is not a binding (typeof=", typeof(_binding), ")");
+            return;
         }
         
-        var _gamepad_index = arg1.__gamepad_get();
-        
+        var _gamepad_index = _binding.__gamepad_get();
         if (_gamepad_index == undefined)
-            arg1 = undefined;
+        {
+            //Generic binding, return the player's gamepad
+            _binding = undefined;
+        }
         else
+        {
             return _gamepad_index;
+        }
     }
     
-    return _global.__players[arg0].__source_get_gamepad();
+    return _global.__players[_player_index].__source_get_gamepad();
 }

@@ -1,18 +1,12 @@
-function input_trigger_effect_off(arg0, arg1 = 0)
+// Feather disable all
+/// @desc    Sets gamepad trigger effect off for a player
+/// @param   trigger
+/// @param   [playerIndex=0]
+
+function input_trigger_effect_off(_trigger, _player_index = 0)
 {
-    static _global = __input_global();
-    
-    if (arg1 < 0)
-    {
-        __input_error("Invalid player index provided (", arg1, ")");
-        return undefined;
-    }
-    
-    if (arg1 >= 1)
-    {
-        __input_error("Player index too large (", arg1, " must be less than ", 1, ")\nIncrease INPUT_MAX_PLAYERS to support more players");
-        return undefined;
-    }
-    
-    _global.__players[arg1].__trigger_effect_set(arg0, new __input_class_trigger_effect_off(), true);
+    __INPUT_GLOBAL_STATIC_LOCAL  //Set static _global
+    __INPUT_VERIFY_PLAYER_INDEX
+
+    _global.__players[_player_index].__trigger_effect_set(_trigger, new __input_class_trigger_effect_off(), true);
 }

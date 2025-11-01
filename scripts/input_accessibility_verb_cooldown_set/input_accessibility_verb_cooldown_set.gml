@@ -1,28 +1,32 @@
-function input_accessibility_verb_cooldown_set(arg0, arg1)
+// Feather disable all
+/// @desc    Sets whether cooldown behaviour is enabled for a verb
+/// @param   verb
+/// @param   state
+
+function input_accessibility_verb_cooldown_set(_verb_name, _state)
 {
-    static _global = __input_global();
+    __INPUT_GLOBAL_STATIC_LOCAL  //Set static _global
     
-    if (is_array(arg0))
+    if (is_array(_verb_name))
     {
         var _i = 0;
-        
-        repeat (array_length(arg0))
+        repeat(array_length(_verb_name))
         {
-            input_accessibility_verb_cooldown_set(arg0[_i], arg1);
-            _i++;
+            input_accessibility_verb_cooldown_set(_verb_name[_i], _state);
+            ++_i;
         }
         
-        exit;
+        return;
     }
     
-    if (variable_struct_exists(_global.__chord_verb_dict, arg0))
-        __input_error("\"", arg0, "\" is a chord verb. Verbs passed to this function must be basic verb");
+    __INPUT_VERIFY_BASIC_VERB_NAME
     
-    if (!variable_struct_exists(_global.__basic_verb_dict, arg0))
-        __input_error("Verb \"", arg0, "\" not recognised");
-    
-    if (arg1)
-        variable_struct_set(_global.__cooldown_dict, arg0, true);
+    if (_state)
+    {
+        _global.__cooldown_dict[$ _verb_name] = true;
+    }
     else
-        variable_struct_remove(_global.__cooldown_dict, arg0);
+    {
+        variable_struct_remove(_global.__cooldown_dict, _verb_name);
+    }
 }

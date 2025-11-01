@@ -1,6 +1,7 @@
-function __input_class_chord_definition(arg0, arg1, arg2) constructor
+// Feather disable all
+function __input_class_chord_definition(_name, _max_time_between_presses, _verb_array) constructor
 {
-    __name = arg0;
-    __max_time_between_presses = arg1;
-    __verb_array = arg2;
+    __name                     = _name;
+    __max_time_between_presses = _max_time_between_presses;
+    __verb_array               = _verb_array;
 }

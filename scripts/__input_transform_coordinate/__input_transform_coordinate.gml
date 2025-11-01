@@ -1,61 +1,78 @@
+// Feather disable all
+/// @param x
+/// @param y
+/// @param inputSystem
+/// @param outputSystem
+/// @param [camera]
+
+//Precache the app surface draw parameters
 __input_transform_coordinate(0, 0, 2, 2, undefined);
 
-function __input_transform_coordinate(arg0, arg1, arg2, arg3, arg4 = undefined)
+function __input_transform_coordinate(_x, _y, _input_system, _output_system, _camera = undefined)
 {
-    static _result = 
-    {
+    static _result = {
         x: 0,
-        y: 0
+        y: 0,
     };
-    static _windowW = undefined;
-    static _windowH = undefined;
-    static _appSurfW = undefined;
-    static _appSurfH = undefined;
+    
+    //Build out lots of cached values
+    //We use these to detect changes that might trigger a recalculation of application_get_position()
+    //Doing all this work is faster than calling application_get_position() all the time
+    static _windowW      = undefined;
+    static _windowH      = undefined;
+    static _appSurfW     = undefined;
+    static _appSurfH     = undefined;
     static _appSurfDrawL = undefined;
     static _appSurfDrawT = undefined;
     static _appSurfDrawW = undefined;
     static _appSurfDrawH = undefined;
-    static _recacheTime = -infinity;
+    static _recacheTime  = -infinity;
     
-    if (arg2 != arg3)
+    if (_input_system != _output_system) //Only do MATHS if the output system is different
     {
-        var _viewA, _viewX, _viewW, _viewY, _viewH;
-        
-        if (arg2 == 0 || arg3 == 0)
+        //Unpack the camera's properties if we're working in room-space at any point
+        if ((_input_system == 0) || (_output_system == 0))
         {
-            if (arg4 == undefined && view_enabled && view_visible[0])
-                arg4 = view_camera[0];
+            //If we have no defined camera then try to use view 0's camera
+            if ((_camera == undefined) && view_enabled && view_visible[0]) _camera = view_camera[0];
             
-            if (arg4 != undefined)
+            if (_camera != undefined)
             {
-                _viewX = camera_get_view_x(arg4);
-                _viewY = camera_get_view_y(arg4);
-                _viewW = camera_get_view_width(arg4);
-                _viewH = camera_get_view_height(arg4);
-                _viewA = camera_get_view_angle(arg4);
+                var _viewX = camera_get_view_x(     _camera);
+                var _viewY = camera_get_view_y(     _camera);
+                var _viewW = camera_get_view_width( _camera);
+                var _viewH = camera_get_view_height(_camera);
+                var _viewA = camera_get_view_angle( _camera);
             }
             else
             {
-                _viewX = 0;
-                _viewY = 0;
-                _viewW = room_width;
-                _viewH = room_height;
-                _viewA = 0;
+                //Fall back on the room's dimensions
+                var _viewX = 0;
+                var _viewY = 0;
+                var _viewW = room_width;
+                var _viewH = room_height;
+                var _viewA = 0;
             }
         }
         
-        if (arg2 == 2 || arg3 == 2)
+        //Only update the cached app surface draw parameters if we're going to need them
+        if ((_input_system == 2) || (_output_system == 2))
         {
-            if (_appSurfW != surface_get_width(application_surface) || _appSurfH != surface_get_height(application_surface))
+            //Detect changes in application surface size
+            if ((_appSurfW != surface_get_width(application_surface))
+            ||  (_appSurfH != surface_get_height(application_surface)))
             {
                 _appSurfW = surface_get_width(application_surface);
                 _appSurfH = surface_get_height(application_surface);
+            
+                //Recache application surface position immediately in this situation
                 _recacheTime = -infinity;
             }
             
             if (current_time > _recacheTime)
             {
                 _recacheTime = infinity;
+                
                 var _array = application_get_position();
                 _appSurfDrawL = _array[0];
                 _appSurfDrawT = _array[1];
@@ -63,123 +80,145 @@ function __input_transform_coordinate(arg0, arg1, arg2, arg3, arg4 = undefined)
                 _appSurfDrawH = _array[3] - _appSurfDrawT;
             }
             
-            if (_windowW != window_get_width() || _windowH != window_get_height())
+            //Detect changes in window size
+            if ((_windowW != window_get_width())
+            ||  (_windowH != window_get_height()))
             {
                 _windowW = window_get_width();
                 _windowH = window_get_height();
+                
+                //Recache application surface position after 200ms to give GM time to do whatever it does
                 _recacheTime = current_time + 200;
             }
         }
         
-        if (arg2 == 0)
+        if (_input_system == 0) //Input coordinate system is room-space
         {
-            if (_viewA == 0)
+            if (_viewA == 0) //Skip expensive rotation step if we can
             {
-                arg0 = (arg0 - _viewX) / _viewW;
-                arg1 = (arg1 - _viewY) / _viewH;
+                //Reduce x/y to normalised values in the viewport
+                _x = (_x - _viewX) / _viewW;
+                _y = (_y - _viewY) / _viewH;
             }
             else
             {
-                _viewX += (_viewW / 2);
-                _viewY += (_viewH / 2);
+                //Perform a rotation, eventually ending up with normalised values as above
+                _viewX += _viewW/2;
+                _viewY += _viewH/2;
+                
                 var _sin = dsin(-_viewA);
                 var _cos = dcos(-_viewA);
-                var _x0 = arg0 - _viewX;
-                var _y0 = arg1 - _viewY;
-                arg0 = (((_x0 * _cos) - (_y0 * _sin)) + (_viewW / 2)) / _viewW;
-                arg1 = ((_x0 * _sin) + (_y0 * _cos) + (_viewH / 2)) / _viewH;
+                
+                var _x0 = _x - _viewX;
+                var _y0 = _y - _viewY;
+                _x = ((_x0*_cos - _y0*_sin) + _viewW/2) / _viewW;
+                _y = ((_x0*_sin + _y0*_cos) + _viewH/2) / _viewH;
             }
             
-            if (arg3 == 1)
+            if (_output_system == 1)
             {
-                arg0 *= display_get_gui_width();
-                arg1 *= display_get_gui_height();
+                //If we're outputting to GUI-space then simply multiply up by the GUI size
+                _x *= display_get_gui_width();
+                _y *= display_get_gui_height();
             }
-            else if (arg3 == 2)
+            else if (_output_system == 2)
             {
-                arg0 = (_appSurfDrawW * arg0) + _appSurfDrawL;
-                arg1 = (_appSurfDrawH * arg1) + _appSurfDrawT;
+                //If we're outputting to device-space then perform a transform using the cached app surface draw parameters
+                _x = _appSurfDrawW*_x + _appSurfDrawL;
+                _y = _appSurfDrawH*_y + _appSurfDrawT;
             }
             else
             {
-                __input_error("Unhandled output coordinate system (", arg3, ")");
+                __input_error("Unhandled output coordinate system (", _output_system, ")");
             }
         }
-        else if (arg2 == 1)
+        else if (_input_system == 1) //Input coordinate system is GUI-space
         {
-            arg0 /= display_get_gui_width();
-            arg1 /= display_get_gui_height();
+            //Reduce x/y to normalised values in GUI-space
+            _x /= display_get_gui_width();
+            _y /= display_get_gui_height();
             
-            if (arg3 == 0)
+            if (_output_system == 0)
             {
-                if (_viewA == 0)
+                if (_viewA == 0) //Skip expensive rotation step if we can
                 {
-                    arg0 = (_viewW * arg0) + _viewX;
-                    arg1 = (_viewH * arg1) + _viewY;
+                    //Expand room-space x/y from normalised values in the viewport
+                    _x = _viewW*_x + _viewX;
+                    _y = _viewH*_y + _viewY;
                 }
                 else
                 {
-                    _viewX += (_viewW / 2);
-                    _viewY += (_viewH / 2);
+                    //Perform a rotation, eventually ending up with room-space coordinates as above
+                    _viewX += _viewW/2;
+                    _viewY += _viewH/2;
+                    
                     var _sin = dsin(_viewA);
                     var _cos = dcos(_viewA);
-                    var _x0 = (arg0 * _viewW) - (_viewW / 2);
-                    var _y0 = (arg1 * _viewH) - (_viewH / 2);
-                    arg0 = ((_x0 * _cos) - (_y0 * _sin)) + _viewX;
-                    arg1 = (_x0 * _sin) + (_y0 * _cos) + _viewY;
+                    
+                    var _x0 = _x*_viewW - _viewW/2;
+                    var _y0 = _y*_viewH - _viewH/2;
+                    _x = (_x0*_cos - _y0*_sin) + _viewX;
+                    _y = (_x0*_sin + _y0*_cos) + _viewY;
                 }
             }
-            else if (arg3 == 2)
+            else if (_output_system == 2)
             {
-                arg0 = (_appSurfDrawW * arg0) + _appSurfDrawL;
-                arg1 = (_appSurfDrawH * arg1) + _appSurfDrawT;
+                //If we're outputting to device-space then perform a transform using the cached app surface draw parameters
+                _x = _appSurfDrawW*_x + _appSurfDrawL;
+                _y = _appSurfDrawH*_y + _appSurfDrawT;
             }
             else
             {
-                __input_error("Unhandled output coordinate system (", arg3, ")");
+                __input_error("Unhandled output coordinate system (", _output_system, ")");
             }
         }
-        else if (arg2 == 2)
+        else if (_input_system == 2) //Input coordinate system is device-space
         {
-            arg0 = (arg0 - _appSurfDrawL) / _appSurfDrawW;
-            arg1 = (arg1 - _appSurfDrawT) / _appSurfDrawH;
+            _x = (_x - _appSurfDrawL) / _appSurfDrawW;
+            _y = (_y - _appSurfDrawT) / _appSurfDrawH;
             
-            if (arg3 == 1)
+            if (_output_system == 1)
             {
-                arg0 *= display_get_gui_width();
-                arg1 *= display_get_gui_height();
+                //Reduce x/y to normalised values in GUI-space
+                _x *= display_get_gui_width();
+                _y *= display_get_gui_height();
             }
-            else if (arg3 == 0)
+            else if (_output_system == 0)
             {
-                if (_viewA == 0)
+                if (_viewA == 0) //Skip expensive rotation step if we can
                 {
-                    arg0 = (_viewW * arg0) + _viewX;
-                    arg1 = (_viewH * arg1) + _viewY;
+                    //Expand room-space x/y from normalised values in the viewport
+                    _x = _viewW*_x + _viewX;
+                    _y = _viewH*_y + _viewY;
                 }
                 else
                 {
-                    _viewX += (_viewW / 2);
-                    _viewY += (_viewH / 2);
+                    //Perform a rotation, eventually ending up with room-space coordinates as above
+                    _viewX += _viewW/2;
+                    _viewY += _viewH/2;
+                    
                     var _sin = dsin(_viewA);
                     var _cos = dcos(_viewA);
-                    var _x0 = (arg0 * _viewW) - (_viewW / 2);
-                    var _y0 = (arg1 * _viewH) - (_viewH / 2);
-                    arg0 = ((_x0 * _cos) - (_y0 * _sin)) + _viewX;
-                    arg1 = (_x0 * _sin) + (_y0 * _cos) + _viewY;
+                    
+                    var _x0 = _x*_viewW -_viewW/2;
+                    var _y0 = _y*_viewH -_viewH/2;
+                    _x = (_x0*_cos - _y0*_sin) + _viewX;
+                    _y = (_x0*_sin + _y0*_cos) + _viewY;
                 }
             }
             else
             {
-                __input_error("Unhandled output coordinate system (", arg3, ")");
+                __input_error("Unhandled output coordinate system (", _output_system, ")");
             }
         }
         else
         {
-            __input_error("Unhandled input coordinate system (", arg2, ")");
+            __input_error("Unhandled input coordinate system (", _input_system, ")");
         }
     }
     
-    _result.x = arg0;
-    _result.y = arg1;
+    //Set values and return!
+    _result.x = _x;
+    _result.y = _y;
     return _result;
 }

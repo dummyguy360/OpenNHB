@@ -1,22 +1,23 @@
-function input_vibrate_pulse(arg0, arg1, arg2, arg3, arg4 = 0, arg5 = false)
+// Feather disable all
+/// @desc    Vibrates a player's gampead with a series of pulses over the given duration
+///          Units for the vibration duration are determined by INPUT_TIMER_MILLISECONDS
+///          
+/// @param   strength
+/// @param   pan
+/// @param   repeats
+/// @param   duration
+/// @param   [playerIndex=0]
+/// @param   [force=false]
+
+function input_vibrate_pulse(_strength, _pan, _repeats, _duration, _player_index = 0, _force = false)
 {
-    static _global = __input_global();
+    __INPUT_GLOBAL_STATIC_LOCAL  //Set static _global
+    __INPUT_VERIFY_PLAYER_INDEX
     
-    if (arg4 < 0)
-    {
-        __input_error("Invalid player index provided (", arg4, ")");
-        return undefined;
-    }
+    _strength = clamp(_strength, 0, 1);
+    _pan      = clamp(_pan, -1, 1);
+    _repeats  = max(_repeats, 0);
+    _duration = max(_duration, 0);
     
-    if (arg4 >= 1)
-    {
-        __input_error("Player index too large (", arg4, " must be less than ", 1, ")\nIncrease INPUT_MAX_PLAYERS to support more players");
-        return undefined;
-    }
-    
-    arg0 = clamp(arg0, 0, 1);
-    arg1 = clamp(arg1, -1, 1);
-    arg2 = max(arg2, 0);
-    arg3 = max(arg3, 0);
-    _global.__players[arg4].__vibration_add_event(new __input_class_vibration_pulse(arg0, arg1, arg2, arg3, arg5));
+    _global.__players[_player_index].__vibration_add_event(new __input_class_vibration_pulse(_strength, _pan, _repeats, _duration, _force));
 }

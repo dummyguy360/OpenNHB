@@ -1,19 +1,15 @@
-function input_player_connected(arg0 = 0, arg1 = true)
+// Feather disable all
+/// @desc    Returns whether any of the player’s sources are connected and available for use
+/// @param   [playerIndex=0]
+/// @param   [includeGhost=true]
+
+function input_player_connected(_player_index = 0, _include_ghost = true)
 {
-    static _global = __input_global();
+    __INPUT_GLOBAL_STATIC_LOCAL  //Set static _global
+    __INPUT_VERIFY_PLAYER_INDEX
     
-    if (arg0 < 0)
+    with(_global.__players[_player_index])
     {
-        __input_error("Invalid player index provided (", arg0, ")");
-        return undefined;
+        return (__connected && (_include_ghost || !__ghost));
     }
-    
-    if (arg0 >= 1)
-    {
-        __input_error("Player index too large (", arg0, " must be less than ", 1, ")\nIncrease INPUT_MAX_PLAYERS to support more players");
-        return undefined;
-    }
-    
-    with (_global.__players[arg0])
-        return __connected && (arg1 || !__ghost);
 }

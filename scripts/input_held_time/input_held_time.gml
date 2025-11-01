@@ -1,29 +1,18 @@
-function input_held_time(arg0, arg1 = 0)
+// Feather disable all
+/// @desc    Returns how long the current verb has been held for, the units of which is determined by INPUT_TIMER_MILLISECONDS
+///          This function returns 0 if the verb has been activated on the current frame
+///          It will return a value less than 0 if the verb is not active at all
+/// @param   {any} verb/array
+/// @param   [playerIndex=0]
+
+function input_held_time(_verb, _player_index = 0)
 {
-    static _global = __input_global();
+    __INPUT_GLOBAL_STATIC_LOCAL  //Set static _global
+    __INPUT_VERIFY_PLAYER_INDEX
+    __INPUT_GET_VERB_STRUCT
     
-    if (arg1 < 0)
-    {
-        __input_error("Invalid player index provided (", arg1, ")");
-        return undefined;
-    }
+    //Return a negative number if the verb is inactive
+    if (_verb_struct.__inactive || !_verb_struct.__held) return -1;
     
-    if (arg1 >= 1)
-    {
-        __input_error("Player index too large (", arg1, " must be less than ", 1, ")\nIncrease INPUT_MAX_PLAYERS to support more players");
-        return undefined;
-    }
-    
-    var _verb_struct = variable_struct_get(_global.__players[arg1].__verb_state_dict, arg0);
-    
-    if (!is_struct(_verb_struct))
-    {
-        __input_error("Verb not recognised (", arg0, ")");
-        return undefined;
-    }
-    
-    if (_verb_struct.__inactive || !_verb_struct.__held)
-        return -1;
-    
-    return __input_get_time() - _verb_struct.__press_time;
+    return (__input_get_time() - _verb_struct.__press_time);
 }

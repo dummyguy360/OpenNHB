@@ -1,25 +1,29 @@
-function input_vibrate_adsr(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7 = 0, arg8 = false)
+// Feather disable all
+/// @desc    Vibrates a player's gampead over an ADSR curve
+///          Units for the vibration duration are determined by INPUT_TIMER_MILLISECONDS
+///          
+/// @param   peakStrength
+/// @param   sustainLevel
+/// @param   pan
+/// @param   attackTime
+/// @param   decayTime
+/// @param   sustainTime
+/// @param   releaseTime
+/// @param   [playerIndex=0]
+/// @param   [force=false]
+
+function input_vibrate_adsr(_peak_strength, _sustain_level, _pan, _attack, _decay, _sustain, _release, _player_index = 0, _force = false)
 {
-    static _global = __input_global();
+    __INPUT_GLOBAL_STATIC_LOCAL  //Set static _global
+    __INPUT_VERIFY_PLAYER_INDEX
     
-    if (arg7 < 0)
-    {
-        __input_error("Invalid player index provided (", arg7, ")");
-        return undefined;
-    }
+    _peak_strength = clamp(_peak_strength, 0, 1);
+    _sustain_level = clamp(_sustain_level, 0, 1);
+    _pan           = clamp(_pan, -1, 1);
+    _attack        = max(_attack, 0);
+    _decay         = max(_decay, 0);
+    _sustain       = max(_sustain, 0);
+    _release       = max(_release, 0);
     
-    if (arg7 >= 1)
-    {
-        __input_error("Player index too large (", arg7, " must be less than ", 1, ")\nIncrease INPUT_MAX_PLAYERS to support more players");
-        return undefined;
-    }
-    
-    arg0 = clamp(arg0, 0, 1);
-    arg1 = clamp(arg1, 0, 1);
-    arg2 = clamp(arg2, -1, 1);
-    arg3 = max(arg3, 0);
-    arg4 = max(arg4, 0);
-    arg5 = max(arg5, 0);
-    arg6 = max(arg6, 0);
-    _global.__players[arg7].__vibration_add_event(new __input_class_vibration_adsr(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg8));
+    _global.__players[_player_index].__vibration_add_event(new __input_class_vibration_adsr(_peak_strength, _sustain_level, _pan, _attack, _decay, _sustain, _release, _force));
 }

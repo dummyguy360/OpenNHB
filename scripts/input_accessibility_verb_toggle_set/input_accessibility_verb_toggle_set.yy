@@ -5,7 +5,7 @@
   "isCompatibility": false,
   "isDnD": false,
   "parent": {
-    "name": "Input_TEMP",
-    "path": "folders/Scripts/Input_TEMP.yy",
+    "name": "12  Accessibility",
+    "path": "folders/Scripts/Input/12  Accessibility.yy",
   },
 }

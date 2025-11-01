@@ -1,26 +1,25 @@
-function __input_gamepad_stop_trigger_effects(arg0)
+// Feather disable all
+function __input_gamepad_stop_trigger_effects(_gamepad_index)
 {
-    static _global = __input_global();
+    __INPUT_GLOBAL_STATIC_LOCAL  //Set static _global
     
-    if (arg0 == -3)
+    if (_gamepad_index == all)
     {
         var _i = 0;
-        
-        repeat (array_length(_global.__gamepads))
+        repeat(array_length(_global.__gamepads))
         {
             __input_gamepad_stop_trigger_effects(_i);
-            _i++;
+            ++_i;
         }
         
-        exit;
+        return;
     }
     
-    if (arg0 < 0)
-        exit;
+    if (_gamepad_index < 0) return;
     
-    with (_global.__gamepads[arg0])
+    with(_global.__gamepads[_gamepad_index])
     {
-        __trigger_effect_apply(32775, new __input_class_trigger_effect_off(), 0);
-        __trigger_effect_apply(32776, new __input_class_trigger_effect_off(), 0);
+        __trigger_effect_apply(gp_shoulderlb, new __input_class_trigger_effect_off(), 0);
+        __trigger_effect_apply(gp_shoulderrb, new __input_class_trigger_effect_off(), 0);
     }
 }

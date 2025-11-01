@@ -19,7 +19,7 @@ jumpstop = 0;
 hurt = 0;
 decel = 0;
 momentum = 0;
-lastslipperyplat = -4;
+lastslipperyplat = noone;
 landanim = 0;
 palettespr = spr_noisepalette;
 curpalette = 1;
@@ -31,7 +31,7 @@ particlecooldown4 = 0;
 particlecooldown5 = 0;
 particlecooldown6 = 0;
 coyotetime = 7;
-speedlinesobj = -4;
+speedlinesobj = noone;
 jumpbuffer = 0;
 attackbuffer = 0;
 slidebuffer = 0;
@@ -45,7 +45,7 @@ hitstuntime = 0;
 walljumptimer = 0;
 wallslidecanceltimer = 0;
 targetdoor = 0;
-targetroom = -4;
+targetroom = noone;
 firstroom = Patch1;
 firstx = x;
 firsty = y;
@@ -53,16 +53,16 @@ levelstarty = y;
 hovering = 0;
 hovered = 0;
 dontcling = 0;
-debugstate = UnknownEnum.Value_0;
-ropeID = -4;
-movingplatID = -4;
-ondeathplatform = -4;
+debugstate = states.normal;
+ropeID = noone;
+movingplatID = noone;
+ondeathplatform = noone;
 beforedeathroute = 
 {
     room: Patch3A,
     path: pth_deathroutealt
 };
-targetouthouse = -4;
+targetouthouse = noone;
 canchangedir = 1;
 turning = 0;
 platformspin = 45;
@@ -100,6 +100,7 @@ longjumptimer = 0;
 outhousestartx = 0;
 outhousestarty = 0;
 outhousegoin = true;
+
 playersavedstate = 
 {
     state: state,
@@ -113,63 +114,90 @@ playersavedstate =
 };
 currcheckpoint = 
 {
-    id: -4,
-    object_index: -4,
+    id: noone,
+    object_index: noone,
     room: 0,
     x: 0,
     y: 0,
     collect: 0,
     destroyedcount: 0,
-    pumpkins: -4,
-    gems: -4,
-    saveroom: -4,
+    pumpkins: noone,
+    gems: noone,
+    saveroom: noone,
     switchstate: true,
     respawnroom: ds_map_create()
 };
+
+#region Player States
+enum states 
+{
+	normal = 0,
+	jump = 1,
+	standstillrun = 2,
+	sprint = 3,
+	sprintjump = 4,
+	machslide = 5,
+	hurt = 6,
+	bump = 7,
+	cartwheel = 8,
+	punch = 9,
+	wall = 10,
+	downslide = 11,
+	hitstun = 12,
+	wallslide = 13,
+	crouch = 14,
+	levelintro = 15,
+	noclip = 16,
+	debug = 17,
+	dead = 18,
+	rope = 19,
+	platformlocked = 20,
+	falllocked = 21,
+	fakewalk = 22,
+	groundpound = 23,
+	grimace = 24,
+	tornado = 25,
+	endplatform = 26,
+	nitrocutscene = 27,
+	outhouse = 28,
+	mirror = 29,
+	actor = 30,
+}
+
 states = [];
-states[UnknownEnum.Value_0] = scr_player_normal;
-states[UnknownEnum.Value_1] = scr_player_jump;
-states[UnknownEnum.Value_2] = scr_player_standstillrun;
-states[UnknownEnum.Value_3] = scr_player_sprint;
-states[UnknownEnum.Value_4] = scr_player_sprintjump;
-states[UnknownEnum.Value_5] = scr_player_machslide;
-states[UnknownEnum.Value_6] = scr_player_hurt;
-states[UnknownEnum.Value_7] = scr_player_bump;
-states[UnknownEnum.Value_8] = scr_player_cartwheel;
-states[UnknownEnum.Value_9] = scr_player_punch;
-states[UnknownEnum.Value_10] = scr_player_wall;
-states[UnknownEnum.Value_11] = scr_player_downslide;
-states[UnknownEnum.Value_12] = scr_player_hitstun;
-states[UnknownEnum.Value_13] = scr_player_wallslide;
-states[UnknownEnum.Value_14] = scr_player_crouch;
-states[UnknownEnum.Value_15] = scr_player_levelintro;
-states[UnknownEnum.Value_16] = scr_player_noclip;
-
-states[UnknownEnum.Value_17] = function()
-{
-};
-
-states[UnknownEnum.Value_18] = scr_player_dead;
-states[UnknownEnum.Value_19] = scr_player_rope;
-states[UnknownEnum.Value_20] = scr_player_platformlocked;
-states[UnknownEnum.Value_21] = scr_player_falllocked;
-states[UnknownEnum.Value_22] = scr_player_fakewalk;
-states[UnknownEnum.Value_23] = scr_player_groundpound;
-states[UnknownEnum.Value_24] = scr_player_grimace;
-states[UnknownEnum.Value_25] = scr_player_tornado;
-states[UnknownEnum.Value_26] = scr_player_endplatform;
-
-states[UnknownEnum.Value_27] = function()
-{
-};
-
-states[UnknownEnum.Value_28] = scr_player_outhouse;
-states[UnknownEnum.Value_29] = scr_player_mirror;
-
-states[UnknownEnum.Value_30] = function()
-{
-};
-
+states[states.normal] = scr_player_normal;
+states[states.jump] = scr_player_jump;
+states[states.standstillrun] = scr_player_standstillrun;
+states[states.sprint] = scr_player_sprint;
+states[states.sprintjump] = scr_player_sprintjump;
+states[states.machslide] = scr_player_machslide;
+states[states.hurt] = scr_player_hurt;
+states[states.bump] = scr_player_bump;
+states[states.cartwheel] = scr_player_cartwheel;
+states[states.punch] = scr_player_punch;
+states[states.wall] = scr_player_wall;
+states[states.downslide] = scr_player_downslide;
+states[states.hitstun] = scr_player_hitstun;
+states[states.wallslide] = scr_player_wallslide;
+states[states.crouch] = scr_player_crouch;
+states[states.levelintro] = scr_player_levelintro;
+states[states.noclip] = scr_player_noclip;
+states[states.debug] = function() { };
+states[states.dead] = scr_player_dead;
+states[states.rope] = scr_player_rope;
+states[states.platformlocked] = scr_player_platformlocked;
+states[states.falllocked] = scr_player_falllocked;
+states[states.fakewalk] = scr_player_fakewalk;
+states[states.groundpound] = scr_player_groundpound;
+states[states.grimace] = scr_player_grimace;
+states[states.tornado] = scr_player_tornado;
+states[states.endplatform] = scr_player_endplatform;
+states[states.nitrocutscene] = function() { };
+states[states.outhouse] = scr_player_outhouse;
+states[states.mirror] = scr_player_mirror;
+states[states.actor] = function() { };
+#endregion
+#region Player Sounds
 jumpsnd = event_instance("event:/sfx/player/jump");
 landsnd = event_instance("event:/sfx/player/land");
 hurtsnd = event_instance("event:/sfx/player/hurt");
@@ -202,8 +230,11 @@ deadblowsnd = event_instance("event:/sfx/player/deadblow");
 deadpopsnd = event_instance("event:/sfx/player/deadpop");
 deadblinksnd = event_instance("event:/sfx/player/deadblink");
 deaddisintergratesnd = event_instance("event:/sfx/player/disintergrate");
+#endregion
+
 standingsurface = standingsurface.grass;
 
+#region Player Moves
 function jump()
 {
     state = (state == states.sprint || state == states.standstillrun || state == states.sprintjump) ? states.sprintjump : states.jump;
@@ -218,9 +249,7 @@ function jump()
             if (state == states.sprintjump)
             {
                 if (movespeed <= 11)
-                {
                     sprite_index = spr_player_mach2jump;
-                }
                 else
                 {
                     sprite_index = spr_player_mach2fastjumpstart;
@@ -228,9 +257,7 @@ function jump()
                 }
             }
             else
-            {
                 sprite_index = spr_player_jump;
-            }
             
             break;
         
@@ -282,9 +309,7 @@ function punch()
                 sprite_index = spr_player_punch3;
         }
         else
-        {
             sprite_index = spr_player_airpunch;
-        }
     }
     else
     {
@@ -332,9 +357,7 @@ function attack()
             }
         }
         else
-        {
             punch();
-        }
     }
 }
 
@@ -508,9 +531,7 @@ function hover()
                 vsp = -8;
             }
             else
-            {
                 vsp = vsp / 2;
-            }
         }
         
         hovering = 1;
@@ -519,7 +540,8 @@ function hover()
         sprite_index = spr_player_hoverstart;
     }
 }
-
+#endregion
+#region Player Particles
 function dashcloudparticle()
 {
     if (particlecooldown1 > 0)
@@ -579,3 +601,4 @@ function particlewithcooldown(arg0, arg1, arg2, arg3, arg4, arg5, arg6 = 1, arg7
         scr_createparticle(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14);
     }
 }
+#endregion

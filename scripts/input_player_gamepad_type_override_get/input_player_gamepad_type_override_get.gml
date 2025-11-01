@@ -1,18 +1,12 @@
-function input_player_gamepad_type_override_get(arg0 = 0)
+// Feather disable all
+/// @desc    Returns the gamepad type override for the player
+///          This function will return <undefined> if no override has been set
+/// @param   [playerIndex=0]
+
+function input_player_gamepad_type_override_get(_player_index = 0)
 {
-    static _global = __input_global();
+    __INPUT_GLOBAL_STATIC_LOCAL  //Set static _global
+    __INPUT_VERIFY_PLAYER_INDEX
     
-    if (arg0 < 0)
-    {
-        __input_error("Invalid player index provided (", arg0, ")");
-        return undefined;
-    }
-    
-    if (arg0 >= 1)
-    {
-        __input_error("Player index too large (", arg0, " must be less than ", 1, ")\nIncrease INPUT_MAX_PLAYERS to support more players");
-        return undefined;
-    }
-    
-    return _global.__players[arg0].__gamepad_type_override;
+    return _global.__players[_player_index].__gamepad_type_override;
 }

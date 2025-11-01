@@ -1,29 +1,30 @@
-function input_binding_is_valid(arg0, arg1 = 0)
+// Feather disable all
+/// @desc    Returns if the binding is valid for the player's currently assigned source(s)
+///          For example, a gamepad binding would not be valid if a player is only using a keyboard
+/// @param   binding
+/// @param   [playerIndex=0]
+
+function input_binding_is_valid(_binding, _player_index = 0)
 {
-    static _global = __input_global();
+    __INPUT_GLOBAL_STATIC_LOCAL  //Set static _global
+    __INPUT_VERIFY_PLAYER_INDEX
     
-    if (arg1 < 0)
+    if (_binding == undefined)
     {
-        __input_error("Invalid player index provided (", arg1, ")");
-        return undefined;
-    }
-    
-    if (arg1 >= 1)
-    {
-        __input_error("Player index too large (", arg1, " must be less than ", 1, ")\nIncrease INPUT_MAX_PLAYERS to support more players");
-        return undefined;
-    }
-    
-    if (arg0 == undefined)
-    {
+        //Invalid if, for example, there is no binding set for the source specified when getting a binding
         return false;
     }
-    else if (!input_value_is_binding(arg0))
+    else
     {
-        __input_error("Value provided is not a binding");
-        return false;
+        if (!input_value_is_binding(_binding))
+        {
+            __input_error("Value provided is not a binding");
+            return false;
+        }
     }
     
-    with (_global.__players[arg1])
-        return __sources_validate_binding(arg0);
+    with(_global.__players[_player_index])
+    {
+        return __sources_validate_binding(_binding);
+    }
 }

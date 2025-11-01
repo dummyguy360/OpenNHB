@@ -5,7 +5,7 @@
   "isCompatibility": false,
   "isDnD": false,
   "parent": {
-    "name": "Input_TEMP",
-    "path": "folders/Scripts/Input_TEMP.yy",
+    "name": "26  Keyboard (Direct)",
+    "path": "folders/Scripts/Input/26  Keyboard (Direct).yy",
   },
 }

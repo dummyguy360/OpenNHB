@@ -5,7 +5,7 @@
   "isCompatibility": false,
   "isDnD": false,
   "parent": {
-    "name": "Input_TEMP",
-    "path": "folders/Scripts/Input_TEMP.yy",
+    "name": "25  Gamepads (Direct)",
+    "path": "folders/Scripts/Input/25  Gamepads (Direct).yy",
   },
 }

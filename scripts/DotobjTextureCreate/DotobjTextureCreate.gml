@@ -1,4 +1,7 @@
-function DotobjTextureCreate(arg0, arg1)
+/// @param sprite
+/// @param index
+
+function DotobjTextureCreate(_sprite, _index)
 {
-    return new DotobjClassTexture(arg0, arg1, false);
+    return new DotobjClassTexture(_sprite, _index, false);
 }

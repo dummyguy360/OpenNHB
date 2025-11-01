@@ -1,39 +1,40 @@
-function input_cursor_elastic_set(arg0, arg1, arg2, arg3 = 0, arg4 = true)
+// Feather disable all
+/// @desc    Sets up a springy force that pulls the cursor towards the given point
+///          This is useful for building aiming systems for shooters and works especially well
+///          with input_cursor_limit_circle()
+/// @param   x
+/// @param   y
+/// @param   strength
+/// @param   [playerIndex=0]
+/// @param   [moveCursor=true]
+
+function input_cursor_elastic_set(_x, _y, _strength, _player_index = 0, _move_cursor = true)
 {
-    static _global = __input_global();
+    __INPUT_GLOBAL_STATIC_LOCAL  //Set static _global
     
-    if (arg3 == -3)
+    if (_player_index == all)
     {
         var _p = 0;
-        
-        repeat (1)
+        repeat(INPUT_MAX_PLAYERS)
         {
-            input_cursor_elastic_set(arg0, arg1, arg2, _p, arg4);
-            _p++;
+            input_cursor_elastic_set(_x, _y, _strength, _p, _move_cursor);
+            ++_p;
         }
         
-        exit;
+        return;
     }
     
-    if (arg3 < 0)
-    {
-        __input_error("Invalid player index provided (", arg3, ")");
-        return undefined;
-    }
+    __INPUT_VERIFY_PLAYER_INDEX
     
-    if (arg3 >= 1)
+    with(_global.__players[_player_index].__cursor)
     {
-        __input_error("Player index too large (", arg3, " must be less than ", 1, ")\nIncrease INPUT_MAX_PLAYERS to support more players");
-        return undefined;
-    }
-    
-    with (_global.__players[arg3].__cursor)
-    {
-        if (arg4 && __elastic_x != undefined && __elastic_y != undefined)
-            __set(arg0 - __elastic_x, arg1 - __elastic_y, true);
+        if (_move_cursor && (__elastic_x != undefined) && (__elastic_y != undefined))
+        {
+            __set(_x - __elastic_x, _y - __elastic_y, true);
+        }
         
-        __elastic_x = arg0;
-        __elastic_y = arg1;
-        __elastic_strength = arg2;
+        __elastic_x        = _x;
+        __elastic_y        = _y;
+        __elastic_strength = _strength;
     }
 }

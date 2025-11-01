@@ -1,70 +1,62 @@
-function input_binding_set_safe(arg0, arg1, arg2 = 0, arg3 = 0, arg4 = undefined)
+// Feather disable all
+/// @desc    Sets the binding for the given verb. The alternate index parameter can be used to
+///          set multiple parallel inputs for one verb. If no profile name is provided, the
+///          current profile is used.
+///          
+///          This function, in contrast to input_binding_set(), will try to automatically
+///          resolve conflicts based on verb groups defined in __input_config_verb_groups().
+///          This function is effective for simple control schemes but may fail in more complex
+///          situations; in these cases, you’ll need to handle conflict resolution yourself.
+///          
+/// @param   verb
+/// @param   binding
+/// @param   [playerIndex=0]
+/// @param   [alternate=0]
+/// @param   [profileName]
+
+function input_binding_set_safe(_verb_name, _binding, _player_index = 0, _alternate = 0, _profile_name = undefined)
 {
-    static _global = __input_global();
+    __INPUT_GLOBAL_STATIC_LOCAL  //Set static _global
+    __INPUT_VERIFY_BASIC_VERB_NAME
+    __INPUT_VERIFY_PLAYER_INDEX
+    __INPUT_VERIFY_ALTERNATE_INDEX
     
-    if (variable_struct_exists(_global.__chord_verb_dict, arg0))
-        __input_error("\"", arg0, "\" is a chord verb. Verbs passed to this function must be basic verb");
-    
-    if (!variable_struct_exists(_global.__basic_verb_dict, arg0))
-        __input_error("Verb \"", arg0, "\" not recognised");
-    
-    if (arg2 < 0)
+    if (input_value_is_binding(_binding))
     {
-        __input_error("Invalid player index provided (", arg2, ")");
-        return undefined;
-    }
-    
-    if (arg2 >= 1)
-    {
-        __input_error("Player index too large (", arg2, " must be less than ", 1, ")\nIncrease INPUT_MAX_PLAYERS to support more players");
-        return undefined;
-    }
-    
-    if (arg3 < 0)
-    {
-        __input_error("Invalid \"alternate\" argument (", arg3, ")");
-        return undefined;
-    }
-    
-    if (arg3 >= 3)
-    {
-        __input_error("\"alternate\" argument too large (", arg3, " must be less than ", 3, ")\nIncrease INPUT_MAX_ALTERNATE_BINDINGS for more alternate binding slots");
-        return undefined;
-    }
-    
-    if (input_value_is_binding(arg1))
-    {
-        var _collisions = input_binding_test_collisions(arg0, arg1, arg2, arg4);
-        
+        var _collisions = input_binding_test_collisions(_verb_name, _binding, _player_index, _profile_name);
         if (array_length(_collisions) == 0)
         {
-            input_binding_set(arg0, arg1, arg2, arg3, arg4);
+            input_binding_set(_verb_name, _binding, _player_index, _alternate, _profile_name);
         }
         else
         {
             if (array_length(_collisions) > 1)
+            {
                 __input_trace("Warning! More than one binding collision found, resolution may not be desirable");
+            }
             
-            arg4 = _global.__players[arg2].__profile_get(arg4);
+            _profile_name = _global.__players[_player_index].__profile_get(_profile_name);
             
-            if (arg4 == undefined)
+            if (_profile_name == undefined)
             {
                 __input_trace("Warning! Cannot set binding, profile was <undefined>");
                 return false;
             }
             
-            var _verb_b = _collisions[0].__verb;
+            var _verb_b      = _collisions[0].__verb;
             var _alternate_b = _collisions[0].__alternate;
             
-            if (arg0 != _verb_b || arg3 != _alternate_b)
+            if ((_verb_name != _verb_b) || (_alternate != _alternate_b))
             {
-                __input_trace("Collision found in profile=", arg4, ", verb=", _verb_b, ", alternate=", _alternate_b);
-                input_binding_swap(arg0, arg3, _verb_b, _alternate_b, arg2, arg4);
-                input_binding_set(arg0, arg1, arg2, arg3, arg4);
+                __input_trace("Collision found in profile=", _profile_name, ", verb=", _verb_b, ", alternate=", _alternate_b);
+                input_binding_swap(_verb_name, _alternate, _verb_b, _alternate_b, _player_index, _profile_name);
+                
+                //We have to force set the new binding in case we had a gamepad collision in multidevice mode with an existing binding without a specific gamepad index
+                input_binding_set(_verb_name, _binding, _player_index, _alternate, _profile_name);
             }
             else
             {
-                __input_trace("New binding (", input_binding_get_name(arg1), ") is the same as existing binding for profile=", arg4, ", verb=", arg0, ", alternate=", arg3);
+                __input_trace("New binding (", input_binding_get_name(_binding), ") is the same as existing binding for profile=", _profile_name, ", verb=", _verb_name, ", alternate=", _alternate);
             }
         }
         

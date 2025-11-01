@@ -1,18 +1,11 @@
-function input_cursor_mouse_enabled_get(arg0 = 0)
+// Feather disable all
+/// @desc    Returns whether the player can use a mouse to move the cursor
+/// @param   [playerIndex=0]
+
+function input_cursor_mouse_enabled_get(_player_index = 0)
 {
-    static _global = __input_global();
-    
-    if (arg0 < 0)
-    {
-        __input_error("Invalid player index provided (", arg0, ")");
-        return undefined;
-    }
-    
-    if (arg0 >= 1)
-    {
-        __input_error("Player index too large (", arg0, " must be less than ", 1, ")\nIncrease INPUT_MAX_PLAYERS to support more players");
-        return undefined;
-    }
-    
-    return _global.__players[arg0].__mouse_enabled;
+    __INPUT_GLOBAL_STATIC_LOCAL  //Set static _global
+    __INPUT_VERIFY_PLAYER_INDEX
+
+    return _global.__players[_player_index].__mouse_enabled;
 }

@@ -127,7 +127,7 @@ var _height = mapcorners[1].y - mapcorners[0].y;
 var _gw = get_game_width();
 var _gh = get_game_height();
 var _scale = min(_gw / _width, _gh / _height) * 0.9;
-_scale = tween(_scale, 1, zoom, "in sine");
+_scale = tween(_scale, 1, zoom, EASE_IN_SINE);
 
 if (global.mapOpen)
 {
@@ -141,7 +141,7 @@ if (global.mapOpen)
         var _prevzoom = zoom;
         zoom = clamp(zoom + ((input_value("zoomin") - input_value("zoomout")) * 0.005), 0, 1);
         _scale = min(_gw / _width, _gh / _height) * 0.9;
-        _scale = tween(_scale, 1, zoom, "in sine");
+        _scale = tween(_scale, 1, zoom, EASE_IN_SINE);
         
         if (zoom != _prevzoom)
         {
@@ -271,7 +271,7 @@ if ((openanim + closeanim) > 0)
     for (var b = 0; b < array_length(roominfo_outhouses); b++)
     {
         _scale = min(_gw / _width, _gh / _height) * 0.9;
-        _scale = tween(_scale, 1, zoom, "in sine");
+        _scale = tween(_scale, 1, zoom, EASE_IN_SINE);
         var _outhouseinfo = roominfo_outhouses[b];
         var _outhouseroom = array_find_pos(global.levelrooms, _outhouseinfo.room);
         var _roomx = (_outhouseinfo.x + 32 + (roomoffset[_outhouseroom].x * 32)) * _scale;

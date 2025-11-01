@@ -1,18 +1,13 @@
-function input_motion_data_get(arg0 = 0)
+// Feather disable all
+/// @desc    Gets gamepad motion data for a player
+//           Returned value is a struct containing normalized 
+//           acceleration (Gs) and angular velocity (rad/s) values 
+/// @param   [playerIndex=0]
+
+function input_motion_data_get(_player_index = 0)
 {
-    static _global = __input_global();
-    
-    if (arg0 < 0)
-    {
-        __input_error("Invalid player index provided (", arg0, ")");
-        return undefined;
-    }
-    
-    if (arg0 >= 1)
-    {
-        __input_error("Player index too large (", arg0, " must be less than ", 1, ")\nIncrease INPUT_MAX_PLAYERS to support more players");
-        return undefined;
-    }
-    
-    return _global.__players[arg0].__motion_data_get();
+    __INPUT_GLOBAL_STATIC_LOCAL  //Set static _global
+    __INPUT_VERIFY_PLAYER_INDEX
+
+    return _global.__players[_player_index].__motion_data_get();
 }

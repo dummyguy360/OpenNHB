@@ -1,29 +1,17 @@
-function input_held_time_released(arg0, arg1 = 0)
+// Feather disable all
+/// @desc    Returns how long the current verb was held when released, the units of which is determined by INPUT_TIMER_MILLISECONDS
+///          This function returns a value less than 0 if the verb is not active or was not released
+/// @param   {any} verb/array
+/// @param   [playerIndex=0]
+
+function input_held_time_released(_verb, _player_index = 0)
 {
-    static _global = __input_global();
+    __INPUT_GLOBAL_STATIC_LOCAL  //Set static _global
+    __INPUT_VERIFY_PLAYER_INDEX
+    __INPUT_GET_VERB_STRUCT
     
-    if (arg1 < 0)
-    {
-        __input_error("Invalid player index provided (", arg1, ")");
-        return undefined;
-    }
+    //Return a negative number if the verb is inactive, cleared, not released
+    if (_verb_struct.__inactive || _global.__cleared || !_verb_struct.__release) return -1;
     
-    if (arg1 >= 1)
-    {
-        __input_error("Player index too large (", arg1, " must be less than ", 1, ")\nIncrease INPUT_MAX_PLAYERS to support more players");
-        return undefined;
-    }
-    
-    var _verb_struct = variable_struct_get(_global.__players[arg1].__verb_state_dict, arg0);
-    
-    if (!is_struct(_verb_struct))
-    {
-        __input_error("Verb not recognised (", arg0, ")");
-        return undefined;
-    }
-    
-    if (_verb_struct.__inactive || _global.__cleared || !_verb_struct.__release)
-        return -1;
-    
-    return max(0, _global.__frame - 1 - _verb_struct.__press_time);
+    return max(0, (INPUT_TIMER_MILLISECONDS? _global.__previous_current_time : _global.__frame - 1) - _verb_struct.__press_time);
 }

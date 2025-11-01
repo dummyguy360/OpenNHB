@@ -1,19 +1,21 @@
-function input_cursor_dy(arg0 = 0, arg1 = undefined)
+// Feather disable all
+/// @desc    Returns how far the cursor has moved on the y-axis between frames
+///          The coordinate space should be a member of the INPUT_COORD_SPACE enum:
+///              .ROOM      Room coordinates; should be the same as mouse_x and mouse_y. This is the default value
+///              .GUI       GUI coordinates
+///              .DEVICE    Raw device-space coordinates
+/// 
+/// @param   [playerIndex=0]
+/// @param   [coordSpace]     Coordinate space to use. If not specified, the coordinate space set by input_cursor_coord_space_set() is used
+
+function input_cursor_dy(_player_index = 0, _output_system = undefined)
 {
-    static _global = __input_global();
+    __INPUT_GLOBAL_STATIC_LOCAL  //Set static _global
+    __INPUT_VERIFY_PLAYER_INDEX
     
-    if (arg0 < 0)
-    {
-        __input_error("Invalid player index provided (", arg0, ")");
-        return undefined;
-    }
-    
-    if (arg0 >= 1)
-    {
-        __input_error("Player index too large (", arg0, " must be less than ", 1, ")\nIncrease INPUT_MAX_PLAYERS to support more players");
-        return undefined;
-    }
-    
-    var _cursor = _global.__players[arg0].__cursor;
-    return __input_transform_coordinate(_cursor.__x - _cursor.__prev_x, _cursor.__y - _cursor.__prev_y, _cursor.__coord_space, arg1 ?? _cursor.__coord_space).y;
+    var _cursor = _global.__players[_player_index].__cursor;
+    return __input_transform_coordinate(_cursor.__x - _cursor.__prev_x,
+                                        _cursor.__y - _cursor.__prev_y,
+                                        _cursor.__coord_space,
+                                        _output_system ?? _cursor.__coord_space).y;
 }

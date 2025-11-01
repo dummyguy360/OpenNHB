@@ -1,4 +1,5 @@
-function __input_wrap_underflow(arg0)
+// Feather disable all
+function __input_wrap_underflow(_value)
 {
-    return arg0 % 4294967296;
+    return _value mod 4294967296;
 }

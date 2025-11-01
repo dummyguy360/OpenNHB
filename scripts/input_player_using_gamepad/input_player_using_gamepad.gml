@@ -1,4 +1,8 @@
-function input_player_using_gamepad(arg0 = 0)
+// Feather disable all
+/// @desc    Returns whether the player is using a gamepad
+/// @param   [playerIndex=0]
+
+function input_player_using_gamepad(_player_index = 0)
 {
-    return input_source_using(__input_global().__source_gamepad, arg0);
+    return input_source_using(INPUT_GAMEPAD, _player_index);
 }

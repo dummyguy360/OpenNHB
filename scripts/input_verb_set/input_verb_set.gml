@@ -1,18 +1,26 @@
-function input_verb_set(arg0, arg1, arg2 = 0, arg3 = true)
+// Feather disable all
+/// @desc    Sets the value of a verb. This is "additive" to other physical inputs the player might be making
+///          If you'd like to fully control a player's verbs, please set that player to ghost mode with input_player_ghost_set()
+/// @param   verb
+/// @param   value
+/// @param   [playerIndex=0]
+/// @param   [analogue=true]
+
+function input_verb_set(_verb, _value, _player_index = 0, _analogue = true)
 {
-    static _global = __input_global();
+    __INPUT_GLOBAL_STATIC_LOCAL  //Set static _global
     
-    if (arg2 < 0)
+    if (_player_index < 0)
     {
-        __input_error("Invalid player index provided (", arg2, ")");
+        __input_error("Invalid player index provided (", _player_index, ")");
         return undefined;
     }
     
-    if (arg2 >= 1)
+    if (_player_index >= INPUT_MAX_PLAYERS)
     {
-        __input_error("Player index too large (", arg2, " must be less than ", 1, ")\nIncrease INPUT_MAX_PLAYERS to support more players");
+        __input_error("Player index too large (", _player_index, " must be less than ", INPUT_MAX_PLAYERS, ")\nIncrease INPUT_MAX_PLAYERS to support more players");
         return undefined;
     }
     
-    _global.__players[arg2].__verb_set(arg0, clamp(arg1, 0, 1), arg3);
+    _global.__players[_player_index].__verb_set(_verb, clamp(_value, 0.0, 1.0), _analogue);
 }

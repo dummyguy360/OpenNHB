@@ -1,7 +1,10 @@
-function input_is_virtual(arg0)
+// Feather disable all
+/// @desc    Returns if the given value is a virtual button
+/// 
+/// @param   value
+
+function input_is_virtual(_value)
 {
-    if (!is_struct(arg0))
-        return false;
-    
-    return !arg0.__destroyed;
+    if (!is_struct(_value)) return false;
+    return !_value.__destroyed;
 }

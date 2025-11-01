@@ -5,7 +5,7 @@
   "isCompatibility": false,
   "isDnD": false,
   "parent": {
-    "name": "Input_TEMP",
-    "path": "folders/Scripts/Input_TEMP.yy",
+    "name": "04  Further Verb Functions",
+    "path": "folders/Scripts/Input/04  Further Verb Functions.yy",
   },
 }

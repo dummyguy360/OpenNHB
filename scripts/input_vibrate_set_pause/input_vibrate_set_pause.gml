@@ -1,31 +1,26 @@
-function input_vibrate_set_pause(arg0, arg1 = 0)
+// Feather disable all
+/// @desc    Sets whether vibration for the given player should be paused
+/// 
+/// @param   state
+/// @param   [playerIndex=0]
+
+function input_vibrate_set_pause(_state, _player_index = 0)
 {
-    static _global = __input_global();
+    __INPUT_GLOBAL_STATIC_LOCAL  //Set static _global
     
-    if (arg1 == -3)
+    if (_player_index == all)
     {
         var _i = 0;
-        
-        repeat (1)
+        repeat(INPUT_MAX_PLAYERS)
         {
-            input_vibrate_set_pause(arg0, _i);
-            _i++;
+            input_vibrate_set_pause(_state, _i);
+            ++_i;
         }
         
-        exit;
+        return;
     }
     
-    if (arg1 < 0)
-    {
-        __input_error("Invalid player index provided (", arg1, ")");
-        return undefined;
-    }
+    __INPUT_VERIFY_PLAYER_INDEX
     
-    if (arg1 >= 1)
-    {
-        __input_error("Player index too large (", arg1, " must be less than ", 1, ")\nIncrease INPUT_MAX_PLAYERS to support more players");
-        return undefined;
-    }
-    
-    _global.__players[arg1].__vibration_paused = arg0;
+    _global.__players[_player_index].__vibration_paused = _state;
 }

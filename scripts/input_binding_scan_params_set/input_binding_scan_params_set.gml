@@ -1,72 +1,69 @@
-function input_binding_scan_params_set(arg0 = undefined, arg1 = undefined, arg2 = undefined, arg3 = 0)
+// Feather disable all
+/// @desc    Sets parameters when scanning for bindings for a particular player
+///          These parameters persist between scans
+/// 
+/// If a constant appears in both lists, the “ignore” array takes precedence and the binding will be ignored
+/// 
+/// @param   [ignoreArray]     Array of keyboard keys (vk_*, "A"), mouse buttons (mb_*), or gamepad constants (gp_*) to explicitly disallow being scanned
+/// @param   [allowArray]      Array of keyboard keys (vk_*, "A"), mouse buttons (mb_*), or gamepad constants (gp_*) to explicitly scan for, excluding all other possible bindings
+/// @param   [sourceFilter]    Array of sources to scan. If not specified, the sources currently assigned to the target player will be scanned
+/// @param   [playerIndex=0]   Player to target. If not specified, player 0 is targeted
+
+function input_binding_scan_params_set(_ignore_array = undefined, _allow_array = undefined, _source_filter = undefined, _player_index = 0)
 {
-    static _global = __input_global();
+    __INPUT_GLOBAL_STATIC_LOCAL  //Set static _global
+    __INPUT_VERIFY_PLAYER_INDEX
     
-    if (arg3 < 0)
+    if (is_numeric(_source_filter))
     {
-        __input_error("Invalid player index provided (", arg3, ")");
-        return undefined;
-    }
-    
-    if (arg3 >= 1)
-    {
-        __input_error("Player index too large (", arg3, " must be less than ", 1, ")\nIncrease INPUT_MAX_PLAYERS to support more players");
-        return undefined;
-    }
-    
-    if (is_numeric(arg2))
         __input_error("Usage of input_binding_scan_params_set() has changed. Please refer to documentation for details");
+    }
     
-    if (!is_array(arg1) && arg1 != undefined)
-        arg1 = [arg1];
-    
-    if (!is_array(arg0) && arg0 != undefined)
-        arg0 = [arg0];
+    //Fic minor misuse of allow/ignore arrays
+    if (!is_array(_allow_array ) && (_allow_array  != undefined)) _allow_array  = [_allow_array ];
+    if (!is_array(_ignore_array) && (_ignore_array != undefined)) _ignore_array = [_ignore_array];
     
     var _ignore_struct = undefined;
-    var _allow_struct = undefined;
+    var _allow_struct  = undefined;
     
-    if (is_array(arg0))
+    if (is_array(_ignore_array)) //"Ignore" array used if there's no allow array
     {
         _ignore_struct = {};
-        var _i = 0;
         
-        repeat (array_length(arg0))
+        var _i = 0;
+        repeat(array_length(_ignore_array))
         {
-            var _value = arg0[_i];
-            
-            if (is_string(_value) && _value != "mouse wheel up" && _value != "mouse wheel down")
-                _value = ord(_value);
-            
-            variable_struct_set(_ignore_struct, string(_value), true);
-            _i++;
+            var _value = _ignore_array[_i];
+            if (is_string(_value) && (_value != "mouse wheel up") && (_value != "mouse wheel down")) _value = ord(_value);
+            _ignore_struct[$ string(_value)] = true;
+            ++_i;
         }
     }
     
-    if (is_array(arg1))
+    if (is_array(_allow_array)) //"Allow" array takes precedence
     {
         _allow_struct = {};
-        var _i = 0;
         
-        repeat (array_length(arg1))
+        var _i = 0;
+        repeat(array_length(_allow_array))
         {
-            var _value = arg1[_i];
-            
-            if (is_string(_value) && _value != "mouse wheel up" && _value != "mouse wheel down")
-                _value = ord(_value);
-            
-            variable_struct_set(_allow_struct, string(_value), true);
-            _i++;
+            var _value = _allow_array[_i];
+            if (is_string(_value) && (_value != "mouse wheel up") && (_value != "mouse wheel down")) _value = ord(_value);
+            _allow_struct[$ string(_value)] = true;
+            ++_i;
         }
     }
     
-    with (_global.__players[arg3])
+    with(_global.__players[_player_index])
     {
-        if (!is_undefined(arg2) && !is_array(arg2))
-            arg2 = [arg2];
+        if (!is_undefined(_source_filter) && !is_array(_source_filter))
+        {
+            //If we've been given a basic piece of data, wrap it in an array
+            _source_filter = [_source_filter];
+        }
         
         __rebind_ignore_struct = _ignore_struct;
-        __rebind_allow_struct = _allow_struct;
-        __rebind_source_filter = arg2;
+        __rebind_allow_struct  = _allow_struct;
+        __rebind_source_filter = _source_filter;
     }
 }

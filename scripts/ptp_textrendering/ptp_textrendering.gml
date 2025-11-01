@@ -327,7 +327,7 @@ function draw_text_fancy(arg0, arg1, arg2, arg3 = 16777215, arg4 = 1, arg5 = tru
     if (_sdf && _prevshader == shd_premultiply)
         shader_set(shd_sdf_premultiply);
     
-    for (var i = 1; i < (string_length(arg2) + 1); continue)
+    for (var i = 1; i < (string_length(arg2) + 1); i++)
     {
         var _char = string_char_at(arg2, i);
         var _input = string_copy(arg2, i, 3);
@@ -423,8 +423,6 @@ function draw_text_fancy(arg0, arg1, arg2, arg3 = 16777215, arg4 = 1, arg5 = tru
                 arg0 += string_width(_char);
             }
         }
-        
-        i++;
     }
     
     if (_sdf && _prevshader == shd_premultiply)

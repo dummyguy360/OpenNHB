@@ -1,6 +1,8 @@
-function __input_key_is_ignored(arg0)
+// Feather disable all
+/// @param key
+
+function __input_key_is_ignored(_key)
 {
-    static _global = __input_global();
-    
-    return variable_struct_exists(_global.__ignore_key_dict, arg0);
+    __INPUT_GLOBAL_STATIC_LOCAL  //Set static _global
+    return variable_struct_exists(_global.__ignore_key_dict, _key);
 }

@@ -8,7 +8,7 @@ if (state == 1)
 {
     var _gW = get_game_width();
     var _gH = get_game_height();
-    tweenedrad = tween(0, sqrt((_gW * _gW) + (_gH * _gH)) * 1.25, ++radstep / radend, "out expo");
+    tweenedrad = tween(0, sqrt((_gW * _gW) + (_gH * _gH)) * 1.25, ++radstep / radend, EASE_OUT_EXPO);
     
     if (radstep >= radend)
     {

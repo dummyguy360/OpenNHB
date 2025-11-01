@@ -1,24 +1,30 @@
-function input_gamepad_get_map(arg0)
+// Feather disable all
+/// @desc    Returns an array containing the buttons/axes mapped for the current gamepad (as ints)
+/// @param   index
+
+function input_gamepad_get_map(_index)
 {
-    static _global = __input_global();
+    __INPUT_GLOBAL_STATIC_LOCAL  //Set static _global
     
-    if (arg0 == undefined || arg0 < 0 || arg0 >= array_length(_global.__gamepads))
+    if ((_index == undefined)
+    ||  (_index < 0)
+    ||  (_index >= array_length(_global.__gamepads)))
+    {
         return [];
+    }
     
-    var _gamepad = _global.__gamepads[arg0];
+    var _gamepad = _global.__gamepads[_index];
+    if (!is_struct(_gamepad)) return [];
     
-    if (!is_struct(_gamepad))
-        return [];
-    
-    with (_gamepad)
+    with(_gamepad)
     {
         var _output = array_create(array_length(__mapping_array), undefined);
-        var _i = 0;
         
-        repeat (array_length(__mapping_array))
+        var _i = 0;
+        repeat(array_length(__mapping_array))
         {
-            _output[_i] = __mapping_array[_i].__gm;
-            _i++;
+            _output[@ _i] = __mapping_array[_i].__gm;
+            ++_i;
         }
         
         return _output;
