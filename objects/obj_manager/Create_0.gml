@@ -1,0 +1,44 @@
+pal_swap_init_system(shd_pal_swapper, shd_billboard_paletted, shd_pal_premultiply);
+var _strfiledir = working_directory + "Data/";
+var _strfile = "strings_en.json";
+
+if (file_exists(_strfiledir + _strfile))
+    strings_read(_strfiledir + _strfile);
+else
+    show_error(string("Fatal Error! Language File \"{0}\" Not Found!", _strfile), true);
+
+DotobjSetFlipTexcoordV(true);
+DotobjSetReverseTriangles(true);
+reroll();
+global.loadedModels = ds_map_create();
+global.font = font_add_sprite_ext(spr_font, "!#$%&'()*+,-.0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[]^_`abcdefghijklmnopqrstuvwxyz{|}~/\\", true, 0);
+global.keyfont = font_add_sprite_ext(spr_keyfont, "ABCDEFGHIJKLMNOPQRSTUVWXYZ`1234567890-=[];'\\,./", false, 0);
+global.speedruntimerfont = font_add_sprite_ext(spr_smallfont, "ABCDEFGHIJKLMNOPQRSTUVWXYZ!.1234567890:?,'", false, -4);
+global.namefont = font_add_sprite_ext(spr_creditsnamefont, "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890.,_-+=:/\\()!&#@$%*'\"", true, 1);
+global.rolefont = font_add_sprite_ext(spr_creditsrolefont, "ABCDEFGHIJKLMNOPQRSTUVWXYZ", true, 1);
+global.toonfont = font_add_sprite_ext(spr_toonfont, "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.,_-=+:%/!?'\"", true, 1);
+global.rankcountfont = font_add_sprite_ext(spr_counterfont, "1234567890/", true, 0);
+global.manualfont = font_add_sprite_ext(spr_manualfont, "!#$%&'()*+,-.0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[]^_`abcdefghijklmnopqrstuvwxyz{|}~/\\\"", true, 1);
+global.optionsdescfont = font_add_sprite_ext(spr_optionsdescfont, "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890.,'\"?!:-", true, 1);
+define_font_globals();
+global.inputs = ds_map_create();
+ds_map_set(global.inputs, "[U]", "up");
+ds_map_set(global.inputs, "[D]", "down");
+ds_map_set(global.inputs, "[L]", "left");
+ds_map_set(global.inputs, "[R]", "right");
+ds_map_set(global.inputs, "[J]", "jump");
+ds_map_set(global.inputs, "[A]", "attack");
+ds_map_set(global.inputs, "[M]", "dash");
+ds_map_set(global.inputs, "[S]", "slide");
+ds_map_set(global.inputs, "[I]", "inv");
+ds_map_set(global.inputs, "[P]", "pause");
+ds_map_set(global.inputs, "[B]", "map");
+ds_map_set(global.inputs, "[Z]", "zoomin");
+ds_map_set(global.inputs, "[X]", "zoomout");
+ds_map_set(global.inputs, "[?]", "any");
+global.visiblesolids = true;
+global.godmode = false;
+global.worldlightpos = new Vec3(-0.2, -0.7, -2);
+global.levelrooms = [Patch1, Patch2A, Patch2B, Patch3A, Patch3B, Patch4A, Patch4B, Patch5, PatchDeathRoute, PatchDeathRoute2, PatchPerilousEntrance, PatchPerilousRoute];
+global.altMaterials = {};
+trace("WinRT Init Status: ", winrt_init());
