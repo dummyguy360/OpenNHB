@@ -5,7 +5,7 @@ OpenNHB
 GameMaker Version Used: 2023.11.1.129
 
 Packages Used
-- YYFMOD
+- GMEXT-FMOD v1.0.4
 - NekoPresence
 - GameFrame
 - GMLive?

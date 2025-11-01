@@ -12,59 +12,57 @@
 
 function __input_config_verbs()
 {
-    return {
-        keyboard_and_mouse:
+    return 
+    {
+        keyboard_and_mouse: 
         {
-            up:    [input_binding_key(vk_up),    input_binding_key("W")],
-            down:  [input_binding_key(vk_down),  input_binding_key("S")],
-            left:  [input_binding_key(vk_left),  input_binding_key("A")],
-            right: [input_binding_key(vk_right), input_binding_key("D")],
-            
-            accept:  input_binding_key(vk_space),
-            cancel:  input_binding_key(vk_backspace),
-            action:  input_binding_key(vk_enter),
-            special: input_binding_key(vk_shift),
-            
-            //No aiming verbs since we use the mouse for that (see below for aiming verb examples)
-            shoot: input_binding_mouse_button(mb_left),
-            
-            pause: input_binding_key(vk_escape),
+            up: input_binding_key(vk_up),
+            down: input_binding_key(vk_down),
+            left: input_binding_key(vk_left),
+            right: input_binding_key(vk_right),
+            jump: input_binding_key("Z"),
+            dash: input_binding_key(vk_shift),
+            attack: input_binding_key("X"),
+            inv: input_binding_key("C"),
+            slide: input_binding_key(vk_down),
+            debug_menu: input_binding_key(192),
+            debug_cam_up: input_binding_key(vk_space),
+            debug_cam_down: input_binding_key(vk_shift),
+            debug_cam_forward: input_binding_key(ord("W")),
+            debug_cam_back: input_binding_key(ord("S")),
+            debug_cam_left: input_binding_key(ord("A")),
+            debug_cam_right: input_binding_key(ord("D")),
+            map: input_binding_key(vk_enter),
+            zoomin: input_binding_key(ord("Z")),
+            zoomout: input_binding_key(ord("X")),
+            pause: input_binding_key(vk_escape)
         },
-        
-        gamepad:
+        gamepad: 
         {
-            up:    [input_binding_gamepad_axis(gp_axislv, true),  input_binding_gamepad_button(gp_padu)],
-            down:  [input_binding_gamepad_axis(gp_axislv, false), input_binding_gamepad_button(gp_padd)],
-            left:  [input_binding_gamepad_axis(gp_axislh, true),  input_binding_gamepad_button(gp_padl)],
+            up: [input_binding_gamepad_axis(gp_axislv, true), input_binding_gamepad_button(gp_padu)],
+            down: [input_binding_gamepad_axis(gp_axislv, false), input_binding_gamepad_button(gp_padd)],
+            left: [input_binding_gamepad_axis(gp_axislh, true), input_binding_gamepad_button(gp_padl)],
             right: [input_binding_gamepad_axis(gp_axislh, false), input_binding_gamepad_button(gp_padr)],
-            
-            accept:  input_binding_gamepad_button(gp_face1),
-            cancel:  input_binding_gamepad_button(gp_face2),
-            action:  input_binding_gamepad_button(gp_face3),
-            special: input_binding_gamepad_button(gp_face4),
-            
-            aim_up:    input_binding_gamepad_axis(gp_axisrv, true),
-            aim_down:  input_binding_gamepad_axis(gp_axisrv, false),
-            aim_left:  input_binding_gamepad_axis(gp_axisrh, true),
-            aim_right: input_binding_gamepad_axis(gp_axisrh, false),
-            shoot:     [input_binding_gamepad_button(gp_shoulderlb), input_binding_gamepad_button(gp_shoulderrb)],
-            
-            pause: input_binding_gamepad_button(gp_start),
-        },
-        
-        touch:
-        {
-            up:    input_binding_virtual_button(),
-            down:  input_binding_virtual_button(),
-            left:  input_binding_virtual_button(),
-            right: input_binding_virtual_button(),
-            
-            accept:  input_binding_virtual_button(),
-            cancel:  input_binding_virtual_button(),
-            action:  input_binding_virtual_button(),
-            special: input_binding_virtual_button(),
-            
-            pause: input_binding_virtual_button(),
+            jump: input_binding_gamepad_button(gp_face1),
+            dash: [input_binding_gamepad_button(gp_shoulderrb), input_binding_gamepad_button(gp_shoulderlb)],
+            attack: input_binding_gamepad_button(gp_face3),
+            inv: input_binding_gamepad_button(gp_face4),
+            slide: [input_binding_gamepad_button(gp_face2), input_binding_gamepad_button(gp_shoulderl), input_binding_gamepad_button(gp_shoulderr)],
+            debug_menu: input_binding_gamepad_button(gp_stickl),
+            debug_cam_up: input_binding_gamepad_button(gp_face1),
+            debug_cam_down: input_binding_gamepad_button(gp_face3),
+            debug_cam_forward: [input_binding_gamepad_axis(gp_axislv, true), input_binding_gamepad_button(gp_padu)],
+            debug_cam_back: [input_binding_gamepad_axis(gp_axislv, false), input_binding_gamepad_button(gp_padd)],
+            debug_cam_left: [input_binding_gamepad_axis(gp_axislh, true), input_binding_gamepad_button(gp_padl)],
+            debug_cam_right: [input_binding_gamepad_axis(gp_axislh, false), input_binding_gamepad_button(gp_padr)],
+            debug_cam_lookleft: input_binding_gamepad_axis(gp_axisrh, true),
+            debug_cam_lookright: input_binding_gamepad_axis(gp_axisrh, false),
+            debug_cam_lookup: input_binding_gamepad_axis(gp_axisrv, true),
+            debug_cam_lookdown: input_binding_gamepad_axis(gp_axisrv, false),
+            map: input_binding_gamepad_button(gp_select),
+            zoomin: [input_binding_gamepad_button(gp_face1), input_binding_gamepad_axis(gp_axisrv, false)],
+            zoomout: [input_binding_gamepad_button(gp_face3), input_binding_gamepad_axis(gp_axisrv, true)],
+            pause: input_binding_gamepad_button(gp_start)
         }
     };
 }
