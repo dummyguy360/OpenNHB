@@ -29,8 +29,8 @@
   "nineSlice": null,
   "origin": 0,
   "parent": {
-    "name": "Sprites",
-    "path": "folders/Sprites.yy",
+    "name": "Player",
+    "path": "folders/Sprites/Player.yy",
   },
   "preMultiplyAlpha": false,
   "sequence": {
@@ -57,7 +57,7 @@
     "showBackdropImage": false,
     "timeUnits": 1,
     "tracks": [
-      {"resourceType":"GMSpriteFramesTrack","resourceVersion":"1.0","name":"frames","builtinName":-1,"events":[],"inheritsTrackColour":true,"interpolation":1,"isCreationTrack":false,"keyframes":{"resourceType":"KeyframeStore<SpriteFrameKeyframe>","resourceVersion":"1.0","Keyframes":[
+      {"resourceType":"GMSpriteFramesTrack","resourceVersion":"1.0","name":"frames","builtinName":0,"events":[],"inheritsTrackColour":true,"interpolation":1,"isCreationTrack":false,"keyframes":{"resourceType":"KeyframeStore<SpriteFrameKeyframe>","resourceVersion":"1.0","Keyframes":[
             {"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"1.0","Channels":{"0":{"resourceType":"SpriteFrameKeyframe","resourceVersion":"1.0","Id":{"name":"962b2087-5641-4360-8529-3b9e1096430e","path":"sprites/spr_noisehud/spr_noisehud.yy",},},},"Disabled":false,"id":"fd883b5a-18d6-4733-99c9-261208a497d0","IsCreationKey":false,"Key":0.0,"Length":1.0,"Stretch":false,},
             {"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"1.0","Channels":{"0":{"resourceType":"SpriteFrameKeyframe","resourceVersion":"1.0","Id":{"name":"72781ba2-da15-49ae-9534-98429d17383c","path":"sprites/spr_noisehud/spr_noisehud.yy",},},},"Disabled":false,"id":"dfdd6dbf-be6d-4443-a572-2d1c576568a9","IsCreationKey":false,"Key":1.0,"Length":1.0,"Stretch":false,},
             {"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"1.0","Channels":{"0":{"resourceType":"SpriteFrameKeyframe","resourceVersion":"1.0","Id":{"name":"724ae410-61bd-4fc9-9a2b-1e82bb678264","path":"sprites/spr_noisehud/spr_noisehud.yy",},},},"Disabled":false,"id":"dccc7bf3-b5ec-44a4-9789-b59e29e61116","IsCreationKey":false,"Key":2.0,"Length":1.0,"Stretch":false,},

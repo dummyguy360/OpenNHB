@@ -12,8 +12,8 @@
   "managed": true,
   "overriddenProperties": [],
   "parent": {
-    "name": "Objects",
-    "path": "folders/Objects.yy",
+    "name": "Destroyables",
+    "path": "folders/Objects/Level Objects/Destroyables.yy",
   },
   "parentObjectId": {
     "name": "par_bouncysolid",

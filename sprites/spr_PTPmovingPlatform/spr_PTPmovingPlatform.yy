@@ -49,8 +49,8 @@
   },
   "origin": 1,
   "parent": {
-    "name": "Sprites",
-    "path": "folders/Sprites.yy",
+    "name": "Collision",
+    "path": "folders/Sprites/Level Objects/Collision.yy",
   },
   "preMultiplyAlpha": false,
   "sequence": {

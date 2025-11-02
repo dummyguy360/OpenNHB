@@ -25,8 +25,8 @@
   "nineSlice": null,
   "origin": 0,
   "parent": {
-    "name": "GeneratedTileSprites",
-    "path": "folders/Sprites/GeneratedTileSprites.yy",
+    "name": "Tilesets",
+    "path": "folders/Sprites/Backgrounds/Tilesets.yy",
   },
   "preMultiplyAlpha": false,
   "sequence": {

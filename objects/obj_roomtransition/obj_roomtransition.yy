@@ -10,8 +10,8 @@
   "managed": true,
   "overriddenProperties": [],
   "parent": {
-    "name": "Objects",
-    "path": "folders/Objects.yy",
+    "name": "Transisitions",
+    "path": "folders/Objects/HUD/Transisitions.yy",
   },
   "parentObjectId": null,
   "persistent": true,

@@ -49,8 +49,8 @@
   },
   "origin": 0,
   "parent": {
-    "name": "Sprites",
-    "path": "folders/Sprites.yy",
+    "name": "GameFrame",
+    "path": "folders/Sprites/GameFrame.yy",
   },
   "preMultiplyAlpha": false,
   "sequence": {

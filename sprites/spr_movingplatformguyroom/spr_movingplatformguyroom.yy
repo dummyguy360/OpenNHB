@@ -51,8 +51,8 @@
   },
   "origin": 9,
   "parent": {
-    "name": "Sprites",
-    "path": "folders/Sprites.yy",
+    "name": "Moving Platform Guy",
+    "path": "folders/Sprites/Level Objects/Collision/Moving Platform Guy.yy",
   },
   "preMultiplyAlpha": false,
   "sequence": {

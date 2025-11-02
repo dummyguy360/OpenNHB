@@ -32,8 +32,8 @@
   "nineSlice": null,
   "origin": 4,
   "parent": {
-    "name": "Sprites",
-    "path": "folders/Sprites.yy",
+    "name": "HUD",
+    "path": "folders/Sprites/HUD.yy",
   },
   "preMultiplyAlpha": false,
   "sequence": {
@@ -60,7 +60,7 @@
     "showBackdropImage": false,
     "timeUnits": 1,
     "tracks": [
-      {"resourceType":"GMSpriteFramesTrack","resourceVersion":"1.0","name":"frames","builtinName":-1,"events":[],"inheritsTrackColour":true,"interpolation":1,"isCreationTrack":false,"keyframes":{"resourceType":"KeyframeStore<SpriteFrameKeyframe>","resourceVersion":"1.0","Keyframes":[
+      {"resourceType":"GMSpriteFramesTrack","resourceVersion":"1.0","name":"frames","builtinName":0,"events":[],"inheritsTrackColour":true,"interpolation":1,"isCreationTrack":false,"keyframes":{"resourceType":"KeyframeStore<SpriteFrameKeyframe>","resourceVersion":"1.0","Keyframes":[
             {"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"1.0","Channels":{"0":{"resourceType":"SpriteFrameKeyframe","resourceVersion":"1.0","Id":{"name":"f13004ac-77c5-46e4-adb2-d16b70bda97f","path":"sprites/spr_saveindicator/spr_saveindicator.yy",},},},"Disabled":false,"id":"83e1fd83-211b-4af9-9e24-944259a865fa","IsCreationKey":false,"Key":0.0,"Length":1.0,"Stretch":false,},
             {"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"1.0","Channels":{"0":{"resourceType":"SpriteFrameKeyframe","resourceVersion":"1.0","Id":{"name":"b3a91a6d-a3fe-4289-a274-123a059203b7","path":"sprites/spr_saveindicator/spr_saveindicator.yy",},},},"Disabled":false,"id":"665b100a-9bbc-455a-9680-044fbbea6d2a","IsCreationKey":false,"Key":1.0,"Length":1.0,"Stretch":false,},
             {"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"1.0","Channels":{"0":{"resourceType":"SpriteFrameKeyframe","resourceVersion":"1.0","Id":{"name":"ff97bb86-786b-4956-aecb-faebf799e06d","path":"sprites/spr_saveindicator/spr_saveindicator.yy",},},},"Disabled":false,"id":"4a3c26d6-a2ff-468b-96b2-afca9df927b6","IsCreationKey":false,"Key":2.0,"Length":1.0,"Stretch":false,},

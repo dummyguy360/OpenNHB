@@ -49,8 +49,8 @@
   },
   "origin": 1,
   "parent": {
-    "name": "Sprites",
-    "path": "folders/Sprites.yy",
+    "name": "Concept Art",
+    "path": "folders/Sprites/Concept Art.yy",
   },
   "preMultiplyAlpha": false,
   "sequence": {

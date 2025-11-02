@@ -34,8 +34,8 @@
   "nineSlice": null,
   "origin": 4,
   "parent": {
-    "name": "Sprites",
-    "path": "folders/Sprites.yy",
+    "name": "Pumpkin Joe",
+    "path": "folders/Sprites/Level Objects/Enemies/Pumpkin Joe.yy",
   },
   "preMultiplyAlpha": false,
   "sequence": {
@@ -62,7 +62,7 @@
     "showBackdropImage": false,
     "timeUnits": 1,
     "tracks": [
-      {"resourceType":"GMSpriteFramesTrack","resourceVersion":"1.0","name":"frames","builtinName":-1,"events":[],"inheritsTrackColour":true,"interpolation":1,"isCreationTrack":false,"keyframes":{"resourceType":"KeyframeStore<SpriteFrameKeyframe>","resourceVersion":"1.0","Keyframes":[
+      {"resourceType":"GMSpriteFramesTrack","resourceVersion":"1.0","name":"frames","builtinName":0,"events":[],"inheritsTrackColour":true,"interpolation":1,"isCreationTrack":false,"keyframes":{"resourceType":"KeyframeStore<SpriteFrameKeyframe>","resourceVersion":"1.0","Keyframes":[
             {"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"1.0","Channels":{"0":{"resourceType":"SpriteFrameKeyframe","resourceVersion":"1.0","Id":{"name":"e4494127-08ec-419e-baeb-9cd571b7893c","path":"sprites/spr_pumpkinjoe_chase/spr_pumpkinjoe_chase.yy",},},},"Disabled":false,"id":"defa0ad5-bd3c-439f-939b-fdac6c6620e1","IsCreationKey":false,"Key":0.0,"Length":1.0,"Stretch":false,},
             {"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"1.0","Channels":{"0":{"resourceType":"SpriteFrameKeyframe","resourceVersion":"1.0","Id":{"name":"a908168c-d281-4f0c-b70d-74810e8e5b7e","path":"sprites/spr_pumpkinjoe_chase/spr_pumpkinjoe_chase.yy",},},},"Disabled":false,"id":"b420cddc-42fb-466d-8310-b58bf0911835","IsCreationKey":false,"Key":1.0,"Length":1.0,"Stretch":false,},
             {"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"1.0","Channels":{"0":{"resourceType":"SpriteFrameKeyframe","resourceVersion":"1.0","Id":{"name":"08488c8c-98a1-45f4-b396-50f8ec39d4d2","path":"sprites/spr_pumpkinjoe_chase/spr_pumpkinjoe_chase.yy",},},},"Disabled":false,"id":"d826725e-8063-4652-aa4f-185ad74dd622","IsCreationKey":false,"Key":2.0,"Length":1.0,"Stretch":false,},

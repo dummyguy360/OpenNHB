@@ -25,8 +25,8 @@
   "nineSlice": null,
   "origin": 4,
   "parent": {
-    "name": "Sprites",
-    "path": "folders/Sprites.yy",
+    "name": "Snail",
+    "path": "folders/Sprites/Level Objects/Enemies/Snail.yy",
   },
   "preMultiplyAlpha": false,
   "sequence": {

@@ -5,8 +5,8 @@
   "closed": true,
   "kind": 1,
   "parent": {
-    "name": "Paths",
-    "path": "folders/Paths.yy",
+    "name": "Numbered Paths",
+    "path": "folders/Paths/Numbered Paths.yy",
   },
   "points": [
     {"speed":100.0,"x":4928.0,"y":448.0,},

@@ -31,8 +31,8 @@
   "nineSlice": null,
   "origin": 9,
   "parent": {
-    "name": "Sprites",
-    "path": "folders/Sprites.yy",
+    "name": "Philbert",
+    "path": "folders/Sprites/Level Objects/Philbert.yy",
   },
   "preMultiplyAlpha": false,
   "sequence": {
@@ -59,7 +59,7 @@
     "showBackdropImage": false,
     "timeUnits": 1,
     "tracks": [
-      {"resourceType":"GMSpriteFramesTrack","resourceVersion":"1.0","name":"frames","builtinName":-1,"events":[],"inheritsTrackColour":true,"interpolation":1,"isCreationTrack":false,"keyframes":{"resourceType":"KeyframeStore<SpriteFrameKeyframe>","resourceVersion":"1.0","Keyframes":[
+      {"resourceType":"GMSpriteFramesTrack","resourceVersion":"1.0","name":"frames","builtinName":0,"events":[],"inheritsTrackColour":true,"interpolation":1,"isCreationTrack":false,"keyframes":{"resourceType":"KeyframeStore<SpriteFrameKeyframe>","resourceVersion":"1.0","Keyframes":[
             {"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"1.0","Channels":{"0":{"resourceType":"SpriteFrameKeyframe","resourceVersion":"1.0","Id":{"name":"b9c8b7eb-776a-4cc9-ad54-6861b86cbabf","path":"sprites/spr_flyingphilbert_bounce/spr_flyingphilbert_bounce.yy",},},},"Disabled":false,"id":"a310b914-7f66-4869-8c92-c7cf3d6012a0","IsCreationKey":false,"Key":0.0,"Length":1.0,"Stretch":false,},
             {"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"1.0","Channels":{"0":{"resourceType":"SpriteFrameKeyframe","resourceVersion":"1.0","Id":{"name":"f71f6603-d1ce-4adb-afee-8738cd48da04","path":"sprites/spr_flyingphilbert_bounce/spr_flyingphilbert_bounce.yy",},},},"Disabled":false,"id":"d7b38bc7-2f09-4459-9ab5-661998f5b31e","IsCreationKey":false,"Key":1.0,"Length":1.0,"Stretch":false,},
             {"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"1.0","Channels":{"0":{"resourceType":"SpriteFrameKeyframe","resourceVersion":"1.0","Id":{"name":"975cac93-27c0-4a35-b984-378f55da5e5e","path":"sprites/spr_flyingphilbert_bounce/spr_flyingphilbert_bounce.yy",},},},"Disabled":false,"id":"7fda6480-abfd-4b22-8291-f3ba69eb02e1","IsCreationKey":false,"Key":2.0,"Length":1.0,"Stretch":false,},

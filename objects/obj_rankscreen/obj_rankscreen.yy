@@ -13,8 +13,8 @@
   "managed": true,
   "overriddenProperties": [],
   "parent": {
-    "name": "Objects",
-    "path": "folders/Objects.yy",
+    "name": "Ranks",
+    "path": "folders/Objects/HUD/Ranks.yy",
   },
   "parentObjectId": null,
   "persistent": false,

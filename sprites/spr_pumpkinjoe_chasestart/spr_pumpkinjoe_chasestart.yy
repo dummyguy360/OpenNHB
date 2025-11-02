@@ -39,8 +39,8 @@
   "nineSlice": null,
   "origin": 4,
   "parent": {
-    "name": "Sprites",
-    "path": "folders/Sprites.yy",
+    "name": "Pumpkin Joe",
+    "path": "folders/Sprites/Level Objects/Enemies/Pumpkin Joe.yy",
   },
   "preMultiplyAlpha": false,
   "sequence": {

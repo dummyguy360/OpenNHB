@@ -27,8 +27,8 @@
   "nineSlice": null,
   "origin": 4,
   "parent": {
-    "name": "Sprites",
-    "path": "folders/Sprites.yy",
+    "name": "Moving Platform Guy",
+    "path": "folders/Sprites/Level Objects/Collision/Moving Platform Guy.yy",
   },
   "preMultiplyAlpha": false,
   "sequence": {

@@ -32,8 +32,8 @@
   "nineSlice": null,
   "origin": 9,
   "parent": {
-    "name": "Sprites",
-    "path": "folders/Sprites.yy",
+    "name": "Bird",
+    "path": "folders/Sprites/Level Objects/Enemies/Bird.yy",
   },
   "preMultiplyAlpha": false,
   "sequence": {

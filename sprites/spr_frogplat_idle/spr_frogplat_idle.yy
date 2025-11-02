@@ -34,8 +34,8 @@
   "nineSlice": null,
   "origin": 9,
   "parent": {
-    "name": "Sprites",
-    "path": "folders/Sprites.yy",
+    "name": "FrogPlat",
+    "path": "folders/Sprites/Level Objects/Enemies/FrogPlat.yy",
   },
   "preMultiplyAlpha": false,
   "sequence": {

@@ -9,8 +9,8 @@
   "managed": true,
   "overriddenProperties": [],
   "parent": {
-    "name": "Objects",
-    "path": "folders/Objects.yy",
+    "name": "Level Objects",
+    "path": "folders/Objects/Level Objects.yy",
   },
   "parentObjectId": {
     "name": "par_gem",

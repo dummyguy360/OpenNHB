@@ -18,8 +18,8 @@
   "managed": true,
   "overriddenProperties": [],
   "parent": {
-    "name": "Objects",
-    "path": "folders/Objects.yy",
+    "name": "Enemies",
+    "path": "folders/Objects/Level Objects/Enemies.yy",
   },
   "parentObjectId": {
     "name": "par_enemy",

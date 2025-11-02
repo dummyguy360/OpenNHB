@@ -63,8 +63,8 @@
   "nineSlice": null,
   "origin": 9,
   "parent": {
-    "name": "Sprites",
-    "path": "folders/Sprites.yy",
+    "name": "Level Objects",
+    "path": "folders/Sprites/Level Objects.yy",
   },
   "preMultiplyAlpha": false,
   "sequence": {
@@ -91,7 +91,7 @@
     "showBackdropImage": false,
     "timeUnits": 1,
     "tracks": [
-      {"resourceType":"GMSpriteFramesTrack","resourceVersion":"1.0","name":"frames","builtinName":-1,"events":[],"inheritsTrackColour":true,"interpolation":1,"isCreationTrack":false,"keyframes":{"resourceType":"KeyframeStore<SpriteFrameKeyframe>","resourceVersion":"1.0","Keyframes":[
+      {"resourceType":"GMSpriteFramesTrack","resourceVersion":"1.0","name":"frames","builtinName":0,"events":[],"inheritsTrackColour":true,"interpolation":1,"isCreationTrack":false,"keyframes":{"resourceType":"KeyframeStore<SpriteFrameKeyframe>","resourceVersion":"1.0","Keyframes":[
             {"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"1.0","Channels":{"0":{"resourceType":"SpriteFrameKeyframe","resourceVersion":"1.0","Id":{"name":"692de993-5d4c-465b-b85a-80828bc01c7c","path":"sprites/spr_pumpkinface/spr_pumpkinface.yy",},},},"Disabled":false,"id":"0a3b0650-5564-41d9-8cc7-a6fef51de043","IsCreationKey":false,"Key":0.0,"Length":1.0,"Stretch":false,},
             {"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"1.0","Channels":{"0":{"resourceType":"SpriteFrameKeyframe","resourceVersion":"1.0","Id":{"name":"8d4b8256-0adb-49ac-915a-62899c93bc89","path":"sprites/spr_pumpkinface/spr_pumpkinface.yy",},},},"Disabled":false,"id":"d43d1e67-cca2-411b-b402-8c1962be9e4f","IsCreationKey":false,"Key":1.0,"Length":1.0,"Stretch":false,},
             {"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"1.0","Channels":{"0":{"resourceType":"SpriteFrameKeyframe","resourceVersion":"1.0","Id":{"name":"01f2ffaa-f2b6-4221-a21b-a2338e706112","path":"sprites/spr_pumpkinface/spr_pumpkinface.yy",},},},"Disabled":false,"id":"41b242a5-2780-4150-9661-a1fd1bd6b8bb","IsCreationKey":false,"Key":2.0,"Length":1.0,"Stretch":false,},

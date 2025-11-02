@@ -49,8 +49,8 @@
   },
   "origin": 9,
   "parent": {
-    "name": "Sprites",
-    "path": "folders/Sprites.yy",
+    "name": "Dev Videos",
+    "path": "folders/Sprites/HUD/Dev Videos.yy",
   },
   "preMultiplyAlpha": false,
   "sequence": {

@@ -14,8 +14,8 @@
   "managed": true,
   "overriddenProperties": [],
   "parent": {
-    "name": "Objects",
-    "path": "folders/Objects.yy",
+    "name": "Intro",
+    "path": "folders/Objects/HUD/Intro.yy",
   },
   "parentObjectId": {
     "name": "par_billboard",

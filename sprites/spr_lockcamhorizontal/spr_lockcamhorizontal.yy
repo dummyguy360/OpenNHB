@@ -25,8 +25,8 @@
   "nineSlice": null,
   "origin": 0,
   "parent": {
-    "name": "Sprites",
-    "path": "folders/Sprites.yy",
+    "name": "Lock Cam",
+    "path": "folders/Sprites/HUD/Lock Cam.yy",
   },
   "preMultiplyAlpha": false,
   "sequence": {

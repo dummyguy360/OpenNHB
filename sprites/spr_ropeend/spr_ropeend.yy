@@ -26,8 +26,8 @@
   "nineSlice": null,
   "origin": 4,
   "parent": {
-    "name": "Sprites",
-    "path": "folders/Sprites.yy",
+    "name": "Rope",
+    "path": "folders/Sprites/Level Objects/Rope.yy",
   },
   "preMultiplyAlpha": false,
   "sequence": {

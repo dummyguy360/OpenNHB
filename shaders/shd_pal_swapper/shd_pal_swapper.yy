@@ -3,8 +3,8 @@
   "resourceVersion": "1.0",
   "name": "shd_pal_swapper",
   "parent": {
-    "name": "Shaders",
-    "path": "folders/Shaders.yy",
+    "name": "Palette Shaders",
+    "path": "folders/Shaders/Palette Shaders.yy",
   },
   "type": 1,
 }

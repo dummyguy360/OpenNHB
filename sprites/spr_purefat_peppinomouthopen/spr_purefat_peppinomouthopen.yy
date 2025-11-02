@@ -28,8 +28,8 @@
   "nineSlice": null,
   "origin": 0,
   "parent": {
-    "name": "Sprites",
-    "path": "folders/Sprites.yy",
+    "name": "Pure Fat",
+    "path": "folders/Sprites/HUD/Intro/Pure Fat.yy",
   },
   "preMultiplyAlpha": false,
   "sequence": {

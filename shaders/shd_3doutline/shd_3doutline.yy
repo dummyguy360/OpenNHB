@@ -3,8 +3,8 @@
   "resourceVersion": "1.0",
   "name": "shd_3doutline",
   "parent": {
-    "name": "Shaders",
-    "path": "folders/Shaders.yy",
+    "name": "3D Shaders",
+    "path": "folders/Shaders/3D Shaders.yy",
   },
   "type": 1,
 }

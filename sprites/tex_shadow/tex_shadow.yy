@@ -32,8 +32,8 @@
   "nineSlice": null,
   "origin": 4,
   "parent": {
-    "name": "Sprites",
-    "path": "folders/Sprites.yy",
+    "name": "Tile Textures",
+    "path": "folders/Sprites/Backgrounds/Tile Textures.yy",
   },
   "preMultiplyAlpha": false,
   "sequence": {

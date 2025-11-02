@@ -25,8 +25,8 @@
   "nineSlice": null,
   "origin": 7,
   "parent": {
-    "name": "Sprites",
-    "path": "folders/Sprites.yy",
+    "name": "Masks",
+    "path": "folders/Sprites/Level Objects/Masks.yy",
   },
   "preMultiplyAlpha": false,
   "sequence": {

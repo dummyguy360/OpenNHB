@@ -3,8 +3,8 @@
   "resourceVersion": "1.0",
   "name": "shd_billboard_paletted",
   "parent": {
-    "name": "Shaders",
-    "path": "folders/Shaders.yy",
+    "name": "BillBoard Shaders",
+    "path": "folders/Shaders/BillBoard Shaders.yy",
   },
   "type": 1,
 }
