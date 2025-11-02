@@ -23,7 +23,7 @@ function DEBUGMenuItem(arg0, arg1) constructor
 {
     static draw = function(arg0, arg1, arg2)
     {
-        var _c = 16777215;
+        var _c = c_white;
         
         if (arg2)
             _c = 0;

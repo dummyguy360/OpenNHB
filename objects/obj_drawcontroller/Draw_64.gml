@@ -82,7 +82,7 @@ if (scr_hudroom())
     if (_sp != undefined)
     {
         draw_sprite_ext(spr_hoverbar, 0, _sp[0] + 50, _sp[1] - 32, 1, 1, 0, c_white, hovertimerfade);
-        draw_sprite_radial(spr_hoverbar, 1, obj_player.hovertime / obj_player.hovermaxtime, _sp[0] + 50, _sp[1] - 32, 1, 1, 16777215, hovertimerfade, false);
+        draw_sprite_radial(spr_hoverbar, 1, obj_player.hovertime / obj_player.hovermaxtime, _sp[0] + 50, _sp[1] - 32, 1, 1, c_white, hovertimerfade, false);
         draw_sprite_ext(spr_hoverbar, 2, _sp[0] + 50, _sp[1] - 32, 1, 1, 0, c_white, hovertimerflash * hovertimerfade);
     }
     

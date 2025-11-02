@@ -1,5 +1,5 @@
 musicmap = ds_map_create();
-global.music = -4;
+global.music = noone;
 global.pausemusic = event_instance("event:/music/pause");
 add_music(Titlescreen, "event:/music/mainmenu", false);
 add_music(Patch1, "event:/music/patch", false);

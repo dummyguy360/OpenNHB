@@ -4,7 +4,7 @@ var _state = global.switchstate ^^ reverse;
 
 if (!_state)
 {
-    lighting_set(global.worldlightpos.x, global.worldlightpos.y, global.worldlightpos.z, lightlevel, 16777215, 0, 1);
+    lighting_set(global.worldlightpos.x, global.worldlightpos.y, global.worldlightpos.z, lightlevel, c_white, 0, 1);
 }
 else
 {

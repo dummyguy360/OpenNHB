@@ -101,9 +101,7 @@ function scr_player_groundpound()
             instance_create_depth(x, y, depth + 1, obj_groundpoundlines);
     }
     else
-    {
         movespeed = approach(movespeed, 0, 2);
-    }
     
     if (sprite_index == spr_player_groundpound && input_check_pressed("attack"))
         punch();

@@ -1,9 +1,7 @@
 function scr_player_platformlocked()
 {
     if (sprite_index != spr_player_platformhop)
-    {
         sprite_index = spr_player_idle;
-    }
     else
     {
         var _lerpval = image_index - 2;

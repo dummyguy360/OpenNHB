@@ -1,3 +1,4 @@
+///@description Draw Loading Border
 draw_rectangle_colour(0, 0, get_game_width(), get_game_height(), c_black, c_black, c_black, c_black, false);
 var _perc = loadedassets / loadedassetsmax;
 var _w = get_game_width();

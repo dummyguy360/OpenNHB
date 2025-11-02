@@ -97,9 +97,7 @@ function scr_player_sprintjump()
             movespeed = approach(movespeed, 8, 0.5);
     }
     else if (!momentum)
-    {
         movespeed = approach(movespeed, 0, 2);
-    }
     
     if (dir != image_xscale)
     {
@@ -140,13 +138,13 @@ function scr_player_sprintjump()
     else if (slidebuffer > 0)
         groundpoundstart();
     
-    if (speedlinesobj == -4 && movespeed > 11)
+    if (speedlinesobj == noone && movespeed > 11)
         speedlinesobj = instance_create_depth(x, y, z + 1, obj_speedlines);
     
     if (instance_exists(speedlinesobj) && movespeed <= 11)
     {
         instance_destroy(speedlinesobj);
-        speedlinesobj = -4;
+        speedlinesobj = noone;
     }
     
     attack();

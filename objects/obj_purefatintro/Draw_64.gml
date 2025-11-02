@@ -1,7 +1,7 @@
 introstate = fmod_studio_event_instance_get_parameter_by_name(introaudio, "purefat").final_value;
 var _xoff = (get_game_width() - 960) / 2;
 var _yoff = (get_game_height() - 540) / 2;
-var _c = 16777215;
+var _c = c_white;
 
 if (introstate == UnknownEnum.Value_6 || introstate == UnknownEnum.Value_7)
     _c = 0;

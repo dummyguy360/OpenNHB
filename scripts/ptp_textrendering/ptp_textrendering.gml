@@ -72,8 +72,35 @@ function define_font_globals()
     global.FONTEXTRA[global.font] = [spr_controllerbuttons, spr_keyboardkey, spr_keyfunctions, global.keyfont, 40, 0, 0, 6];
     global.FONTEXTRA[global.toonfont] = [spr_controllerbuttons, spr_keyboardkey, spr_keyfunctions, global.keyfont, 40, 0, 0, 6];
     global.FONTEXTRA[font_warning] = [spr_controllerbuttons, spr_keyboardkey, spr_keyfunctions, global.keyfont, 40, 0, 0, 0];
-    global.FONTDEF = [["font_caption", font_caption], ["font_debug", font_debug], ["font_warning", font_warning], ["font_fat", global.font], ["font_toon", global.toonfont]];
-    global.COLOURDEF = [["c_aqua", 16776960], ["c_black", 0], ["c_blue", 16711680], ["c_dkgrey", 4210752], ["c_fuchsia", 16711935], ["c_grey", 8421504], ["c_green", 32768], ["c_lime", 65280], ["c_ltgrey", 12632256], ["c_maroon", 128], ["c_navy", 8388608], ["c_olive", 32896], ["c_purple", 8388736], ["c_red", 255], ["c_silver", 12632256], ["c_teal", 8421376], ["c_white", 16777215], ["c_yellow", 65535]];
+    global.FONTDEF = 
+	[
+		["font_caption", font_caption], 
+		["font_debug", font_debug], 
+		["font_warning", font_warning], 
+		["font_fat", global.font], 
+		["font_toon", global.toonfont]
+	];
+    global.COLOURDEF = 
+	[
+		["c_aqua", c_aqua], 
+		["c_black", c_black], 
+		["c_blue", c_blue], 
+		["c_dkgrey", 4210752], 
+		["c_fuchsia", c_fuchsia], 
+		["c_grey", c_grey], 
+		["c_green", c_green], 
+		["c_lime", c_lime], 
+		["c_ltgrey", c_ltgrey], 
+		["c_maroon", c_maroon], 
+		["c_navy", c_navy], 
+		["c_olive", c_olive], 
+		["c_purple", c_purple], 
+		["c_red", c_red], 
+		["c_silver", c_silver], 
+		["c_teal", c_teal], 
+		["c_white", c_white], 
+		["c_yellow", c_yellow]
+	];
 }
 
 function draw_input(arg0, arg1, arg2, arg3, arg4, arg5 = true, arg6 = input_profile_get(), arg7 = 0, arg8 = spr_controllerbuttons, arg9 = spr_keyboardkey, arg10 = spr_keyfunctions, arg11 = global.keyfont, arg12 = 0)
@@ -275,7 +302,7 @@ function string_height_fancy(arg0)
     return _height;
 }
 
-function draw_text_fancy(arg0, arg1, arg2, arg3 = 16777215, arg4 = 1, arg5 = true, arg6 = input_profile_get(), arg7 = 0, arg8 = false)
+function draw_text_fancy(arg0, arg1, arg2, arg3 = c_white, arg4 = 1, arg5 = true, arg6 = input_profile_get(), arg7 = 0, arg8 = false)
 {
     var _font = draw_get_font();
     var _halign = draw_get_halign();
@@ -355,72 +382,198 @@ function draw_text_fancy(arg0, arg1, arg2, arg3 = 16777215, arg4 = 1, arg5 = tru
         }
         else
         {
-            switch (_input)
+			switch (_input)
             {
                 case "{S}":
                     _shake = true;
                     i += 2;
-                    continue;
-            }
-            
-            if (!game_paused() || arg8)
-            {
-                if (_shake)
-                {
-                    _xoff = irandom_range(-1, 1);
-                    _yoff = irandom_range(-1, 1);
-                }
-                
-                _vertshakedir = !_vertshakedir;
-                
-                if (_vertshake)
-                    _yoff = _vertshakedir;
-                
-                if (_wave)
-                    _yoff = wave(-2, 2, 1, (i - 1) * 250);
-                
-                if (_rotwave)
-                    _rotoff = wave(-12, 12, 1, (i - 1) * 50);
-            }
-            
-            if (!is_undefined(ds_map_find_value(global.inputs, _input)))
-            {
-                var _verb = ds_map_find_value(global.inputs, _input);
-                array_push(_drawinputs, [round(arg0 + global.FONTEXTRA[_font][5] + _xoff), round(arg1 + global.FONTEXTRA[_font][6] + _yoff), _rotoff, _verb, _font]);
-                arg0 += global.FONTEXTRA[_font][4];
-                i += 2;
-            }
-            else
-            {
-                _width = string_width(_char);
-                _height = string_height(_char);
-                var _rotxoff = (_width / 2) - lengthdir_x(_width / 2, _rotoff);
-                var _rotyoff = (_height / 2) - lengthdir_y(_height / 2, _rotoff - 90);
-                _rotxoff -= ((_height / 2) - lengthdir_y(_height / 2, _rotoff) - (_height / 2));
-                _rotyoff -= ((_width / 2) - lengthdir_x(_width / 2, _rotoff - 90) - (_width / 2));
-                var _charx = round(arg0 + _xoff) + _rotxoff;
-                var _chary = round(arg1 + _yoff) + _rotyoff;
-                draw_text_transformed_colour(_charx, _chary, _char, 1, 1, _rotoff, arg3, arg3, arg3, arg3, arg4);
-                _prevshader = shader_current();
-                var _prevalpha = draw_get_alpha();
-                shader_reset();
-                draw_set_alpha(arg4);
-                
-                if (_hyperlink != -1)
-                {
-                    draw_line(_charx - 1, _chary + string_height(_char), _charx + string_width(_char) + 1, _chary + string_height(_char));
-                    
-                    if (point_in_rectangle(global.screenmouse_x, global.screenmouse_y, _charx - 1, _chary - 1, _charx + string_width(_char) + 1, _chary + _lineheight))
+                    break;
+					
+                case "{V}":
+                    _vertshake = true;
+                    i += 2;
+                    break;
+					
+                case "{W}":
+                    _wave = true;
+                    i += 2;
+                    break;
+					
+                case "{R}":
+                    _rotwave = true;
+                    i += 2;
+                    break;
+					
+                case "{H:":
+                    i += 2;
+                    var _startpos = i + 1;
+                    var _endpos = string_pos_ext("}", arg2, i);
+                    i = _endpos;
+                    _hyperlink = string_copy(arg2, _startpos, (_endpos - _startpos));
+                    break;
+					
+                case "{F:":
+                    i += 2;
+                    _startpos = i + 1;
+                    _endpos = string_pos_ext("}", arg2, i);
+                    i = _endpos;
+                    var _fnt = string_copy(arg2, _startpos, (_endpos - _startpos));
+                    var f = 0;
+					
+                    while (f < array_length(global.FONTDEF))
                     {
-                        obj_drawcontroller.hovering = true;
-                        obj_drawcontroller.clicklink = _hyperlink;
-                        obj_drawcontroller.alarm[0] = 2;
+                        if (global.FONTDEF[f][0] == _fnt)
+                        {
+                            draw_set_font(global.FONTDEF[f][1]);
+                            _font = global.FONTDEF[f][1];
+                            break;
+                        }
+                        else
+                        {
+                            f++
+                            continue;
+                        }
                     }
-                }
-                
-                draw_set_alpha(_prevalpha);
-                shader_set(_prevshader);
-                arg0 += string_width(_char);
+                    break;
+					
+                case "{C:":
+                    i += 2;
+                    _startpos = i + 1;
+                    _endpos = string_pos_ext("}", arg2, i);
+                    i = _endpos;
+                    var _col = string_copy(arg2, _startpos, (_endpos - _startpos));
+                    var _colset = false;
+                    var c = 0;
+					
+                    while (c < array_length(global.COLOURDEF))
+                    {
+                        if (global.COLOURDEF[c][0] == _col)
+                        {
+                            draw_set_colour(global.COLOURDEF[c][1]);
+                            arg3 = global.COLOURDEF[c][1];
+                            _colset = true;
+                            break;
+                        }
+                        else
+                        {
+                            c++
+                            continue;
+                        }
+                    }
+                    if (_colset == false)
+                    {
+                        var _hexcol = hexstr_to_col(_col);
+                        draw_set_colour(_hexcol);
+                        arg3 = _hexcol;
+                    }
+                    break;
+					
+                case "{/S":
+                    _shake = false;
+                    i += 3;
+                    break;
+					
+                case "{/V":
+                    _vertshake = false;
+                    i += 3;
+                    break;
+					
+                case "{/W":
+                    _wave = false;
+                    i += 3;
+                    break;
+					
+                case "{/R":
+                    _rotwave = false;
+                    i += 3;
+                    break;
+					
+                case "{/H":
+                    _hyperlink = -1;
+                    i += 3;
+                    break;
+					
+                case "{/F":
+                    draw_set_font(_codefont);
+                    _font = _codefont;
+                    i += 3;
+                    break;
+					
+                case "{/C":
+                    draw_set_colour(_codecolour);
+                    arg3 = _codecolour;
+                    i += 3;
+                    break;
+					
+                case "{/}":
+                    _shake = false;
+                    _vertshake = false;
+                    _wave = false;
+                    _rotwave = false;
+                    _hyperlink = -1;
+                    draw_set_font(_codefont);
+                    draw_set_colour(_codecolour);
+                    arg3 = _codecolour;
+                    i += 2;
+                    break;
+					
+                default:
+                    if (!game_paused() || arg8)
+                    {
+                        if (_shake)
+                        {
+                            _xoff = irandom_range(-1, 1);
+                            _yoff = irandom_range(-1, 1);
+                        }
+						
+                        _vertshakedir = !_vertshakedir;
+						
+                        if (_vertshake)
+                            _yoff = _vertshakedir;
+                        if (_wave)
+                            _yoff = wave(-2, 2, 1, ((i - 1) * 250));
+                        if (_rotwave)
+                            _rotoff = wave(-12, 12, 1, ((i - 1) * 50));
+                    }
+                    if !is_undefined(ds_map_find_value(global.inputs, _input))
+                    {
+                        var _verb = ds_map_find_value(global.inputs, _input);
+                        array_push(_drawinputs, [round(arg0 + global.FONTEXTRA[_font][5] + _xoff), round(arg1 + global.FONTEXTRA[_font][6] + _yoff), _rotoff, _verb, _font]);
+                        arg0 += global.FONTEXTRA[_font][4];
+                        i += 2;
+                        break;
+                    }
+                    else
+                    {
+                        _width = string_width(_char);
+                        _height = string_height(_char);
+                        _rotxoff = _width / 2 - (lengthdir_x((_width / 2), _rotoff));
+                        _rotyoff = _height / 2 - (lengthdir_y((_height / 2), (_rotoff - 90)));
+                        _rotxoff -= (_height / 2 - (lengthdir_y((_height / 2), _rotoff)) - _height / 2);
+                        _rotyoff -= (_width / 2 - (lengthdir_x((_width / 2), (_rotoff - 90))) - _width / 2);
+                        var _charx = (round(arg0 + _xoff)) + _rotxoff;
+                        var _chary = (round(arg1 + _yoff)) + _rotyoff;
+                        draw_text_transformed_colour(_charx, _chary, _char, 1, 1, _rotoff, arg3, arg3, arg3, arg3, arg4);
+                        _prevshader = shader_current();
+                        var _prevalpha = draw_get_alpha();
+                        shader_reset();
+                        draw_set_alpha(arg4);
+						
+                        if (_hyperlink != -1)
+                        {
+                            draw_line((_charx - 1), (_chary + string_height(_char)), (_charx + string_width(_char) + 1), (_chary + string_height(_char)));
+                            if point_in_rectangle(global.screenmouse_x, global.screenmouse_y, (_charx - 1), (_chary - 1), (_charx + string_width(_char) + 1), (_chary + _lineheight))
+                            {
+                                obj_drawcontroller.hovering = true;
+                                obj_drawcontroller.clicklink = _hyperlink;
+                                obj_drawcontroller.alarm[0] = 2;
+                            }
+                        }
+						
+                        draw_set_alpha(_prevalpha);
+                        shader_set(_prevshader);
+                        arg0 += string_width(_char);
+                    }
             }
         }
     }

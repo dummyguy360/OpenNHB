@@ -88,9 +88,7 @@ function scr_player_crouch()
                 sprite_index = spr_player_land;
         }
         else
-        {
             sprite_index = spr_player_idle;
-        }
         
         image_index = 0;
     }

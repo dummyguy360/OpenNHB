@@ -1,5 +1,61 @@
-var groupstobeloaded = ["Default", "player", "hud", "texture3d", "effectsandparticles"];
-modellist = [["DeathPlatform", "DeathPlatformWIREFRAME", "AscensionPlatform"], ["Crate", "CrateQUESTION", "CrateARROW", "CrateNITROARROW", "CrateTNT", "CrateTNTTIMER1", "CrateTNTTIMER2", "CrateTNTTIMER3", "CratePOW", "CrateNITRO", "CrateFLAME", "CrateMASK", "CrateCOUNTER", "CrateSWITCHHAPPY", "CrateSWITCHSAD", "CrateHAPPY", "CrateSAD"], "CrateBOUNCE", "Checkpoint", "CheckpointDESTROYED", "ChocolatePlatform", "NitroDetonator", "NitroDetonatorACTIVATED", "Gem", "GemCOLOURED", "Crystal", "EndPlatform", "TitleGROUND", "TitleHOUSE", "Outhouse", "OuthouseDOOR"];
+///@description Init Text Groups and Models
+#region Texture Groups
+var groupstobeloaded = 
+[
+	"Default", 
+	"player", 
+	"hud", 
+	"texture3d", 
+	"effectsandparticles"
+];
+#endregion
+#region Models
+modellist = 
+[
+	//Platforms
+	[
+		"DeathPlatform", 
+		"DeathPlatformWIREFRAME", 
+		"AscensionPlatform"
+	], 
+	// Crates
+	[
+		"Crate", 
+		"CrateQUESTION", 
+		"CrateARROW", 
+		"CrateNITROARROW", 
+		"CrateTNT", 
+		"CrateTNTTIMER1", 
+		"CrateTNTTIMER2", 
+		"CrateTNTTIMER3", 
+		"CratePOW", 
+		"CrateNITRO", 
+		"CrateFLAME", 
+		"CrateMASK", 
+		"CrateCOUNTER", 
+		"CrateSWITCHHAPPY", 
+		"CrateSWITCHSAD", 
+		"CrateHAPPY", 
+		"CrateSAD"
+	], 
+	// Others
+	"CrateBOUNCE", 
+	"Checkpoint", 
+	"CheckpointDESTROYED", 
+	"ChocolatePlatform", 
+	"NitroDetonator", 
+	"NitroDetonatorACTIVATED", 
+	"Gem", 
+	"GemCOLOURED", 
+	"Crystal", 
+	"EndPlatform", 
+	"TitleGROUND", 
+	"TitleHOUSE", 
+	"Outhouse", 
+	"OuthouseDOOR"
+];
+#endregion
+
 texturelist = array_create(0);
 
 for (var i = 0; i < array_length(groupstobeloaded); i++)

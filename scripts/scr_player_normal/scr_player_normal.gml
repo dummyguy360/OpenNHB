@@ -172,9 +172,7 @@ function scr_player_normal()
         }
     }
     else
-    {
         downslide();
-    }
     
     if (grounded)
     {
@@ -273,7 +271,5 @@ function scr_player_normal()
         }
     }
     else
-    {
         stepped = false;
-    }
 }

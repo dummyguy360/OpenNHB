@@ -65,7 +65,5 @@ function scr_player_fakewalk()
         }
     }
     else
-    {
         stepped = false;
-    }
 }

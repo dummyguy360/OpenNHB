@@ -35,9 +35,7 @@ function scr_playersounds()
             event_set_3d_position_struct(machsnd, _attr);
         }
         else
-        {
             event_stop(machsnd, 1);
-        }
         
         if (state == states.standstillrun)
         {
@@ -45,9 +43,7 @@ function scr_playersounds()
                 fmod_studio_event_instance_start(runinplacesnd);
         }
         else
-        {
             event_stop(runinplacesnd, 1);
-        }
         
         if (state == states.wallslide)
         {
@@ -55,9 +51,7 @@ function scr_playersounds()
                 fmod_studio_event_instance_start(wallslidesnd);
         }
         else
-        {
             event_stop(wallslidesnd, 1);
-        }
         
         if (event_isplaying(groundpoundsnd) && (state != states.groundpound || (state == states.groundpound && sprite_index == spr_player_groundpoundland)))
             event_stop(groundpoundsnd, 1);

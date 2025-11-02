@@ -1,3 +1,4 @@
+///@description Phase 2 (Model Loading)
 if (array_length(modellist) > 0)
 {
     loadedassets++;

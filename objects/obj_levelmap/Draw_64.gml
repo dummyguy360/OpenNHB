@@ -203,7 +203,7 @@ if ((openanim + closeanim) > 0)
         if (outhouse != -1 && invcharge > 0)
         {
             draw_sprite_ext(spr_outhousecursor_select, 0, _gw / 2, _gh / 2, 1, 1, 0, c_white, openanim - closeanim);
-            draw_sprite_radial(spr_outhousecursor_select, 1, invcharge / 30, _gw / 2, _gh / 2, 1, 1, 16777215, openanim - closeanim);
+            draw_sprite_radial(spr_outhousecursor_select, 1, invcharge / 30, _gw / 2, _gh / 2, 1, 1, c_white, openanim - closeanim);
         }
         else
         {
@@ -239,7 +239,7 @@ if ((openanim + closeanim) > 0)
     _tiptext += string_get("menu/map/movetip");
     draw_set_valign(fa_bottom);
     draw_set_halign(fa_right);
-    draw_text_fancy(_gw - 20, _gh - 20, _tiptext, 16777215, openanim - closeanim, true);
+    draw_text_fancy(_gw - 20, _gh - 20, _tiptext, c_white, openanim - closeanim, true);
     var _ind = 2;
     
     if (canswap && _roomind != -1)

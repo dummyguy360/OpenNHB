@@ -34,9 +34,7 @@ function scr_player_wallslide()
         image_index = 0;
         
         if (vsp < 0)
-        {
             sprite_index = spr_player_wallslidecancelup;
-        }
         else
         {
             sprite_index = spr_player_wallslidecanceldown;

@@ -54,16 +54,16 @@ else
     if (endtiptimer <= 0)
     {
         draw_set_halign(fa_center);
-        draw_text_fancy(get_game_width() / 2, get_game_height() - 32, endtipstr, 16777215, 1);
+        draw_text_fancy(get_game_width() / 2, get_game_height() - 32, endtipstr, c_white, 1);
     }
     
     var _x1 = lerp(0, get_game_width() / 2, perfectfade);
     var _x2 = lerp(get_game_width(), get_game_width() / 2, perfectfade);
     var _y = get_game_height() / 2;
     draw_set_halign(fa_right);
-    draw_text_fancy(_x1, _y, perfectstrs[0], 16777215, 1);
+    draw_text_fancy(_x1, _y, perfectstrs[0], c_white, 1);
     draw_set_halign(fa_left);
-    draw_text_fancy(_x2, _y, perfectstrs[1], 16777215, 1);
+    draw_text_fancy(_x2, _y, perfectstrs[1], c_white, 1);
     draw_sprite_ext(spr_creditsbluesphere, 0, _x1 - perfectwidths[0] - 16, _y, 1, 1, 0, c_white, 1);
     draw_sprite_ext(spr_creditsbluesphere, 0, _x2 + perfectwidths[1] + 16, _y, -1, 1, 0, c_white, 1);
 }

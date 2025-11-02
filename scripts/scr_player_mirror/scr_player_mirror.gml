@@ -15,10 +15,8 @@ function scr_player_mirror()
     
     var _mirror = instance_place(x, y, obj_mirror);
     
-    if (_mirror == -4)
-    {
+    if (_mirror == noone)
         endState();
-    }
     else
     {
         if (sprite_index == spr_player_platformhop)
@@ -59,9 +57,7 @@ function scr_player_mirror()
             visible = false;
         }
         else
-        {
             playSfx = false;
-        }
     }
     
     image_speed = 0.35;

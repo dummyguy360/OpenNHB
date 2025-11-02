@@ -53,15 +53,11 @@ function scr_player_downslide()
     if (slidetime <= 0)
     {
         if (ceilingcheck)
-        {
             state = states.crouch;
-        }
         else if (grounded)
         {
             if (!holdingdown)
-            {
                 state = states.normal;
-            }
             else
             {
                 state = states.crouch;

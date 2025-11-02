@@ -1,20 +1,20 @@
-function draw_sprite_billboard_ext(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10)
+function draw_sprite_billboard_ext(_sprite, _index, _x, _y, _z, _xscale, _yscale, _rot, _col, _alpha, _usepal)
 {
     shader_set(shd_billboard);
     
-    if (arg10 == true)
+    if (_usepal == true)
         pal_swap_set(palettespr, curpalette, false);
     
-    matrix_set(2, matrix_build(arg2, arg3, arg4, 0, 0, 0, 1, 1, 1));
-    draw_sprite_ext(arg0, arg1, 0, 0, arg5, arg6, arg7, arg8, arg9);
+    matrix_set(2, matrix_build(_x, _y, _z, 0, 0, 0, 1, 1, 1));
+    draw_sprite_ext(_sprite, _index, 0, 0, _xscale, _yscale, _rot, _col, _alpha);
     matrix_set(2, matrix_build_identity());
     shader_reset();
 }
 
-function draw_sprite_3d_ext(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9)
+function draw_sprite_3d_ext(_sprite, _index, _x, _y, _z, _xscale, _yscale, _rot, _col, _alpha)
 {
-    matrix_set(2, matrix_build(arg2, arg3, arg4, 0, 0, 0, 1, 1, 1));
-    draw_sprite_ext(arg0, arg1, 0, 0, arg5, arg6, arg7, arg8, arg9);
+    matrix_set(2, matrix_build(_x, _y, _z, 0, 0, 0, 1, 1, 1));
+    draw_sprite_ext(_sprite, _index, 0, 0, _xscale, _yscale, _rot, _col, _alpha);
     matrix_set(2, matrix_build_identity());
 }
 

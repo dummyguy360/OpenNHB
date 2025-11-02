@@ -3,7 +3,7 @@ function scr_player_rope()
     if (!instance_exists(ropeID))
     {
         state = states.normal;
-        ropeID = -4;
+        ropeID = noone;
         exit;
     }
     
@@ -15,9 +15,7 @@ function scr_player_rope()
         sprite_index = spr_player_ropeswing;
     }
     else
-    {
         sprite_index = spr_player_rope;
-    }
     
     hsp = 0;
     vsp = 0;

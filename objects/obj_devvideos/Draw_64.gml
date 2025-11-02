@@ -13,9 +13,7 @@ var _w = 960 * _scale;
 var _h = 540 * _scale;
 
 if (!started)
-{
     draw_sprite_stretched_ext(spr_1x1, 0, _x, _y, _w, _h, c_black, 1);
-}
 else if (_playbackdata[0] == 0)
 {
     if (!surface_exists(lastframe))

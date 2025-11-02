@@ -15,7 +15,7 @@
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Extensions","folderPath":"folders/Extensions.yy",},
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"FMOD","folderPath":"folders/Extensions/FMOD.yy",},
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Gameframe","folderPath":"folders/Extensions/Gameframe.yy",},
-    {"resourceType":"GMFolder","resourceVersion":"1.0","name":"GMLive_TEMP","folderPath":"folders/Extensions/GMLive_TEMP.yy",},
+    {"resourceType":"GMFolder","resourceVersion":"1.0","name":"GMLive","folderPath":"folders/Extensions/GMLive.yy",},
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Fonts","folderPath":"folders/Fonts.yy",},
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Notes","folderPath":"folders/Notes.yy",},
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Objects","folderPath":"folders/Objects.yy",},

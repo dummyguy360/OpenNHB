@@ -63,7 +63,7 @@ function scr_player_tornado()
     if (tornadoendbuffer <= 0)
         state = states.normal;
     
-    if (speedlinesobj == -4)
+    if (speedlinesobj == noone)
         speedlinesobj = instance_create_depth(x, y, z + 1, obj_speedlines);
     
     image_speed = 0.4;

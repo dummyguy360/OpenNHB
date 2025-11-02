@@ -21,9 +21,7 @@ if (!started)
         video_enable_loop(false);
     }
     else
-    {
         exit;
-    }
 }
 
 if (changeflash >= 1 && _status == 0)
@@ -80,11 +78,7 @@ if (input_check_pressed("jump"))
         video_enable_loop(false);
     }
     else if (_status == 2)
-    {
         video_pause();
-    }
     else if (_status == 3)
-    {
         video_resume();
-    }
 }

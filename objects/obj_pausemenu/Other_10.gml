@@ -4,7 +4,7 @@ if (global.noControlType)
     draw_set_font(global.font);
     draw_set_valign(fa_middle);
     draw_set_halign(fa_center);
-    draw_text_fancy(get_game_width() / 2, get_game_height() / 2, string_get("menu/noinput"), 16777215, 1, true, input_profile_get(), 0, true);
+    draw_text_fancy(get_game_width() / 2, get_game_height() / 2, string_get("menu/noinput"), c_white, 1, true, input_profile_get(), 0, true);
     draw_sprite_ext(spr_controllerdisconnected, nocontrollerind, 0, get_game_height(), 1, 1, 0, c_white, 1);
 }
 

@@ -19,7 +19,7 @@ function scr_createparticle(arg0 = true, arg1, arg2, arg3, arg4, arg5 = 1, arg6 
         if (sprite_index == spr_star && is_undefined(arg14))
             image_blend = choose(make_color_rgb(255, 255, 0), make_color_rgb(255, 208, 18), make_color_rgb(255, 208, 133));
         else
-            image_blend = arg14 ?? 16777215;
+            image_blend = arg14 ?? c_white;
     }
     
     return _id;
@@ -223,8 +223,8 @@ function draw_3d_cone(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)
         {
             var cci = cc[i];
             var ssi = ss[i];
-            vertex(vb, 0, r, 0, 0, 1, 0, lerp(uvs[0], uvs[2], hsteps * i), uvs[3], 16777215, 1);
-            vertex(vb, cci * r, nr, ssi * r, cci, 0, ssi, lerp(uvs[0], uvs[2], hsteps * i), uvs[1], 16777215, 1);
+            vertex(vb, 0, r, 0, 0, 1, 0, lerp(uvs[0], uvs[2], hsteps * i), uvs[3], c_white, 1);
+            vertex(vb, cci * r, nr, ssi * r, cci, 0, ssi, lerp(uvs[0], uvs[2], hsteps * i), uvs[1], c_white, 1);
         }
         
         vertex_end(vb);
@@ -238,9 +238,9 @@ function draw_3d_cone(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)
             var ssi = ss[i] / 2;
             var cci2 = cc[i - 1] / 2;
             var ssi2 = ss[i - 1] / 2;
-            vertex(vb_bottom, 0, 0, 0, 0, 1, 0, lerp(uvs[0], uvs[2], 0.5), lerp(uvs[1], uvs[3], 0.5), 16777215, 1);
-            vertex(vb_bottom, cci, 0, ssi, 0, -1, 0, lerp(uvs[0], uvs[2], 0.5 + cci), lerp(uvs[1], uvs[3], 0.5 + ssi), 16777215, 1);
-            vertex(vb_bottom, cci2, 0, ssi2, 0, -1, 0, lerp(uvs[0], uvs[2], 0.5 + cci2), lerp(uvs[1], uvs[3], 0.5 + ssi2), 16777215, 1);
+            vertex(vb_bottom, 0, 0, 0, 0, 1, 0, lerp(uvs[0], uvs[2], 0.5), lerp(uvs[1], uvs[3], 0.5), c_white, 1);
+            vertex(vb_bottom, cci, 0, ssi, 0, -1, 0, lerp(uvs[0], uvs[2], 0.5 + cci), lerp(uvs[1], uvs[3], 0.5 + ssi), c_white, 1);
+            vertex(vb_bottom, cci2, 0, ssi2, 0, -1, 0, lerp(uvs[0], uvs[2], 0.5 + cci2), lerp(uvs[1], uvs[3], 0.5 + ssi2), c_white, 1);
         }
         
         vertex_end(vb_bottom);
@@ -321,7 +321,7 @@ function has_gem(arg0)
     return bit_get(global.gems, arg0);
 }
 
-function lighting_set(arg0, arg1, arg2, arg3 = 1, arg4 = 16777215, arg5 = 0, arg6 = 1, arg7 = false, arg8 = false)
+function lighting_set(arg0, arg1, arg2, arg3 = 1, arg4 = c_white, arg5 = 0, arg6 = 1, arg7 = false, arg8 = false)
 {
     var _shd = shd_basiclighting;
     var u_light = shader_get_uniform(_shd, "u_Light");
@@ -375,7 +375,7 @@ function combosparkles()
 {
     if (sparkletimer <= 0)
     {
-        scr_createparticle(true, x + random_range(-10, 10), y + random_range(-10, 10), z - 1, choose(spr_collectsparkleeffect1, spr_collectsparkleeffect2), image_xscale, image_yscale, 0, 0.5, 0, 0, 0, 0, 0, 65535);
+        scr_createparticle(true, x + random_range(-10, 10), y + random_range(-10, 10), z - 1, choose(spr_collectsparkleeffect1, spr_collectsparkleeffect2), image_xscale, image_yscale, 0, 0.5, 0, 0, 0, 0, 0, c_yellow);
         sparkletimer = 5;
     }
 }

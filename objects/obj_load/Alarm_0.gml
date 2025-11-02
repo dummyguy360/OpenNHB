@@ -1,3 +1,4 @@
+///@description Phase 1 (Texture Loading)
 if (array_length(texturelist) > 0)
 {
     loadedassets++;

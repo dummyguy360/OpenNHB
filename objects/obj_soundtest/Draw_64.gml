@@ -18,7 +18,7 @@ draw_text_fancy(20, 20, string_get("menu/soundtest/uptop"));
 
 for (var i = 0; i < array_length(musiclist); i++)
 {
-    var _c = 16777215;
+    var _c = c_white;
     var _a = 0.5;
     
     if (selected == i)

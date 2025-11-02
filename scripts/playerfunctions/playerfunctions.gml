@@ -21,7 +21,7 @@ enum playerdeath
 	firedeath
 }
 
-function scr_hurtplayer(arg0 = 1, arg1 = playerdeath.normal, arg2 = false, arg3 = 1)
+function scr_hurtplayer(damage = 1, deathtype = playerdeath.normal, override = false, mvspeed = 1)
 {
     with (obj_player)
     {
@@ -34,7 +34,7 @@ function scr_hurtplayer(arg0 = 1, arg1 = playerdeath.normal, arg2 = false, arg3 
         if (state == states.dead)
             return false;
         
-        var _hpmul = max(1, arg0 / 2);
+        var _hpmul = max(1, damage / 2);
         
         if (wrathofcortex)
         {
@@ -42,17 +42,18 @@ function scr_hurtplayer(arg0 = 1, arg1 = playerdeath.normal, arg2 = false, arg3 
             save_easteregg("gatherTheGemsNotTheCrystals");
         }
         
-        if ((state != states.hurt && !hurt) || (state != states.hurt && arg2))
+        if ((state != states.hurt && !hurt) || (state != states.hurt && override))
         {
             var _prevhp = hp;
-            hp = max(hp - arg0, 0);
+            hp = max(hp - damage, 0);
             
+			// Stun if some HP left
             if (hp > 0)
             {
                 state = states.hurt;
                 hurt = 1;
                 sprite_index = choose(spr_player_hurt, spr_player_hurt2);
-                movespeed = -2 * arg3;
+                movespeed = -2 * mvspeed;
                 vsp = -10;
                 
                 if (_prevhp > hp)
@@ -64,6 +65,8 @@ function scr_hurtplayer(arg0 = 1, arg1 = playerdeath.normal, arg2 = false, arg3 
                 player_voice_hurt();
                 gamepadvibrate(0.2, 0, 20);
             }
+			// Kill the Noise
+			// if no HP left
             else
             {
                 hsp = 0;
@@ -74,7 +77,7 @@ function scr_hurtplayer(arg0 = 1, arg1 = playerdeath.normal, arg2 = false, arg3 
                 if (!in_deathroute())
                     global.playerhit = true;
                 
-                switch (arg1)
+                switch (deathtype)
                 {
                     case playerdeath.firedeath:
                         scr_fmod_soundeffectONESHOT("event:/sfx/player/firedeath", x, y);
@@ -165,20 +168,20 @@ function player_restore_state()
     }
 }
 
-function hitstun(arg0)
+function hitstun(_time)
 {
     with (obj_player)
     {
         player_save_state();
-        hitstuntime = arg0;
+        hitstuntime = _time;
         state = states.hitstun;
     }
     
     with (par_enemy)
-        hitstuntime = arg0;
+        hitstuntime = _time;
 }
 
-function player_reset(arg0 = true, arg1 = true, arg2 = true)
+function player_reset(_restart_music = true, _restart_level = true, _restart_HUD = true)
 {
     with (obj_player)
     {
@@ -201,8 +204,8 @@ function player_reset(arg0 = true, arg1 = true, arg2 = true)
         hurt = 0;
         decel = 0;
         momentum = 0;
-        lastslipperyplat = -4;
-        movingplatID = -4;
+        lastslipperyplat = noone;
+        movingplatID = noone;
         landanim = 0;
         palettespr = spr_noisepalette;
         onslipperyplat = false;
@@ -213,7 +216,7 @@ function player_reset(arg0 = true, arg1 = true, arg2 = true)
         particlecooldown5 = 0;
         particlecooldown6 = 0;
         coyotetime = 7;
-        speedlinesobj = -4;
+        speedlinesobj = noone;
         jumpbuffer = 0;
         attackbuffer = 0;
         slidebuffer = 0;
@@ -224,12 +227,12 @@ function player_reset(arg0 = true, arg1 = true, arg2 = true)
         cartwheelcooldown = 0;
         mach3crashtimer = 0;
         hitstuntime = 0;
-        ropeID = -4;
+        ropeID = noone;
         targetdoor = 0;
-        targetroom = -4;
-        ondeathplatform = -4;
+        targetroom = noone;
+        ondeathplatform = noone;
         diddeathroute = false;
-        targetouthouse = -4;
+        targetouthouse = noone;
         canchangedir = 1;
         platformspin = 45;
         showturnsprite = false;
@@ -266,16 +269,16 @@ function player_reset(arg0 = true, arg1 = true, arg2 = true)
         alarm[1] = -1;
         alarm[2] = -1;
         
-        if (arg1)
+        if (_restart_level)
         {
             beforedeathroute = 
             {
                 room: Patch3A,
                 path: pth_deathroutealt
             };
-            currcheckpoint.id = -4;
-            currcheckpoint.object_index = -4;
-            currcheckpoint.room = -4;
+            currcheckpoint.id = noone;
+            currcheckpoint.object_index = noone;
+            currcheckpoint.room = noone;
             currcheckpoint.x = 0;
             currcheckpoint.y = 0;
             currcheckpoint.destroyedcount = 0;
@@ -319,7 +322,7 @@ function player_reset(arg0 = true, arg1 = true, arg2 = true)
         camshake = 0;
         camXINTERP = 0;
         camYINTERP = 0;
-        curlock = -4;
+        curlock = noone;
         curlockbboxdata = [];
         prevlock = curlock;
         prevlockbboxdata = curlockbboxdata;
@@ -352,21 +355,21 @@ function player_reset(arg0 = true, arg1 = true, arg2 = true)
     
     fmod_studio_system_set_parameter_by_name("bringtorank", false, true);
     
-    if (arg0)
+    if (_restart_music)
     {
         with (obj_music)
         {
-            if (global.music != -4)
+            if (global.music != noone)
             {
-                if (global.music.event != -4)
+                if (global.music.event != noone)
                     fmod_studio_event_instance_set_parameter_by_name(global.music.event, "state", 0, true);
                 
-                global.music = -4;
+                global.music = noone;
             }
         }
     }
     
-    if (arg2)
+    if (_restart_HUD)
     {
         instance_destroy(obj_deathroutetransition);
         instance_destroy(obj_roomtransition);
@@ -397,19 +400,29 @@ function on_slippery_slope()
 
 function player_collideable()
 {
-    return !(obj_player.state == states.noclip || obj_player.state == states.levelintro || obj_player.state == states.dead || obj_player.state == states.debug || obj_player.ondeathplatform != -4 || obj_player.state == states.falllocked || obj_player.state == states.endplatform || obj_player.state == states.nitrocutscene || obj_player.state == states.outhouse);
+    return !(
+		obj_player.state == states.noclip 
+		|| obj_player.state == states.levelintro 
+		|| obj_player.state == states.dead 
+		|| obj_player.state == states.debug 
+		|| obj_player.ondeathplatform != noone 
+		|| obj_player.state == states.falllocked 
+		|| obj_player.state == states.endplatform 
+		|| obj_player.state == states.nitrocutscene 
+		|| obj_player.state == states.outhouse
+	);
 }
 
-function player_bounce(arg0)
+function player_bounce(_height)
 {
     if (check_ceiling())
         exit;
     
-    vsp = arg0;
+    vsp = _height;
     jumpstop = 1;
     hovering = 0;
     
-    if (arg0 < 0)
+    if (_height < 0)
     {
         canchangedir = true;
         hovered = false;

@@ -15,9 +15,7 @@ function scr_player_sprint()
                 image_index = 0;
             }
             else
-            {
                 state = states.wall;
-            }
         }
     };
     
@@ -125,13 +123,9 @@ function scr_player_sprint()
         image_speed = imgspd;
     }
     else if (_mach1sprcond)
-    {
         image_speed = 0.35;
-    }
     else
-    {
         image_speed = 0.4;
-    }
     
     if (!grounded)
     {
@@ -166,13 +160,13 @@ function scr_player_sprint()
     if (sprite_index == spr_player_mach2fast)
         dashcloudfastparticle();
     
-    if (speedlinesobj == -4 && movespeed > 11)
+    if (speedlinesobj == noone && movespeed > 11)
         speedlinesobj = instance_create_depth(x, y, z + 1, obj_speedlines);
     
     if (instance_exists(speedlinesobj) && movespeed <= 11)
     {
         instance_destroy(speedlinesobj);
-        speedlinesobj = -4;
+        speedlinesobj = noone;
     }
     
     if ((sprite_index == spr_player_mach1 || sprite_index == spr_player_mach2) && grounded && (on_slippery_slope() || onslipperyplat) && vsp >= 0)

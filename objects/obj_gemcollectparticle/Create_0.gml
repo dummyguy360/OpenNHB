@@ -8,4 +8,4 @@ xend = 0;
 yend = 0;
 model = "Gem";
 gemid = 0;
-colour = 16777215;
+colour = c_white;

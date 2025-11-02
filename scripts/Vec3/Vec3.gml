@@ -1,23 +1,23 @@
-function Vec2(arg0, arg1) constructor
+function Vec2(xx, yy) constructor
 {
-    static Add = function(arg0)
+    static Add = function(val)
     {
-        return new Vec2(x + arg0.x, y + arg0.y);
+        return new Vec2(x + val.x, y + val.y);
     };
     
-    static Subtract = function(arg0)
+    static Subtract = function(val)
     {
-        return new Vec2(x - arg0.x, y - arg0.y);
+        return new Vec2(x - val.x, y - val.y);
     };
     
-    static Multiply = function(arg0)
+    static Multiply = function(val)
     {
-        return new Vec2(x * arg0, y * arg0);
+        return new Vec2(x * val, y * val);
     };
     
-    static Divide = function(arg0)
+    static Divide = function(val)
     {
-        return new Vec2(x / arg0, y / arg0);
+        return new Vec2(x / val, y / val);
     };
     
     static Length = function()
@@ -30,30 +30,30 @@ function Vec2(arg0, arg1) constructor
         return Divide(Length());
     };
     
-    x = arg0;
-    y = arg1;
+    x = xx;
+    y = yy;
 }
 
-function Vec3(arg0, arg1, arg2) constructor
+function Vec3(xx, yy, zz) constructor
 {
-    static Add = function(arg0)
+    static Add = function(val)
     {
-        return new Vec3(x + arg0.x, y + arg0.y, z + arg0.z);
+        return new Vec3(x + val.x, y + val.y, z + val.z);
     };
     
-    static Subtract = function(arg0)
+    static Subtract = function(val)
     {
-        return new Vec3(x - arg0.x, y - arg0.y, z - arg0.z);
+        return new Vec3(x - val.x, y - val.y, z - val.z);
     };
     
-    static Multiply = function(arg0)
+    static Multiply = function(val)
     {
-        return new Vec3(x * arg0, y * arg0, z * arg0);
+        return new Vec3(x * val, y * val, z * val);
     };
     
-    static Divide = function(arg0)
+    static Divide = function(val)
     {
-        return new Vec3(x / arg0, y / arg0, z / arg0);
+        return new Vec3(x / val, y / val, z / val);
     };
     
     static Length = function()
@@ -66,12 +66,12 @@ function Vec3(arg0, arg1, arg2) constructor
         return Divide(Length());
     };
     
-    static Cross = function(arg0)
+    static Cross = function(val)
     {
-        return new Vec3((y * arg0.z) - (z * arg0.y), (z * arg0.x) - (x * arg0.z), (x * arg0.y) - (y * arg0.x));
+        return new Vec3((y * val.z) - (z * val.y), (z * val.x) - (x * val.z), (x * val.y) - (y * val.x));
     };
     
-    x = arg0;
-    y = arg1;
-    z = arg2;
+    x = xx;
+    y = yy;
+    z = zz;
 }

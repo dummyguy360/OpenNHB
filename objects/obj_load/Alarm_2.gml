@@ -1,3 +1,4 @@
+///@description Phase 3 (3D Tile Generation)
 var _platdepth = 48;
 
 if (array_length(threedeeslist) > 0)

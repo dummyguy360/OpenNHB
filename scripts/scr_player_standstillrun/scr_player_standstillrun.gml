@@ -50,7 +50,5 @@ function scr_player_standstillrun()
         stepped = true;
     }
     else
-    {
         stepped = false;
-    }
 }

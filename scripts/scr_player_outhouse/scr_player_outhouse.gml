@@ -12,10 +12,8 @@ function scr_player_outhouse()
     
     var _outhouse = instance_place(x, y, obj_outhouse);
     
-    if (_outhouse == -4)
-    {
+    if (_outhouse == noone)
         endState();
-    }
     else if (sprite_index != spr_player_platformhop)
     {
         x = _outhouse.x + 4;
@@ -49,9 +47,7 @@ function scr_player_outhouse()
                 _outhouse.alarm[0] = 20;
             }
             else
-            {
                 endState();
-            }
         }
     }
     

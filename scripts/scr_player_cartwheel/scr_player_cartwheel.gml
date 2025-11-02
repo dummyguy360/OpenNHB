@@ -5,9 +5,7 @@ function scr_player_cartwheel()
         momentum = 0;
         
         if (scr_solid(x, y + 1, [obj_slope, obj_slopePlatform]) && grounded && sign(arg0) == image_xscale)
-        {
             state = states.wall;
-        }
         else
         {
             state = states.bump;

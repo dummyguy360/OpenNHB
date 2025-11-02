@@ -1,3 +1,4 @@
+///@description Phase 4 (Map Generation)
 if (array_length(maplist) > 0)
 {
     loadedassets++;
@@ -72,74 +73,74 @@ if (array_length(maplist) > 0)
                         case 21:
                         case 43:
                         case 87:
-                            map_create_face(vBuffMap[r], new Vec2(_x, _y), new Vec2(_x + _tilew, _y), new Vec2(_x + _tilew, _y + _tileh), new Vec2(_x, _y + _tileh), 65535);
+                            map_create_face(vBuffMap[r], new Vec2(_x, _y), new Vec2(_x + _tilew, _y), new Vec2(_x + _tilew, _y + _tileh), new Vec2(_x, _y + _tileh), c_yellow);
                             break;
                         
                         case 65:
-                            map_create_face(vBuffMap[r], new Vec2(_x, _y), new Vec2(_x + _tilew, _y), new Vec2(_x + _tilew, _y + (_tileh * 2)), new Vec2(_x, _y + (_tileh * 2)), 16777215);
-                            map_create_face(vBuffMap[r], new Vec2(_x, _y + ((_tilexscale == -1) ? (_tileh * 1.5) : (_tileh / 2))), new Vec2(_x + _tilew, _y + ((_tilexscale == -1) ? (_tileh / 2) : (_tileh * 1.5))), new Vec2(_x + _tilew, _y + (_tileh * 2)), new Vec2(_x, _y + (_tileh * 2)), 65535);
+                            map_create_face(vBuffMap[r], new Vec2(_x, _y), new Vec2(_x + _tilew, _y), new Vec2(_x + _tilew, _y + (_tileh * 2)), new Vec2(_x, _y + (_tileh * 2)), c_white);
+                            map_create_face(vBuffMap[r], new Vec2(_x, _y + ((_tilexscale == -1) ? (_tileh * 1.5) : (_tileh / 2))), new Vec2(_x + _tilew, _y + ((_tilexscale == -1) ? (_tileh / 2) : (_tileh * 1.5))), new Vec2(_x + _tilew, _y + (_tileh * 2)), new Vec2(_x, _y + (_tileh * 2)), c_yellow);
                         
                         case 22:
-                            map_create_face(vBuffMap[r], new Vec2(_x, _y), new Vec2(_x + _tilew, _y), new Vec2(_x + _tilew, _y + ((_tilexscale == -1) ? 0 : _tileh)), new Vec2(_x, _y + ((_tilexscale == -1) ? _tileh : 0)), 65535);
+                            map_create_face(vBuffMap[r], new Vec2(_x, _y), new Vec2(_x + _tilew, _y), new Vec2(_x + _tilew, _y + ((_tilexscale == -1) ? 0 : _tileh)), new Vec2(_x, _y + ((_tilexscale == -1) ? _tileh : 0)), c_yellow);
                             break;
                         
                         case 67:
-                            map_create_face(vBuffMap[r], new Vec2(_x, _y), new Vec2(_x + _tilew, _y), new Vec2(_x + _tilew, _y + _tileh), new Vec2(_x, _y + _tileh), 16777215);
-                            map_create_face(vBuffMap[r], new Vec2(_x, _y + ((_tilexscale == -1) ? _tileh : (_tileh / 2))), new Vec2(_x + _tilew, _y + ((_tilexscale == -1) ? (_tileh / 2) : _tileh)), new Vec2(_x + _tilew, _y + _tileh), new Vec2(_x, _y + _tileh), 65535);
+                            map_create_face(vBuffMap[r], new Vec2(_x, _y), new Vec2(_x + _tilew, _y), new Vec2(_x + _tilew, _y + _tileh), new Vec2(_x, _y + _tileh), c_white);
+                            map_create_face(vBuffMap[r], new Vec2(_x, _y + ((_tilexscale == -1) ? _tileh : (_tileh / 2))), new Vec2(_x + _tilew, _y + ((_tilexscale == -1) ? (_tileh / 2) : _tileh)), new Vec2(_x + _tilew, _y + _tileh), new Vec2(_x, _y + _tileh), c_yellow);
                         
                         case 23:
-                            map_create_face(vBuffMap[r], new Vec2(_x, _y), new Vec2(_x + _tilew, _y), new Vec2(_x + _tilew, _y + ((_tilexscale == -1) ? 0 : (_tileh / 2))), new Vec2(_x, _y + ((_tilexscale == -1) ? (_tileh / 2) : 0)), 65535);
+                            map_create_face(vBuffMap[r], new Vec2(_x, _y), new Vec2(_x + _tilew, _y), new Vec2(_x + _tilew, _y + ((_tilexscale == -1) ? 0 : (_tileh / 2))), new Vec2(_x, _y + ((_tilexscale == -1) ? (_tileh / 2) : 0)), c_yellow);
                             break;
                         
                         case 68:
-                            map_create_face(vBuffMap[r], new Vec2(_x, _y), new Vec2(_x + _tilew, _y), new Vec2(_x + _tilew, _y + _tileh), new Vec2(_x, _y + _tileh), 16777215);
+                            map_create_face(vBuffMap[r], new Vec2(_x, _y), new Vec2(_x + _tilew, _y), new Vec2(_x + _tilew, _y + _tileh), new Vec2(_x, _y + _tileh), c_white);
                         
                         case 24:
-                            map_create_face(vBuffMap[r], new Vec2(_x, _y), new Vec2(_x + _tilew, _y), new Vec2(_x + _tilew, _y + ((_tilexscale == -1) ? (_tileh / 2) : _tileh)), new Vec2(_x, _y + ((_tilexscale == -1) ? _tileh : (_tileh / 2))), 65535);
+                            map_create_face(vBuffMap[r], new Vec2(_x, _y), new Vec2(_x + _tilew, _y), new Vec2(_x + _tilew, _y + ((_tilexscale == -1) ? (_tileh / 2) : _tileh)), new Vec2(_x, _y + ((_tilexscale == -1) ? _tileh : (_tileh / 2))), c_yellow);
                             break;
                         
                         case 88:
-                            map_create_face(vBuffMap[r], new Vec2(_x, _y), new Vec2(_x + _tilew, _y), new Vec2(_x + _tilew, _y + _tileh), new Vec2(_x, _y + _tileh), 16777215);
-                            map_create_face(vBuffMap[r], new Vec2(_x, _y + ((_tilexscale == -1) ? (_tileh / 2) : 0)), new Vec2(_x + _tilew, _y + ((_tilexscale == -1) ? 0 : (_tileh / 2))), new Vec2(_x + _tilew, _y + _tileh), new Vec2(_x, _y + _tileh), 65535);
+                            map_create_face(vBuffMap[r], new Vec2(_x, _y), new Vec2(_x + _tilew, _y), new Vec2(_x + _tilew, _y + _tileh), new Vec2(_x, _y + _tileh), c_white);
+                            map_create_face(vBuffMap[r], new Vec2(_x, _y + ((_tilexscale == -1) ? (_tileh / 2) : 0)), new Vec2(_x + _tilew, _y + ((_tilexscale == -1) ? 0 : (_tileh / 2))), new Vec2(_x + _tilew, _y + _tileh), new Vec2(_x, _y + _tileh), c_yellow);
                             break;
                         
                         case 25:
-                            map_create_face(vBuffMap[r], new Vec2(_x, _y), new Vec2(_x + _tilew, _y), new Vec2(_x + _tilew, _y + ((_tilexscale == -1) ? 0 : ceil(_tileh / 3))), new Vec2(_x, _y + ((_tilexscale == -1) ? ceil(_tileh / 3) : 0)), 65535);
+                            map_create_face(vBuffMap[r], new Vec2(_x, _y), new Vec2(_x + _tilew, _y), new Vec2(_x + _tilew, _y + ((_tilexscale == -1) ? 0 : ceil(_tileh / 3))), new Vec2(_x, _y + ((_tilexscale == -1) ? ceil(_tileh / 3) : 0)), c_yellow);
                             break;
                         
                         case 26:
-                            map_create_face(vBuffMap[r], new Vec2(_x, _y), new Vec2(_x + _tilew, _y), new Vec2(_x + _tilew, _y + ((_tilexscale == -1) ? ceil(_tileh / 3) : (ceil(_tileh / 3) * 2))), new Vec2(_x, _y + ((_tilexscale == -1) ? (ceil(_tileh / 3) * 2) : ceil(_tileh / 3))), 65535);
+                            map_create_face(vBuffMap[r], new Vec2(_x, _y), new Vec2(_x + _tilew, _y), new Vec2(_x + _tilew, _y + ((_tilexscale == -1) ? ceil(_tileh / 3) : (ceil(_tileh / 3) * 2))), new Vec2(_x, _y + ((_tilexscale == -1) ? (ceil(_tileh / 3) * 2) : ceil(_tileh / 3))), c_yellow);
                             break;
                         
                         case 27:
-                            map_create_face(vBuffMap[r], new Vec2(_x, _y), new Vec2(_x + _tilew, _y), new Vec2(_x + _tilew, _y + ((_tilexscale == -1) ? (ceil(_tileh / 3) * 2) : _tileh)), new Vec2(_x, _y + ((_tilexscale == -1) ? _tileh : (ceil(_tileh / 3) * 2))), 65535);
+                            map_create_face(vBuffMap[r], new Vec2(_x, _y), new Vec2(_x + _tilew, _y), new Vec2(_x + _tilew, _y + ((_tilexscale == -1) ? (ceil(_tileh / 3) * 2) : _tileh)), new Vec2(_x, _y + ((_tilexscale == -1) ? _tileh : (ceil(_tileh / 3) * 2))), c_yellow);
                             break;
                         
                         case 41:
-                            map_create_face(vBuffMap[r], new Vec2(_x, _y), new Vec2(_x + _tilew, _y), new Vec2(_x + _tilew, _y + ((_tilexscale == -1) ? 0 : (ceil(_tileh / 3) * 2))), new Vec2(_x, _y + ((_tilexscale == -1) ? (ceil(_tileh / 3) * 2) : 0)), 65535);
+                            map_create_face(vBuffMap[r], new Vec2(_x, _y), new Vec2(_x + _tilew, _y), new Vec2(_x + _tilew, _y + ((_tilexscale == -1) ? 0 : (ceil(_tileh / 3) * 2))), new Vec2(_x, _y + ((_tilexscale == -1) ? (ceil(_tileh / 3) * 2) : 0)), c_yellow);
                             break;
                         
                         case 42:
-                            map_create_face(vBuffMap[r], new Vec2(_x, _y), new Vec2(_x + _tilew, _y), new Vec2(_x + _tilew, _y + ((_tilexscale == -1) ? (ceil(_tileh / 3) * 2) : ceil(_tileh * 1.333))), new Vec2(_x, _y + ((_tilexscale == -1) ? ceil(_tileh * 1.333) : (ceil(_tileh / 3) * 2))), 65535);
+                            map_create_face(vBuffMap[r], new Vec2(_x, _y), new Vec2(_x + _tilew, _y), new Vec2(_x + _tilew, _y + ((_tilexscale == -1) ? (ceil(_tileh / 3) * 2) : ceil(_tileh * 1.333))), new Vec2(_x, _y + ((_tilexscale == -1) ? ceil(_tileh * 1.333) : (ceil(_tileh / 3) * 2))), c_yellow);
                             break;
                         
                         case 63:
-                            map_create_face(vBuffMap[r], new Vec2(_x, _y), new Vec2(_x + _tilew, _y), new Vec2(_x + _tilew, _y + ((_tilexscale == -1) ? ceil(_tileh / 3) : _tileh)), new Vec2(_x, _y + ((_tilexscale == -1) ? _tileh : ceil(_tileh / 3))), 65535);
+                            map_create_face(vBuffMap[r], new Vec2(_x, _y), new Vec2(_x + _tilew, _y), new Vec2(_x + _tilew, _y + ((_tilexscale == -1) ? ceil(_tileh / 3) : _tileh)), new Vec2(_x, _y + ((_tilexscale == -1) ? _tileh : ceil(_tileh / 3))), c_yellow);
                             break;
                         
                         case 64:
-                            map_create_face(vBuffMap[r], new Vec2(_x, _y), new Vec2(_x + _tilew, _y), new Vec2(_x + _tilew, _y + _tileh), new Vec2(_x, _y + _tileh), 16777215);
-                            map_create_face(vBuffMap[r], new Vec2(_x, _y + ((_tileyscale == 1) ? (_tileh / 2) : _tileh)), new Vec2(_x + _tilew, _y + ((_tileyscale == 1) ? (_tileh / 2) : _tileh)), new Vec2(_x + _tilew, _y + ((_tileyscale == 1) ? _tileh : 0)), new Vec2(_x, _y + ((_tileyscale == 1) ? _tileh : 0)), 65535);
+                            map_create_face(vBuffMap[r], new Vec2(_x, _y), new Vec2(_x + _tilew, _y), new Vec2(_x + _tilew, _y + _tileh), new Vec2(_x, _y + _tileh), c_white);
+                            map_create_face(vBuffMap[r], new Vec2(_x, _y + ((_tileyscale == 1) ? (_tileh / 2) : _tileh)), new Vec2(_x + _tilew, _y + ((_tileyscale == 1) ? (_tileh / 2) : _tileh)), new Vec2(_x + _tilew, _y + ((_tileyscale == 1) ? _tileh : 0)), new Vec2(_x, _y + ((_tileyscale == 1) ? _tileh : 0)), c_yellow);
                             break;
                         
                         case 66:
-                            map_create_face(vBuffMap[r], new Vec2(_x, _y), new Vec2(_x + _tilew, _y), new Vec2(_x + _tilew, _y + _tileh), new Vec2(_x, _y + _tileh), 16777215);
-                            map_create_face(vBuffMap[r], new Vec2(_x + ((_tilexscale == 1) ? 0 : (_tilew / 2)), _y), new Vec2(_x + ((_tilexscale == 1) ? (_tilew / 2) : _tilew), _y), new Vec2(_x + ((_tilexscale == 1) ? (_tilew / 2) : _tilew), _y + _tileh), new Vec2(_x + ((_tilexscale == 1) ? 0 : (_tilew / 2)), _y + _tileh), 65535);
+                            map_create_face(vBuffMap[r], new Vec2(_x, _y), new Vec2(_x + _tilew, _y), new Vec2(_x + _tilew, _y + _tileh), new Vec2(_x, _y + _tileh), c_white);
+                            map_create_face(vBuffMap[r], new Vec2(_x + ((_tilexscale == 1) ? 0 : (_tilew / 2)), _y), new Vec2(_x + ((_tilexscale == 1) ? (_tilew / 2) : _tilew), _y), new Vec2(_x + ((_tilexscale == 1) ? (_tilew / 2) : _tilew), _y + _tileh), new Vec2(_x + ((_tilexscale == 1) ? 0 : (_tilew / 2)), _y + _tileh), c_yellow);
                             break;
                         
                         case 69:
-                            map_create_face(vBuffMap[r], new Vec2(_x, _y), new Vec2(_x + _tilew, _y), new Vec2(_x + _tilew, _y + _tileh), new Vec2(_x, _y + _tileh), 16777215);
-                            map_create_face(vBuffMap[r], new Vec2(_x + ((_tilexscale == 1) ? 0 : _tilew), _y + (_tileh / 2)), new Vec2(_x + (_tilew / 2), _y + (_tileh / 2)), new Vec2(_x + (_tilew / 2), _y + ((_tileyscale == 1) ? _tileh : 0)), new Vec2(_x + ((_tilexscale == 1) ? 0 : _tilew), _y + ((_tileyscale == 1) ? _tileh : 0)), 65535);
+                            map_create_face(vBuffMap[r], new Vec2(_x, _y), new Vec2(_x + _tilew, _y), new Vec2(_x + _tilew, _y + _tileh), new Vec2(_x, _y + _tileh), c_white);
+                            map_create_face(vBuffMap[r], new Vec2(_x + ((_tilexscale == 1) ? 0 : _tilew), _y + (_tileh / 2)), new Vec2(_x + (_tilew / 2), _y + (_tileh / 2)), new Vec2(_x + (_tilew / 2), _y + ((_tileyscale == 1) ? _tileh : 0)), new Vec2(_x + ((_tilexscale == 1) ? 0 : _tilew), _y + ((_tileyscale == 1) ? _tileh : 0)), c_yellow);
                             break;
                     }
                 }
