@@ -18,11 +18,11 @@ function draw_sprite_3d_ext(_sprite, _index, _x, _y, _z, _xscale, _yscale, _rot,
     matrix_set(2, matrix_build_identity());
 }
 
-function draw_text_billboard(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7 = draw_get_colour(), arg8 = draw_get_colour(), arg9 = draw_get_colour(), arg10 = draw_get_colour(), arg11 = draw_get_alpha())
+function draw_text_billboard(_x, _y, _z, _str, _xscale, _yscale, _angle, _c1 = draw_get_colour(), _c2 = draw_get_colour(), _c3 = draw_get_colour(), _c4 = draw_get_colour(), _alpha = draw_get_alpha())
 {
     shader_set(shd_billboard);
-    matrix_set(2, matrix_build(arg0, arg1, arg2, 0, 0, 0, 1, 1, 1));
-    __draw_text_transformed_colour_hook(0, 0, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11);
+    matrix_set(2, matrix_build(_x, _y, _z, 0, 0, 0, 1, 1, 1));
+    __draw_text_transformed_colour_hook(0, 0, _str, _xscale, _yscale, _angle, _c1, _c2, _c3, _c4, _alpha);
     matrix_set(2, matrix_build_identity());
     shader_reset();
 }

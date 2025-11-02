@@ -1,10 +1,10 @@
 function scr_player_cartwheel()
 {
-    hit_horizontal = function(arg0)
+    hit_horizontal = function(_h)
     {
         momentum = 0;
         
-        if (scr_solid(x, y + 1, [obj_slope, obj_slopePlatform]) && grounded && sign(arg0) == image_xscale)
+        if (scr_solid(x, y + 1, [obj_slope, obj_slopePlatform]) && grounded && sign(_h) == image_xscale)
             state = states.wall;
         else
         {
@@ -19,12 +19,12 @@ function scr_player_cartwheel()
         }
     };
     
-    collide_destructibles = function(arg0, arg1)
+    collide_destructibles = function(_h, _v)
     {
-        scr_destroy_horizontal(arg0 * 2);
+        scr_destroy_horizontal(_h * 2);
         
         if (!prevGrounded)
-            scr_destroy_vertical(arg1);
+            scr_destroy_vertical(_v);
     };
     
     move = input_check_opposing("left", "right");

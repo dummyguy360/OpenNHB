@@ -1,16 +1,16 @@
 global.langstruct = {};
 
-function strings_read(arg0)
+function strings_read(_str_file)
 {
-    var _stringsfile = buffer_load(arg0);
+    var _stringsfile = buffer_load(_str_file);
     var _strings = buffer_read(_stringsfile, buffer_string);
     global.langstruct = json_parse(_strings);
     buffer_delete(_stringsfile);
 }
 
-function string_get(arg0)
+function string_get(_str)
 {
-    var _vars = string_split(arg0, "/");
+    var _vars = string_split(_str, "/");
     var _prevvar = global.langstruct;
     
     for (var i = 0; i < array_length(_vars); i++)
@@ -42,15 +42,11 @@ function string_get(arg0)
                     break;
                 }
                 else
-                {
                     _aroot = _founddir;
-                }
             }
         }
         else
-        {
             _isdirectory = false;
-        }
         
         _replace = _isdirectory ? _aroot : string(_replace);
         
@@ -60,9 +56,7 @@ function string_get(arg0)
                 _prevvar[i] = string_replace(_prevvar[i], string("{{0}}", p - 1), _replace);
         }
         else
-        {
             _prevvar = string_replace(_prevvar, string("{{0}}", p - 1), _replace);
-        }
     }
     
     return _prevvar;

@@ -1,16 +1,16 @@
 function scr_player_sprintjump()
 {
-    hit_horizontal = function(arg0)
+    hit_horizontal = function(_h)
     {
         momentum = 0;
         
-        if (!scr_solid(x + arg0, y, obj_nostickwall))
-            wallslide(arg0);
+        if (!scr_solid(x + _h, y, obj_nostickwall))
+            wallslide(_h);
     };
     
-    hit_vertical = function(arg0)
+    hit_vertical = function(_v)
     {
-        if (arg0 >= 0)
+        if (_v >= 0)
         {
             sprite_index = spr_player_mach2land;
             image_index = 0;
@@ -20,9 +20,9 @@ function scr_player_sprintjump()
         }
     };
     
-    collide_destructibles = function(arg0, arg1)
+    collide_destructibles = function(_h, _v)
     {
-        scr_destroybounce(arg1);
+        scr_destroybounce(_v);
     };
     
     move = input_check_opposing("left", "right");

@@ -1,8 +1,8 @@
 function scr_player_sprint()
 {
-    hit_horizontal = function(arg0)
+    hit_horizontal = function(_h)
     {
-        if (sign(arg0) == image_xscale && grounded)
+        if (sign(_h) == image_xscale && grounded)
         {
             if (!scr_solid(x, y + 1, [obj_slope, obj_slopePlatform]))
             {

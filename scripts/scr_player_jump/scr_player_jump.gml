@@ -2,15 +2,15 @@ function scr_player_jump()
 {
     var _analogue = input_value("left") + input_value("right");
     
-    hit_horizontal = function(arg0)
+    hit_horizontal = function(_h)
     {
         momentum = 0;
-        wallslide(arg0);
+        wallslide(_h);
     };
     
-    hit_vertical = function(arg0)
+    hit_vertical = function(_v)
     {
-        if (arg0 >= 0)
+        if (_v >= 0)
         {
             if (!canchangedir)
                 movespeed = abs(movespeed);
@@ -55,9 +55,9 @@ function scr_player_jump()
         }
     };
     
-    collide_destructibles = function(arg0, arg1)
+    collide_destructibles = function(_h, _v)
     {
-        scr_destroybounce(arg1);
+        scr_destroybounce(_v);
     };
     
     move = input_check_opposing("left", "right");

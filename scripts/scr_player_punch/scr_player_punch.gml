@@ -1,8 +1,8 @@
 function scr_player_punch()
 {
-    collide_destructibles = function(arg0, arg1)
+    collide_destructibles = function(_h, _v)
     {
-        scr_destroybounce(arg1);
+        scr_destroybounce(_v);
     };
     
     move = input_check_opposing("left", "right");

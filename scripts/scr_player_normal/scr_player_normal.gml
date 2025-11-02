@@ -1,6 +1,6 @@
 function scr_player_normal()
 {
-    hit_horizontal = function(arg0)
+    hit_horizontal = function(_h)
     {
         movespeed = 0;
         momentum = false;

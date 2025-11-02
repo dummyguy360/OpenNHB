@@ -1,21 +1,21 @@
-function gamepadvibrate(arg0, arg1, arg2, arg3 = 0, arg4 = false)
+function gamepadvibrate(_strength, _pan, _duration, _playerindex = 0, _force = false)
 {
     if (global.rumble)
-        input_vibrate_constant(arg0, arg1, arg2, arg3, arg4);
+        input_vibrate_constant(_strength, _pan, _duration, _playerindex, _force);
 }
 
-function create_key(arg0)
+function create_key(_key)
 {
     return 
     {
-        key: arg0
+        key: _key
     };
 }
 
 function apply_inputglobals()
 {
-    input_axis_threshold_set(32785, global.horizdeadzone, 1);
-    input_axis_threshold_set(32787, global.horizdeadzone, 1);
-    input_axis_threshold_set(32786, global.vertdeadzone, 1);
-    input_axis_threshold_set(32788, global.vertdeadzone, 1);
+    input_axis_threshold_set(gp_axislh, global.horizdeadzone, 1);
+    input_axis_threshold_set(gp_axisrh, global.horizdeadzone, 1);
+    input_axis_threshold_set(gp_axislv, global.vertdeadzone, 1);
+    input_axis_threshold_set(gp_axisrv, global.vertdeadzone, 1);
 }

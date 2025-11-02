@@ -1,11 +1,14 @@
-exception_unhandled_handler(function(arg0)
+exception_unhandled_handler(function(_ex)
 {
+	#region Get Date and Time
     var _date = date_current_datetime();
     var _day = date_get_day(_date);
     var _month = date_get_month(_date);
     var _year = date_get_year(_date);
     var _hour = date_get_hour(_date);
     var _minute = date_get_minute(_date);
+	#endregion
+	#region Get OS Values
     var _osver = os_get_name();
     var _hardwareinfo = os_get_info();
     var _memory = os_get_installed_memory();
@@ -29,12 +32,14 @@ exception_unhandled_handler(function(arg0)
         if (i < (array_length(_processorwords) - 1))
             _processor += " ";
     }
+	#endregion
     
     var _dir = string("{0}CrashReport.txt", working_directory);
-    
+    // delete old crash report file
     if (file_exists(_dir))
         file_delete(_dir);
     
+	#region Error Begin (Log Machine and Error Info)
     var _report = "";
     _report += "--BEGIN ERROR REPORT--\r\n";
     _report += "\r\n";
@@ -49,7 +54,7 @@ exception_unhandled_handler(function(arg0)
         _report += string("Video Memory: {0} GB\r\n", ceil(_videomemory / 1074000000));
     
     _report += "\r\n#################\r\n";
-    var _longmessagelines = string_split(arg0.longMessage, "\n");
+    var _longmessagelines = string_split(_ex.longMessage, "\n");
     var _startnewlines = false;
     
     for (var i = 0; i < (array_length(_longmessagelines) - 1); i++)
@@ -67,7 +72,8 @@ exception_unhandled_handler(function(arg0)
                 _report += " ";
         }
     }
-    
+	#endregion
+    #region Error End (Message to User)
     _report += "\r\n#################\r\n";
     _report += "\r\n--END ERROR REPORT-";
     var _crashcomments = ["Well this is awkward.", "Whoops.", "My bad.", "Umm, why'd that happen?"];
@@ -87,11 +93,16 @@ exception_unhandled_handler(function(arg0)
     _finalstr += "\r\n";
     _finalstr += "\r\n";
     _finalstr += "Do you want to copy this report?";
+	#endregion
+	
+	// create crash report file
     var _file = file_text_open_write(_dir);
     file_text_write_string(_file, _finalstr);
     file_text_close(_file);
+	
+	// show error message to user
     show_debug_message(_report);
-    
+	// copy error to clipboard
     if (show_question(_finalstr))
         clipboard_set_text(_report);
     

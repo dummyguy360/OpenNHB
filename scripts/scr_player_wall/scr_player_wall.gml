@@ -1,6 +1,6 @@
 function scr_player_wall()
 {
-    collide_destructibles = function(arg0, arg1)
+    collide_destructibles = function(_h, _v)
     {
         scr_destroy_horizontal(image_xscale, obj_destroyablenitro);
     };

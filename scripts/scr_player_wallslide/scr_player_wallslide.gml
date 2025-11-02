@@ -1,9 +1,9 @@
 function scr_player_wallslide()
 {
-    collide_destructibles = function(arg0, arg1)
+    collide_destructibles = function(_h, _v)
     {
         scr_destroy_horizontal(image_xscale, obj_destroyablenitro);
-        scr_destroybounce(arg1);
+        scr_destroybounce(_v);
     };
     
     move = input_check_opposing("left", "right");

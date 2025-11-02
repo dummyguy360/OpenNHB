@@ -1,39 +1,41 @@
-function scr_createparticle(arg0 = true, arg1, arg2, arg3, arg4, arg5 = 1, arg6 = 1, arg7 = 0, arg8 = 0.5, arg9 = 0, arg10 = 0, arg11 = 0, arg12 = 0, arg13 = 0, arg14 = undefined)
+function scr_createparticle(_anim_end = true, _x, _y, _depth, _sprite, _xscale = 1, _yscale = 1, 
+	_index = 0, _speed = 0.5, _angle = 0, _grav = 0, _hsp = 0, _vsp = 0, _zsp = 0, _blend = undefined
+)
 {
-    var _id = instance_create_depth(arg1, arg2, arg3 - 7, obj_particle);
+    var _id = instance_create_depth(_x, _y, _depth - 7, obj_particle);
     
     with (_id)
     {
-        animationend = arg0;
-        sprite_index = arg4;
-        image_xscale = arg5;
-        image_yscale = arg6;
-        image_index = arg7;
-        image_speed = arg8;
-        image_angle = arg9;
-        grav = arg10;
-        hsp = arg11;
-        vsp = arg12;
-        zsp = arg13;
+        animationend = _anim_end;
+        sprite_index = _sprite;
+        image_xscale = _xscale;
+        image_yscale = _yscale;
+        image_index = _index;
+        image_speed = _speed;
+        image_angle = _angle;
+        grav = _grav;
+        hsp = _hsp;
+        vsp = _vsp;
+        zsp = _zsp;
         
-        if (sprite_index == spr_star && is_undefined(arg14))
+        if (sprite_index == spr_star && is_undefined(_blend))
             image_blend = choose(make_color_rgb(255, 255, 0), make_color_rgb(255, 208, 18), make_color_rgb(255, 208, 133));
         else
-            image_blend = arg14 ?? c_white;
+            image_blend = _blend ?? c_white;
     }
     
     return _id;
 }
 
-function scr_tiptext(arg0, arg1 = -8000, arg2 = true)
+function scr_tiptext(_text, _depth = -8000, _shouldpause = true)
 {
     instance_destroy(obj_tiptext);
     
-    with (instance_create_depth(x, y, arg1, obj_tiptext))
+    with (instance_create_depth(x, y, _depth, obj_tiptext))
     {
-        shouldpause = arg2;
-        depth = arg1;
-        text = arg0;
+        shouldpause = _shouldpause;
+        depth = _depth;
+        text = _text;
     }
 }
 
@@ -42,7 +44,7 @@ function scr_hudroom()
     return array_find_pos([Init, Logos, Titlescreen, RankRoom, Credits, Jeg], room) == -1;
 }
 
-function crateeffect(arg0)
+function crateeffect(_blend)
 {
     repeat (5)
     {
@@ -50,16 +52,17 @@ function crateeffect(arg0)
         var _wall = wall_behind(x + (sprite_width / 2), y + (sprite_height / 2), z);
         
         with (scr_createparticle(false, irandom_range(bbox_left, bbox_right), irandom_range(bbox_top, bbox_bottom), z + 16, spr_cratedebris, image_xscale / 2, image_yscale / 2, irandom(4), 0, irandom(360), 0.5, irandom_range(-4, 4), irandom_range(-6, -2), irandom_range(-2, 2 * !_wall)))
-            image_blend = arg0;
+            image_blend = _blend;
     }
 }
 
-function cratebounceeffect(arg0)
+function cratebounceeffect(_effect_obj)
 {
-    with (arg0)
+    with (_effect_obj)
         scr_createparticle(true, x, bbox_bottom, z + 4, spr_cratebounceeffect, 1, 1, 0, 0.5);
 }
 
+#region Models
 function draw_model(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9)
 {
     matrix_set(2, matrix_build(arg1, arg2, arg3, arg7, arg8, arg9, arg4, arg5, arg6));
@@ -70,9 +73,7 @@ function draw_model(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9)
             model_submit(arg0[i]);
     }
     else if (is_string(arg0))
-    {
         model_submit(arg0);
-    }
     
     matrix_set(2, matrix_build_identity());
 }
@@ -88,9 +89,7 @@ function model_submit(arg0)
         _model.Submit();
     }
     else
-    {
         ds_map_find_value(global.loadedModels, arg0).Submit();
-    }
 }
 
 function import_material(arg0, arg1)
@@ -119,13 +118,14 @@ function import_material(arg0, arg1)
     buffer_delete(_buffer);
     return _name;
 }
+#endregion
 
-function offset_camera(arg0, arg1, arg2, arg3)
+function offset_camera(_x1, _y1, _x2, _y2)
 {
     with (obj_drawcontroller)
     {
-        camXINTERP = arg0 - arg2;
-        camYINTERP = arg1 - arg3;
+        camXINTERP = _x1 - _x2;
+        camYINTERP = _y1 - _y2;
     }
 }
 
@@ -171,11 +171,11 @@ function screen_to_world(arg0, arg1, arg2, arg3)
 
 function draw_3d_cone(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)
 {
-    static vertex = function(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10)
+    static vertex = function(_vbuff, _x, _y, _z, arg4, arg5, arg6, _u, _v, arg9, arg10)
     {
-        vertex_position_3d(arg0, arg1, arg2, arg3);
-        vertex_texcoord(arg0, arg7, arg8);
-        vertex_float1(arg0, false);
+        vertex_position_3d(_vbuff, _x, _y, _z);
+        vertex_texcoord(_vbuff, _u, _v);
+        vertex_float1(_vbuff, false);
     };
     
     static prevspr = undefined;
@@ -274,51 +274,51 @@ function is_outofview3d(arg0, arg1, arg2, arg3 = 0)
     return !point_in_rectangle(_sp[0], _sp[1], -arg3, -arg3, get_game_width() + arg3, get_game_height() + arg3);
 }
 
-function set_player_checkpoint(arg0 = id, arg1 = false)
+function set_player_checkpoint(_id = id, _save_score = false)
 {
     with (obj_player)
     {
-        currcheckpoint.id = arg0;
-        currcheckpoint.object_index = arg0.object_index;
+        currcheckpoint.id = _id;
+        currcheckpoint.object_index = _id.object_index;
         currcheckpoint.room = room;
-        currcheckpoint.x = arg0.x;
-        currcheckpoint.y = arg0.y;
+        currcheckpoint.x = _id.x;
+        currcheckpoint.y = _id.y;
         currcheckpoint.collect = global.collect;
         currcheckpoint.destroyedcount = global.destroyedcount;
         currcheckpoint.switchstate = global.switchstate;
         ds_map_copy(currcheckpoint.respawnroom, global.respawnroom);
         
-        if (arg1)
+        if (_save_score)
         {
             currcheckpoint.pumpkins = global.pumpkintotal;
             currcheckpoint.gems = global.gems;
             
-            if (currcheckpoint.saveroom == -4)
+            if (currcheckpoint.saveroom == noone)
                 currcheckpoint.saveroom = ds_map_create();
             
             ds_map_copy(currcheckpoint.saveroom, global.saveroom);
         }
         else
         {
-            currcheckpoint.pumpkins = -4;
-            currcheckpoint.gems = -4;
+            currcheckpoint.pumpkins = noone;
+            currcheckpoint.gems = noone;
             
-            if (currcheckpoint.saveroom != -4)
+            if (currcheckpoint.saveroom != noone)
                 ds_map_destroy(currcheckpoint.saveroom);
             
-            currcheckpoint.saveroom = -4;
+            currcheckpoint.saveroom = noone;
         }
     }
 }
 
-function get_gem(arg0)
+function get_gem(_gem)
 {
-    global.gems = bit_set(global.gems, arg0);
+    global.gems = bit_set(global.gems, _gem);
 }
 
-function has_gem(arg0)
+function has_gem(_gem)
 {
-    return bit_get(global.gems, arg0);
+    return bit_get(global.gems, _gem);
 }
 
 function lighting_set(arg0, arg1, arg2, arg3 = 1, arg4 = c_white, arg5 = 0, arg6 = 1, arg7 = false, arg8 = false)
@@ -476,7 +476,7 @@ function draw_sprite_radial(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8
     draw_texture_radial(sprite_get_texture(arg0, arg1), arg2, _x1, _y1, _x2, _y2, arg7, arg8);
 }
 
-function wall_behind(arg0 = x, arg1 = y, arg2 = depth)
+function wall_behind(xx = x, yy = y, _depth = depth)
 {
     var _layers = layer_get_all();
     
@@ -491,7 +491,7 @@ function wall_behind(arg0 = x, arg1 = y, arg2 = depth)
         var _data = tilemap_get_at_pixel(_mapid, floor(x) + 1, floor(y) + 1);
         var _tileid = tile_get_index(_data);
         
-        if (_tileid > 0 && layer_get_depth(_layer) > arg2)
+        if (_tileid > 0 && layer_get_depth(_layer) > _depth)
             return true;
     }
     
@@ -529,9 +529,7 @@ function finish_explosion_chains()
                         add_saveroom(_obj, global.respawnroom);
                 }
                 else
-                {
                     add_saveroom(_obj, global.respawnroom);
-                }
                 
                 if (object_is_ancestor(_obj.object_index, par_destructible))
                     global.destroyedcount++;
@@ -549,7 +547,7 @@ function deathplat_camupdate()
 {
     with (obj_drawcontroller)
     {
-        curlock = -4;
+        curlock = noone;
         curlockbboxdata = [];
         
         with (obj_player)
@@ -578,7 +576,7 @@ function deathplat_camupdate()
             
             if ((player_collideable() || state == states.levelintro || state == states.platformlocked || obj_player.state == states.outhouse) && (place_meeting(_meetx, _meety, par_camlock) || place_meeting(_meetx, _meety, obj_lockcamextender)))
             {
-                var _lockid = -4;
+                var _lockid = noone;
                 
                 if (place_meeting(_meetx, _meety, par_camlock))
                     _lockid = instance_place(_meetx, _meety, par_camlock);
@@ -590,12 +588,12 @@ function deathplat_camupdate()
             }
             else
             {
-                other.curlock = -4;
+                other.curlock = noone;
                 other.curlockbboxdata = [];
             }
         }
         
-        if (curlock != -4)
+        if (curlock != noone)
         {
             var _lock = lock_cam(camX, camY, curlock, curlockbboxdata);
             camX = _lock[0];

@@ -401,7 +401,7 @@ function on_slippery_slope()
 function player_collideable()
 {
     return !(
-		obj_player.state == states.noclip 
+		   obj_player.state == states.noclip 
 		|| obj_player.state == states.levelintro 
 		|| obj_player.state == states.dead 
 		|| obj_player.state == states.debug 

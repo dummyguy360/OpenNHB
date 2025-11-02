@@ -1,74 +1,74 @@
-function add_music(arg0, arg1, arg2, arg3 = -4)
+function add_music(_rm, _music, _is_continuous, _func = noone)
 {
     var musicstruct = 
     {
-        continuous: arg2,
-        event: -4,
-        mumethod: -4
+        continuous: _is_continuous,
+        event: noone,
+        mumethod: noone
     };
     
     with (musicstruct)
     {
-        if (arg3 != -4)
-            mumethod = method(self, arg3);
+        if (_func != noone)
+            mumethod = method(self, _func);
         
-        if (arg1 != -4)
+        if (_music != noone)
         {
-            eventname = arg1;
-            event = event_instance(arg1);
+            eventname = _music;
+            event = event_instance(_music);
         }
     }
     
-    ds_map_set(musicmap, arg0, musicstruct);
+    ds_map_set(musicmap, _rm, musicstruct);
 }
 
 function stop_music()
 {
     with (obj_music)
     {
-        if (global.music != -4)
+        if (global.music != noone)
         {
-            if (global.music.event != -4)
+            if (global.music.event != noone)
                 event_stop(global.music.event, game_paused() || room == Jeg);
             
-            global.music = -4;
+            global.music = noone;
         }
     }
 }
 
-function timeline_wrapauto(arg0, arg1, arg2)
+function timeline_wrapauto(_pos, _length, event_inst)
 {
-    var pos = fmod_studio_event_instance_get_timeline_position(arg0);
-    var length = fmod_studio_event_description_get_length(fmod_studio_system_get_event(arg1));
-    fmod_studio_event_instance_set_timeline_position(arg2, wrap(pos, 1, length - 1));
+    var pos = fmod_studio_event_instance_get_timeline_position(_pos);
+    var length = fmod_studio_event_description_get_length(fmod_studio_system_get_event(_length));
+    fmod_studio_event_instance_set_timeline_position(event_inst, wrap(pos, 1, length - 1));
 }
 
-function play_music(arg0, arg1 = true)
+function play_music(_rm, _stop_music = true)
 {
-    var mu = ds_map_find_value(musicmap, arg0);
+    var mu = ds_map_find_value(musicmap, _rm);
     
     if (!is_undefined(mu))
     {
         var prevmusic = global.music;
         
-        if (prevmusic == -4 || mu.eventname != prevmusic.eventname)
+        if (prevmusic == noone || mu.eventname != prevmusic.eventname)
         {
             fmod_studio_event_instance_start(mu.event);
             fmod_studio_event_instance_set_paused(mu.event, false);
             
-            if (mu.continuous && prevmusic != -4)
+            if (mu.continuous && prevmusic != noone)
                 timeline_wrapauto(prevmusic.event, mu.eventname, mu.event);
             
-            if (prevmusic != -4)
+            if (prevmusic != noone)
             {
-                if (prevmusic.event != -4)
-                    event_stop(prevmusic.event, arg1);
+                if (prevmusic.event != noone)
+                    event_stop(prevmusic.event, _stop_music);
             }
             
             global.music = mu;
         }
     }
     
-    if (global.music != -4 && global.music.mumethod != -4)
-        global.music.mumethod(arg0);
+    if (global.music != noone && global.music.mumethod != noone)
+        global.music.mumethod(_rm);
 }

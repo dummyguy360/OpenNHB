@@ -1,8 +1,8 @@
 function scr_player_groundpound()
 {
-    hit_vertical = function(arg0)
+    hit_vertical = function(_v)
     {
-        if (arg0 >= 0 && sprite_index == spr_player_groundpound)
+        if (_v >= 0 && sprite_index == spr_player_groundpound)
         {
             sprite_index = spr_player_groundpoundland;
             image_index = 0;
@@ -15,14 +15,14 @@ function scr_player_groundpound()
         }
     };
     
-    collide_destructibles = function(arg0, arg1)
+    collide_destructibles = function(_h, _v)
     {
-        scr_destroy_horizontal(arg0);
+        scr_destroy_horizontal(_h);
         
         if (sprite_index == spr_player_groundpound)
         {
-            scr_destroy_vertical(arg1 * 2);
-            scr_destroybounce(arg1 * 2, par_bouncysolid);
+            scr_destroy_vertical(_v * 2);
+            scr_destroybounce(_v * 2, par_bouncysolid);
         }
     };
     

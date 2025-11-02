@@ -1,8 +1,8 @@
 function scr_player_downslide()
 {
-    hit_vertical = function(arg0)
+    hit_vertical = function(_v)
     {
-        if (arg0 >= 0 && sprite_index == spr_player_downslidedive)
+        if (_v >= 0 && sprite_index == spr_player_downslidedive)
         {
             sprite_index = spr_player_downslide;
             slidetime = 18;
@@ -10,12 +10,12 @@ function scr_player_downslide()
         }
     };
     
-    collide_destructibles = function(arg0, arg1)
+    collide_destructibles = function(_h, _v)
     {
-        scr_destroy_horizontal(arg0);
+        scr_destroy_horizontal(_h);
         
         if (sprite_index == spr_player_downslidedive)
-            scr_destroy_vertical(arg1);
+            scr_destroy_vertical(_v);
         
         if (sprite_index == spr_player_downslide && !prevGrounded)
             scr_destroybounce(1);

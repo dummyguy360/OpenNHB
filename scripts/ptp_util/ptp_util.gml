@@ -1,13 +1,9 @@
 function array_get_undefined(arg0, arg1)
 {
     try
-    {
         return array_get(arg0, arg1);
-    }
     catch (_ex)
-    {
         return undefined;
-    }
 }
 
 function roundlower(arg0)

@@ -44,13 +44,13 @@ else
     }
     else
     {
-        hit_horizontal = function(arg0)
+        hit_horizontal = function(_h)
         {
-            if (scr_destroy_horizontal(arg0, obj_destroyablenitro))
+            if (scr_destroy_horizontal(_h, obj_destroyablenitro))
                 exit;
             
             vsp = -6;
-            hsp = -3 * arg0;
+            hsp = -3 * _h;
         };
         
         depth = approach(depth, 0, 1);

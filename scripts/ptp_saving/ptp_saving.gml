@@ -35,9 +35,7 @@ function save_load()
             asyncloadid = buffer_async_group_end();
         }
         else
-        {
             ds_queue_enqueue(savequeue, save_load);
-        }
     }
 }
 
@@ -56,9 +54,7 @@ function save_dump()
             asyncsaveid = buffer_async_group_end();
         }
         else
-        {
             ds_queue_enqueue(savequeue, save_dump);
-        }
     }
 }
 
@@ -98,36 +94,34 @@ function config_dump()
             asyncconfigsaveid = buffer_async_group_end();
         }
         else
-        {
             ds_queue_enqueue(savequeue, config_dump);
-        }
     }
 }
 
-function config_get_option(arg0, arg1, arg2)
+function config_get_option(_section_name, _option_name, _value)
 {
     with (obj_savesystem)
     {
-        if (!variable_struct_exists(configstruct, arg0))
-            return arg2;
+        if (!variable_struct_exists(configstruct, _section_name))
+            return _value;
         
-        var _sect = variable_struct_get(configstruct, arg0);
+        var _sect = variable_struct_get(configstruct, _section_name);
         
-        if (!variable_struct_exists(_sect, arg1))
-            return arg2;
+        if (!variable_struct_exists(_sect, _option_name))
+            return _value;
         
-        return variable_struct_get(_sect, arg1);
+        return variable_struct_get(_sect, _option_name);
     }
 }
 
-function config_set_option(arg0, arg1, arg2)
+function config_set_option(_section_name, _option_name, _value)
 {
     with (obj_savesystem)
     {
-        if (!variable_struct_exists(configstruct, arg0))
-            variable_struct_set(configstruct, arg0, {});
+        if (!variable_struct_exists(configstruct, _section_name))
+            variable_struct_set(configstruct, _section_name, {});
         
-        var _sect = variable_struct_get(configstruct, arg0);
-        variable_struct_set(_sect, arg1, arg2);
+        var _sect = variable_struct_get(configstruct, _section_name);
+        variable_struct_set(_sect, _option_name, _value);
     }
 }

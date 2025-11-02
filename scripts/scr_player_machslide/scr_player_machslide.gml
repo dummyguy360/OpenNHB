@@ -1,14 +1,14 @@
 function scr_player_machslide()
 {
-    hit_horizontal = function(arg0)
+    hit_horizontal = function(_h)
     {
         movespeed = 0;
     };
     
-    collide_destructibles = function(arg0, arg1)
+    collide_destructibles = function(_h, _v)
     {
         if (!grounded)
-            scr_destroybounce(arg1);
+            scr_destroybounce(_v);
     };
     
     var machturn = sprite_index == spr_player_mach2turn;
@@ -80,9 +80,7 @@ function scr_player_machslide()
                 movespeed = 8;
             }
             else
-            {
                 state = states.normal;
-            }
         }
     }
     
