@@ -15,7 +15,12 @@ update_stars = function()
     var _gems = ini_read_real("PumpkinPatch", "gemData", 0);
     var _rank = get_rank(_candy, _pumpkins, _crates, _gems);
     starexists = false;
-    stars = [new Star(_rank <= UnknownEnum.Value_1, 1, 0), new Star(_rank == UnknownEnum.Value_0, 2, 1), new Star(has_easteregg("lifeExpectancyVoided"), 3, 2)];
+    stars = 
+	[
+		new Star(_rank <= Rank.Good, 1, 0), 
+		new Star(_rank == Rank.Perfect, 2, 1), 
+		new Star(has_easteregg("lifeExpectancyVoided"), 3, 2)
+	];
     save_close();
 };
 

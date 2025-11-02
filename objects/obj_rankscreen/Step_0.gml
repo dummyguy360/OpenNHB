@@ -196,19 +196,19 @@ if (fade <= 0)
                     
                     switch (rank)
                     {
-                        case UnknownEnum.Value_3:
+                        case Rank.Shit:
                             alarm[0] = 425;
                             break;
                         
-                        case UnknownEnum.Value_2:
+                        case Rank.Meh:
                             alarm[0] = 690;
                             break;
                         
-                        case UnknownEnum.Value_1:
+                        case Rank.Good:
                             alarm[0] = 960;
                             break;
                         
-                        case UnknownEnum.Value_0:
+                        case Rank.Perfect:
                             alarm[0] = 810;
                             break;
                         
@@ -253,22 +253,22 @@ if (fade <= 0)
         case states.hurt:
             switch (rank)
             {
-                case UnknownEnum.Value_0:
+                case Rank.Perfect:
                     noisespr = spr_player_rankperfect;
                     audiencespr = spr_rankaudience_goodperfect;
                     break;
                 
-                case UnknownEnum.Value_1:
+                case Rank.Good:
                     noisespr = spr_player_rankgood;
                     audiencespr = spr_rankaudience_goodperfect;
                     break;
                 
-                case UnknownEnum.Value_2:
+                case Rank.Meh:
                     noisespr = spr_player_rankmeh;
                     audiencespr = spr_rankaudience_meh;
                     break;
                 
-                case UnknownEnum.Value_3:
+                case Rank.Shit:
                     noisespr = spr_player_rankshit;
                     audiencespr = spr_rankaudience_shit;
                     break;

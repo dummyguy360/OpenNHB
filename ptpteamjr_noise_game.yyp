@@ -1477,7 +1477,6 @@
     {"id":{"name":"_decompiled_tileset_death","path":"sprites/_decompiled_tileset_death/_decompiled_tileset_death.yy",},},
     {"id":{"name":"_decompiled_tileset_patch","path":"sprites/_decompiled_tileset_patch/_decompiled_tileset_patch.yy",},},
     {"id":{"name":"_decompiled_tileset_map","path":"sprites/_decompiled_tileset_map/_decompiled_tileset_map.yy",},},
-    {"id":{"name":"_GLOBAL_INIT","path":"scripts/_GLOBAL_INIT/_GLOBAL_INIT.yy",},},
   ],
   "RoomOrderNodes": [
     {"roomId":{"name":"Init","path":"rooms/Init/Init.yy",},},

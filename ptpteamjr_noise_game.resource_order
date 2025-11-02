@@ -1252,6 +1252,5 @@
     {"name":"_decompiled_tileset_death","order":525,"path":"sprites/_decompiled_tileset_death/_decompiled_tileset_death.yy",},
     {"name":"_decompiled_tileset_patch","order":526,"path":"sprites/_decompiled_tileset_patch/_decompiled_tileset_patch.yy",},
     {"name":"_decompiled_tileset_map","order":527,"path":"sprites/_decompiled_tileset_map/_decompiled_tileset_map.yy",},
-    {"name":"_GLOBAL_INIT","order":40,"path":"scripts/_GLOBAL_INIT/_GLOBAL_INIT.yy",},
   ],
 }

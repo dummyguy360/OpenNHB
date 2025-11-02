@@ -612,25 +612,25 @@ function deathplat_camupdate()
 
 function get_rank(arg0, arg1, arg2, arg3)
 {
-    var _workingrank = UnknownEnum.Value_0;
+    var _workingrank = Rank.Perfect;
     var _gemcount = bit_count(arg3);
     
-    if (_workingrank == UnknownEnum.Value_0)
+    if (_workingrank == Rank.Perfect)
     {
         if (arg0 < 8000 || arg1 < 10 || arg2 < global.cratecount || _gemcount < 3)
-            _workingrank = UnknownEnum.Value_1;
+            _workingrank = Rank.Good;
     }
     
-    if (_workingrank == UnknownEnum.Value_1)
+    if (_workingrank == Rank.Good)
     {
         if (arg0 < 4000 || arg1 < 9 || arg2 < 250 || _gemcount < 2)
-            _workingrank = UnknownEnum.Value_2;
+            _workingrank = Rank.Meh;
     }
     
-    if (_workingrank == UnknownEnum.Value_2)
+    if (_workingrank == Rank.Meh)
     {
         if (arg0 < 2000 || arg1 < 7 || arg2 < 250 || _gemcount < 1)
-            _workingrank = UnknownEnum.Value_3;
+            _workingrank = Rank.Shit;
     }
     
     return _workingrank;

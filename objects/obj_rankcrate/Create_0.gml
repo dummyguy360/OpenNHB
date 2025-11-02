@@ -6,24 +6,24 @@ var _gw = get_game_width();
 var _gh = get_game_height();
 middlex = _gw / 2;
 
-switch (type ?? UnknownEnum.Value_0)
+switch (type ?? Rank.Perfect)
 {
-    case UnknownEnum.Value_0:
+    case Rank.Perfect:
         x = middlex;
         y = -100;
         vsp = 8;
         break;
     
-    case UnknownEnum.Value_1:
+    case Rank.Good:
         x = 16;
         break;
     
-    case UnknownEnum.Value_2:
+    case Rank.Meh:
         x = _gw - 16;
         break;
 }
 
-if (type == UnknownEnum.Value_1 || type == UnknownEnum.Value_2)
+if (type == Rank.Good || type == Rank.Meh)
 {
     y = _gh + 64;
     var _motion = calculate_projectile_motion(x, y, middlex, 365, grav, 48);

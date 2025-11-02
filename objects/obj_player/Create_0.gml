@@ -232,6 +232,16 @@ deadblinksnd = event_instance("event:/sfx/player/deadblink");
 deaddisintergratesnd = event_instance("event:/sfx/player/disintergrate");
 #endregion
 
+enum standingsurface 
+{
+	grass = 0,
+	wood = 1,
+	slop = 2,
+	metal = 3,
+	generic = 4,
+	none = 5,
+}
+
 standingsurface = standingsurface.grass;
 
 #region Player Moves

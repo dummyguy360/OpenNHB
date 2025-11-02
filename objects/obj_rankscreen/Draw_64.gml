@@ -28,19 +28,19 @@ var _signind = 0;
 
 switch (rank)
 {
-    case UnknownEnum.Value_3:
+    case Rank.Shit:
         _signind = 1;
         break;
     
-    case UnknownEnum.Value_2:
+    case Rank.Meh:
         _signind = 2;
         break;
     
-    case UnknownEnum.Value_1:
+    case Rank.Good:
         _signind = 3;
         break;
     
-    case UnknownEnum.Value_0:
+    case Rank.Perfect:
         _signind = 4;
         break;
 }

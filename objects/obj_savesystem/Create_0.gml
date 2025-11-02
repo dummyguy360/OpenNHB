@@ -1,3 +1,11 @@
+enum save_state 
+{
+	idle = 0,
+	dumpsave = 1,
+	loadsave = 2,
+	dumpconfig = 3,
+}
+
 savestate = save_state.idle;
 savestr = "";
 configstruct = {};
@@ -41,6 +49,13 @@ global.borders = [-1];
 var _highestaspectratio = array_length(global.screensizes) - 1;
 global.maxscreenwidth = global.screensizes[_highestaspectratio][1][0];
 global.maxscreenheight = global.screensizes[_highestaspectratio][1][1];
+
+enum aspectratio 
+{
+	res4_3 = 0,
+	res16_9 = 1,
+	res16_10 = 2,
+}
 global.resmode = config_get_option("Video", "resmode", aspectratio.res16_9);
 global.resnumb = config_get_option("Video", "resnumb", 1);
 global.scalemode = config_get_option("Video", "scalemode", scaletype.fit);

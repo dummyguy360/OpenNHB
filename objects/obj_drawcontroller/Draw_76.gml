@@ -1,3 +1,11 @@
+enum scaletype 
+{
+	fit = 0,
+	fill = 1,
+	pixelperfect = 2,
+	exact = 3,
+}
+
 gpu_set_ztestenable(true);
 windowwidth = window_get_width();
 windowheight = window_get_height();

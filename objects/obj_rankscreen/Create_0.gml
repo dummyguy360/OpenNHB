@@ -25,5 +25,14 @@ totalsignbounced = false;
 ranksigny = -224;
 state = states.normal;
 countsndtimer = 0;
-rank = UnknownEnum.Value_3;
+
+enum Rank
+{
+	Perfect = 0,
+	Good = 1,
+	Meh = 2,
+	Shit = 3,
+}
+
+rank = Rank.Shit;
 signsqueak = event_instance("event:/sfx/misc/ranksignsqueak");

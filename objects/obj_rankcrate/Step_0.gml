@@ -5,7 +5,7 @@ var _destroy = false;
 
 switch (type)
 {
-    case UnknownEnum.Value_0:
+    case Rank.Perfect:
         var _maxy = 330;
         
         if (obj_rankscreen.noisespr == spr_player_rankmanycrates)
@@ -17,16 +17,16 @@ switch (type)
         _destroy = y >= _maxy;
         break;
     
-    case UnknownEnum.Value_1:
+    case Rank.Good:
         _destroy = x >= middlex;
         break;
     
-    case UnknownEnum.Value_2:
+    case Rank.Meh:
         _destroy = x <= middlex;
         break;
 }
 
-if (type == UnknownEnum.Value_1 || type == UnknownEnum.Value_2)
+if (type == Rank.Good || type == Rank.Meh)
 {
     image_xscale = tween(2, 1, 1 - (abs(x - middlex) / middlex), EASE_OUT_CUBIC);
     image_yscale = image_xscale;

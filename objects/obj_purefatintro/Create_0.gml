@@ -1,4 +1,16 @@
-introstate = UnknownEnum.Value_0;
+enum intro
+{
+	pep_mouthopen = 0,
+	pep_recliner = 1,
+	pep_recliner_zoomout = 2,
+	truck_enter_wZoomout = 3,
+	truck_enter = 4,
+	truck_door_fall = 5,
+	logo_enter = 6,
+	logo_fade = 7
+}
+
+introstate = intro.pep_mouthopen;
 frontx = 352;
 fronty = 64;
 frontind = 0;

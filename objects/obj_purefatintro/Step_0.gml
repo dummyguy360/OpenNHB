@@ -7,7 +7,7 @@ if (input_check_pressed("jump"))
     room_goto(Titlescreen);
 }
 
-if (introstate == UnknownEnum.Value_7)
+if (introstate == intro.logo_fade)
 {
     if (logofade <= 0 && !event_isplaying(introaudio))
         room_goto(Titlescreen);
