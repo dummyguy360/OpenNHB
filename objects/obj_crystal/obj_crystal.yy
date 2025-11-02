@@ -8,8 +8,8 @@
   "managed": true,
   "overriddenProperties": [],
   "parent": {
-    "name": "Miscellanous",
-    "path": "folders/Objects/Miscellanous.yy",
+    "name": "Collectables",
+    "path": "folders/Objects/Level Objects/Collectables.yy",
   },
   "parentObjectId": {
     "name": "par_gem",

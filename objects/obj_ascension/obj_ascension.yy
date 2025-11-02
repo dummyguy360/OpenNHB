@@ -11,8 +11,8 @@
   "managed": true,
   "overriddenProperties": [],
   "parent": {
-    "name": "Miscellanous",
-    "path": "folders/Objects/Miscellanous.yy",
+    "name": "Collision",
+    "path": "folders/Objects/Level Objects/Collision.yy",
   },
   "parentObjectId": {
     "name": "obj_endplatform",

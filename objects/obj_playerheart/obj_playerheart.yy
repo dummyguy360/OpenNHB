@@ -10,8 +10,8 @@
   "managed": true,
   "overriddenProperties": [],
   "parent": {
-    "name": "Level Objects",
-    "path": "folders/Objects/Level Objects.yy",
+    "name": "HUD",
+    "path": "folders/Objects/HUD.yy",
   },
   "parentObjectId": {
     "name": "par_billboard",

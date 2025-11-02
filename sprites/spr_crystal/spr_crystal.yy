@@ -25,8 +25,8 @@
   "nineSlice": null,
   "origin": 4,
   "parent": {
-    "name": "Miscellanous",
-    "path": "folders/Sprites/Miscellanous.yy",
+    "name": "Collectables",
+    "path": "folders/Sprites/Level Objects/Collectables.yy",
   },
   "preMultiplyAlpha": false,
   "sequence": {

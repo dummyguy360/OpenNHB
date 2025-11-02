@@ -25,8 +25,8 @@
   "nineSlice": null,
   "origin": 7,
   "parent": {
-    "name": "Miscellanous",
-    "path": "folders/Sprites/Miscellanous.yy",
+    "name": "Destroyables",
+    "path": "folders/Sprites/Level Objects/Destroyables.yy",
   },
   "preMultiplyAlpha": false,
   "sequence": {

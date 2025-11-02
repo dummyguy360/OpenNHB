@@ -14,8 +14,8 @@
   "managed": true,
   "overriddenProperties": [],
   "parent": {
-    "name": "Miscellanous",
-    "path": "folders/Objects/Miscellanous.yy",
+    "name": "Player",
+    "path": "folders/Objects/General/Player.yy",
   },
   "parentObjectId": {
     "name": "obj_solid",

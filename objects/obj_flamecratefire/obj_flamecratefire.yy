@@ -11,8 +11,8 @@
   "managed": true,
   "overriddenProperties": [],
   "parent": {
-    "name": "Miscellanous",
-    "path": "folders/Objects/Miscellanous.yy",
+    "name": "Destroyables",
+    "path": "folders/Objects/Level Objects/Destroyables.yy",
   },
   "parentObjectId": {
     "name": "par_billboard",

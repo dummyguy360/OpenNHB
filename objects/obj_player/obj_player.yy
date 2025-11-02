@@ -17,8 +17,8 @@
   "managed": true,
   "overriddenProperties": [],
   "parent": {
-    "name": "General",
-    "path": "folders/Objects/General.yy",
+    "name": "Player",
+    "path": "folders/Objects/General/Player.yy",
   },
   "parentObjectId": null,
   "persistent": true,

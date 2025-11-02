@@ -34,8 +34,8 @@
   "nineSlice": null,
   "origin": 4,
   "parent": {
-    "name": "Level Objects",
-    "path": "folders/Sprites/Level Objects.yy",
+    "name": "Collectables",
+    "path": "folders/Sprites/Level Objects/Collectables.yy",
   },
   "preMultiplyAlpha": false,
   "sequence": {

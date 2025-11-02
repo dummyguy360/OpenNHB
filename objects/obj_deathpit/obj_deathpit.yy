@@ -9,8 +9,8 @@
   "managed": true,
   "overriddenProperties": [],
   "parent": {
-    "name": "Miscellanous",
-    "path": "folders/Objects/Miscellanous.yy",
+    "name": "Triggers",
+    "path": "folders/Objects/Level Objects/Triggers.yy",
   },
   "parentObjectId": null,
   "persistent": false,

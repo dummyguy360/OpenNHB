@@ -9,8 +9,8 @@
   "managed": true,
   "overriddenProperties": [],
   "parent": {
-    "name": "Miscellanous",
-    "path": "folders/Objects/Miscellanous.yy",
+    "name": "Misc",
+    "path": "folders/Objects/Level Objects/Enemies/Misc.yy",
   },
   "parentObjectId": null,
   "persistent": false,
