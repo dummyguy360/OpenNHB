@@ -1,3 +1,5 @@
+/// @description Update NekoPresence so async events will execute.
+
 np_update();
 var _state = string_concat("Crates: ", global.destroyedcount, "/", global.cratecount, " / Gems: ", bit_count(global.gems));
 

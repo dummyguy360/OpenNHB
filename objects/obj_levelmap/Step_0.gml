@@ -207,9 +207,7 @@ if (global.mapOpen)
                 outhouse = -1;
         }
         else
-        {
             outhouse = -1;
-        }
         
         if (outhoused && outhouse != -1)
         {
@@ -236,9 +234,7 @@ if (global.mapOpen)
                             instance_create_depth(0, 0, 0, obj_outhousetransition);
                         }
                         else
-                        {
                             instance_place(x, y, obj_outhouse).alarm[1] = 20;
-                        }
                     }
                 }
             }

@@ -25,9 +25,9 @@ if (!global.gamePaused && can_pause())
         {
             global.noControlType = false;
             
-            if (global.music != -4)
+            if (global.music != noone)
             {
-                if (global.music.event != -4)
+                if (global.music.event != noone)
                     fmod_studio_event_instance_set_paused(global.music.event, savedmusicpause);
             }
         }
@@ -40,9 +40,9 @@ if (!global.gamePaused && can_pause())
         global.noControlType = true;
         nocontrollerind = 0;
         
-        if (global.music != -4)
+        if (global.music != noone)
         {
-            if (global.music.event != -4)
+            if (global.music.event != noone)
             {
                 savedmusicpause = fmod_studio_event_instance_get_paused(global.music.event);
                 fmod_studio_event_instance_set_paused(global.music.event, true);
@@ -67,9 +67,9 @@ if (input_check_pressed("pause") && can_pause() && !global.mapOpen)
         {
             fmod_studio_event_instance_start(global.pausemusic);
             
-            if (global.music != -4)
+            if (global.music != noone)
             {
-                if (global.music.event != -4)
+                if (global.music.event != noone)
                 {
                     other.savedmusicpause = fmod_studio_event_instance_get_paused(global.music.event);
                     fmod_studio_event_instance_set_paused(global.music.event, true);
@@ -89,9 +89,9 @@ if (input_check_pressed("pause") && can_pause() && !global.mapOpen)
         {
             event_stop(global.pausemusic, true);
             
-            if (global.music != -4)
+            if (global.music != noone)
             {
-                if (global.music.event != -4)
+                if (global.music.event != noone)
                     fmod_studio_event_instance_set_paused(global.music.event, other.savedmusicpause);
             }
         }
@@ -123,9 +123,7 @@ if (global.gamePaused && !instance_exists(obj_optionsmenu) && !instance_exists(o
             options[selected][1]();
     }
     else if (input_check_pressed("jump"))
-    {
         manual_func();
-    }
     
     if (_prevmanual != manual || _prevselect != selected)
         event_play_oneshot("event:/sfx/pausemenu/move");

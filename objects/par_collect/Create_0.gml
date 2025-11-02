@@ -1,14 +1,14 @@
 value = 1;
 splitfactor = 1;
 splittime = 0;
-collectedspr = -4;
+collectedspr = noone;
 sprdest = false;
-particlespr = -4;
+particlespr = noone;
 particlespread = 0;
 canmagnetise = true;
 magdist = 60;
 soundpath = "event:/sfx/player/collect";
-splitsound = -4;
+splitsound = noone;
 hasphysics = false;
 collectonland = false;
 collectors = obj_player;

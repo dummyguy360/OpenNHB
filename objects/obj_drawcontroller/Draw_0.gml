@@ -68,9 +68,7 @@ for (var i = 0; i < _num; i++)
             _rotray = fast_ray(bbox_left - _xoff, bbox_bottom - _yoff, bbox_right - _xoff, room_height);
             
             if (grounded)
-            {
                 _angle = angle;
-            }
             else
             {
                 x -= _xoff;
@@ -79,9 +77,7 @@ for (var i = 0; i < _num; i++)
             }
         }
         else if (scr_solid(x, y + 1))
-        {
             _angle = get_floor_angle();
-        }
         else
         {
             _rotray = fast_ray(bbox_left, bbox_bottom, bbox_right, room_height);

@@ -59,26 +59,16 @@ if ((openanim + closeanim) > 0)
                             _roomstatus = 3;
                     }
                     else if (roominfo_pumpkins[_i] > 0)
-                    {
                         _roomstatus = 0;
-                    }
                     else if (roominfo_crates[_i] > 0)
-                    {
                         _roomstatus = 1;
-                    }
                     else if (roominfo_nitros[_i] > 0)
-                    {
                         _roomstatus = 2;
-                    }
                     else
-                    {
                         _roomstatus = 3;
-                    }
                 }
                 else
-                {
                     _roomstatus = 4;
-                }
                 
                 shader_set(shd_maprender);
                 var _g = 0;
@@ -187,9 +177,7 @@ if ((openanim + closeanim) > 0)
         shader_set(shd_premultiply);
     }
     else
-    {
         __draw_text_hook(_gw / 2, _gh / 2, string_get("menu/map/nomap"));
-    }
     
     surface_reset_target();
     shader_set(shd_maptransition);
@@ -206,9 +194,7 @@ if ((openanim + closeanim) > 0)
             draw_sprite_radial(spr_outhousecursor_select, 1, invcharge / 30, _gw / 2, _gh / 2, 1, 1, c_white, openanim - closeanim);
         }
         else
-        {
             draw_sprite_ext(spr_outhousecursor, outhouse != -1, _gw / 2, _gh / 2, 1, 1, 0, c_white, openanim - closeanim);
-        }
     }
     
     var _tiptext = "";

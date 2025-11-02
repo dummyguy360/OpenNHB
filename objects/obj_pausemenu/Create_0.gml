@@ -33,6 +33,7 @@ else
 
 nocontrollerind = 0;
 
+#region Pause Option Funcs
 function resume_func()
 {
     global.gamePaused = false;
@@ -41,9 +42,9 @@ function resume_func()
     {
         event_stop(global.pausemusic, true);
         
-        if (global.music != -4)
+        if (global.music != noone)
         {
-            if (global.music.event != -4)
+            if (global.music.event != noone)
                 fmod_studio_event_instance_set_paused(global.music.event, other.savedmusicpause);
         }
     }
@@ -78,7 +79,9 @@ function manual_func()
 {
     instance_create_depth(x, y, -13000, obj_manual);
 }
+#endregion
 
+// Add Options
 var i = 0;
 options[i++] = [0, resume_func];
 options[i++] = [1, restart_func];

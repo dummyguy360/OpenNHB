@@ -36,13 +36,11 @@ function DEBUGMenuItem(arg0, arg1) constructor
         func(arg0, arg1);
     };
     
-    static atk = function(arg0, arg1)
-    {
-    };
+    static atk = function(arg0, arg1) { };
     
     name = arg0;
     func = arg1;
-    parent = -4;
+    parent = noone;
 }
 
 function DEBUGFolder(arg0, arg1) : DEBUGMenuItem(arg0) constructor
@@ -141,9 +139,7 @@ var _baseoptions = new DEBUGFolder("DebugJr v0.1", [new DEBUGMenuItem("Toggle Co
             noclip = !noclip;
     }
     else if (obj_player.state == states.noclip)
-    {
         obj_player.state = obj_player.debugstate;
-    }
     else
     {
         obj_player.debugstate = obj_player.state;

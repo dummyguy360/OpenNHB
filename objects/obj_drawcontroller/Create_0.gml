@@ -16,6 +16,7 @@ gpu_set_alphatestref(0);
 gpu_set_texrepeat(true);
 gpu_set_blendenable(true);
 application_surface_draw_enable(false);
+
 gameframe_init();
 global.gameframe_caption_font = font_caption;
 global.gameframe_caption_text = window_get_caption();
@@ -25,10 +26,7 @@ global.gameframe_border_width = 2;
 if (window_is_rounded())
 {
     global.gameframe_border_width = 0;
-    
-    global.gameframe_caption_draw_border = function()
-    {
-    };
+    global.gameframe_caption_draw_border = function() { }
 }
 
 mouse_xprev = mouse_x;
@@ -71,9 +69,36 @@ hovertimerfade = 0;
 hovertimerflash = 0;
 billboardlist = ds_list_create();
 toshadow = [];
-shadedobjects = [obj_player, obj_playerheart, obj_philbert, obj_pumpkin, obj_rope, obj_checkpoint, obj_torchplatform, obj_deathplatform, obj_deathplatformend, obj_nitrodetonator, par_billboard, par_collect, par_gem, par_enemy, par_crate, obj_destroyablenitroarrow, obj_destroyablecheckpoint, obj_endplatform, obj_movingplatformguy, obj_windmill, obj_outhouse, obj_mirror];
+
+shadedobjects = 
+[
+	obj_player, 
+	obj_playerheart, 
+	obj_philbert, 
+	obj_pumpkin, 
+	obj_rope, 
+	obj_checkpoint, 
+	obj_torchplatform, 
+	obj_deathplatform, 
+	obj_deathplatformend, 
+	obj_nitrodetonator, 
+	par_billboard, 
+	par_collect, 
+	par_gem, 
+	par_enemy, 
+	par_crate, 
+	obj_destroyablenitroarrow, 
+	obj_destroyablecheckpoint, 
+	obj_endplatform, 
+	obj_movingplatformguy, 
+	obj_windmill, 
+	obj_outhouse, 
+	obj_mirror
+];
+
 debugcam = false;
 debugcamcontrols = false;
+
 vBuffTiles = array_create(0, -1);
 assetLayers = [];
 var _shadows = sprite_get_number(tex_shadow);
@@ -90,6 +115,7 @@ vertex_freeze(vBuffShadow);
 globallight = 1;
 u_tileLightLevel = shader_get_uniform(shd_3dtiles, "u_LightLevel");
 u_shadowLightLevel = shader_get_uniform(shd_shadows, "u_LightLevel");
+
 global.outlineDrawing = false;
 outlineDebug = false;
 outlineSurf = -1;
@@ -100,6 +126,7 @@ outlineTexel = shader_get_uniform(shd_3doutline, "u_Texel");
 outlineUVs = shader_get_uniform(shd_3doutline, "u_UVs");
 outlineHUDTexel = shader_get_uniform(shd_3doutline_hud, "u_Texel");
 shadowMask = shader_get_sampler_index(shd_shadows, "u_Mask");
+
 hpalpha = 0;
 collectalpha = 0;
 comboalpha = 0;
@@ -119,10 +146,10 @@ hudgemsurf = -1;
 scoresparkles = array_create(0);
 scoresparkletimer = 0;
 
-function ScoreSparkle(arg0, arg1) constructor
+function ScoreSparkle(xx, yy) constructor
 {
-    x = arg0 + random_range(-32, 32);
-    y = arg1 + random_range(-16, 16);
+    x = xx + random_range(-32, 32);
+    y = yy + random_range(-16, 16);
     sprite = choose(spr_collectsparkleeffect1, spr_collectsparkleeffect2);
     index = 0.5;
 }
@@ -304,7 +331,7 @@ function draw_background()
     var _oceananimcycle = get_cycle(sprite_get_number(bgoceanspr) * 4) / 4;
     draw_sprite_ext(bgoceanspr, _oceananimcycle, get_game_width() / 2, get_game_height() / 2, 1, 1, 0, c_white, 1);
     
-    if (bgspr != -4)
+    if (bgspr != noone)
     {
         for (var i = 0; i < 10; i++)
         {
@@ -350,7 +377,16 @@ function draw_tiles()
 
 function draw_models()
 {
-    var _objects = [par_bouncysolid, obj_endplatform, obj_deathplatform, obj_deathplatformend, obj_movingplatformguy, obj_outhouse, par_switchsolid];
+    var _objects = 
+	[
+		par_bouncysolid, 
+		obj_endplatform, 
+		obj_deathplatform, 
+		obj_deathplatformend, 
+		obj_movingplatformguy, 
+		obj_outhouse, 
+		par_switchsolid
+	];
     var _num = collision_circle_list(camX, camY, max(global.maxscreenwidth, global.maxscreenheight), _objects, false, true, global.instancelist, false);
     
     for (var i = 0; i < _num; i++)

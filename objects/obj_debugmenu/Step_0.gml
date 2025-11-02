@@ -40,9 +40,7 @@ if (open)
                         break;
                     }
                     else
-                    {
                         break;
-                    }
                 }
             }
         }

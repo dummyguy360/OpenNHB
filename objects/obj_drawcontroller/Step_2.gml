@@ -1,9 +1,7 @@
 global.gameframe_can_input = room != Init;
 
 if (!hovering)
-{
     global.gameframe_default_cursor = -2;
-}
 else
 {
     global.gameframe_default_cursor = -21;
@@ -122,9 +120,7 @@ if (!debugcam)
         camYAW = 270;
     
     if (room == Titlescreen || room == Jeg)
-    {
         camPITCH = 0;
-    }
     else
     {
         var _zFrom = camDist;
@@ -166,7 +162,7 @@ if (!debugcam)
                 _meety = _scene.nitroy + (_scene.nitroh / 2);
             }
             
-            other.curlock = -4;
+            other.curlock = noone;
             other.curlockbboxdata = [];
             
             if (player_collideable() || state == states.endplatform || state == states.dead || state == states.levelintro || state == states.outhouse || state == states.platformlocked)
@@ -189,7 +185,7 @@ if (!debugcam)
             }
         }
         
-        if (curlock != -4)
+        if (curlock != noone)
         {
             var _lock = lock_cam(camX, camY, curlock, curlockbboxdata);
             camX = _lock[0];
@@ -197,10 +193,10 @@ if (!debugcam)
         }
     }
     
-    if (prevlock == -4 && curlock != -4)
+    if (prevlock == noone && curlock != noone)
         offset_camera(_prelockX, _prelockY, camX, camY);
     
-    if ((prevlock != -4 && curlock == -4) || (!array_equals(curlockbboxdata, prevlockbboxdata) && curlock != -4))
+    if ((prevlock != noone && curlock == noone) || (!array_equals(curlockbboxdata, prevlockbboxdata) && curlock != -4))
         offset_camera(_preunlockX, _preunlockY, camX, camY);
     
     if (interpplaypos)
@@ -254,9 +250,7 @@ else if (!in_debug_menu() && !game_paused() && debugcamcontrols)
     camPITCH = clamp(camPITCH, -85, 85);
 }
 else
-{
     window_mouse_set_locked(false);
-}
 
 listener_setPosition(0, camX, camY, camZ);
 
@@ -335,9 +329,7 @@ if (!game_paused())
         noisehudshake = irandom_range(3, -3);
     }
     else
-    {
         noisehudshake = 0;
-    }
 }
 
 globallight = (room == PatchPerilousEntrance) ? 0.5 : 1;
@@ -353,7 +345,7 @@ for (var i = 0; i < _num; i++)
         lightlevel = (room == PatchPerilousEntrance) ? 0.5 : 1;
         var _darkarea = instance_place(x, y, obj_darkarea);
         
-        if (_darkarea != -4)
+        if (_darkarea != noone)
         {
             var _perc = (max(bbox_left, _darkarea.bbox_left) - min(bbox_right, _darkarea.bbox_right)) * (max(bbox_top, _darkarea.bbox_top) - min(bbox_bottom, _darkarea.bbox_bottom + 1));
             var _area = (bbox_left - bbox_right) * (bbox_top - bbox_bottom);
@@ -394,7 +386,7 @@ ds_list_clear(billboardlist);
 if (room != Init)
 {
     _num = collision_circle_list(camX, camY, max(global.maxscreenwidth, global.maxscreenheight), [obj_player, par_billboard], false, true, billboardlist, false);
-    toshadow = array_create(_num, -4);
+    toshadow = array_create(_num, noone);
 }
 
 prevcamx = camX;

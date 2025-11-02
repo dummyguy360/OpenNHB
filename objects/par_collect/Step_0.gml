@@ -36,9 +36,7 @@ if (collected)
                 event_user(1);
         }
         else
-        {
             event_user(1);
-        }
     }
     
     splittimer--;
