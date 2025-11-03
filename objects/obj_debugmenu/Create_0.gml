@@ -21,46 +21,45 @@ if (!_debug)
 }
 #endregion
 #region Debug Menu Functions
-function DEBUGMenuItem(arg0, arg1) constructor
+function DEBUGMenuItem(_name, _func) constructor
 {
-    static draw = function(arg0, arg1, arg2)
+    static draw = function(_x, _y, _col_dark)
     {
         var _c = c_white;
+        if (_col_dark) 
+			_c = c_black;
         
-        if (arg2)
-            _c = 0;
-        
-        __draw_text_colour_hook(round(arg0), round(arg1), name, _c, _c, _c, _c, 1);
+        __draw_text_colour_hook(round(_x), round(_y), name, _c, _c, _c, _c, 1);
     };
     
-    static jump = function(arg0, arg1)
+    static jump = function(_parent, _option)
     {
-        func(arg0, arg1);
+        func(_parent, _option);
     };
     
-    static atk = function(arg0, arg1) { };
+    static atk = function(_parent, _option) { };
     
-    name = arg0;
-    func = arg1;
+    name = _name;
+    func = _func;
     parent = noone;
 }
 
-function DEBUGFolder(arg0, arg1) : DEBUGMenuItem(arg0) constructor
+function DEBUGFolder(_name, _options) : DEBUGMenuItem(_name) constructor
 {
-    static enterfolder = function(arg0)
+    static enterfolder = function(_folder)
     {
         var _memyselfandi = self;
         
-        with (arg0)
+        with (_folder)
             ds_stack_push(optionstack, _memyselfandi);
     };
     
-    static exitfolder = function(arg0)
+    static exitfolder = function(_folder)
     {
-        if (ds_stack_size(arg0.optionstack) > 1)
-            ds_stack_pop(arg0.optionstack);
+        if (ds_stack_size(_folder.optionstack) > 1)
+            ds_stack_pop(_folder.optionstack);
         else
-            arg0.open = false;
+            _folder.open = false;
     };
     
     static drawoptions = function()
@@ -96,22 +95,22 @@ function DEBUGFolder(arg0, arg1) : DEBUGMenuItem(arg0) constructor
         }
     };
     
-    static jump = function(arg0)
+    static jump = function(_selected)
     {
-        enterfolder(arg0);
+        enterfolder(_selected);
     };
     
-    static atk = function(arg0)
+    static atk = function(_selected)
     {
-        exitfolder(arg0);
+        exitfolder(_selected);
     };
     
     optionselected = 0;
-    name = arg0;
-    options = arg1;
-    array_foreach(options, function(arg0, arg1)
+    name = _name;
+    options = _options;
+    array_foreach(options, function(_option, _parent)
     {
-        arg0.parent = self;
+        _option.parent = self;
     });
 }
 
@@ -119,22 +118,24 @@ var _roomoptions = array_create(0);
 
 for (var i = 0; room_exists(i); i++)
 {
-    array_push(_roomoptions, new DEBUGMenuItem(room_get_name(i), function(arg0, arg1)
+    array_push(_roomoptions, new DEBUGMenuItem(room_get_name(i), function(_option, _room)
     {
-        room_goto(asset_get_index(arg1.name));
-        arg0.open = false;
+        room_goto(asset_get_index(_room.name));
+        _option.open = false;
         
-        while (ds_stack_size(arg0.optionstack) > 1)
-            ds_stack_pop(arg0.optionstack);
+        while (ds_stack_size(_option.optionstack) > 1)
+            ds_stack_pop(_option.optionstack);
     }));
 }
 #endregion
 #region Debug Options
-var _baseoptions = new DEBUGFolder("DebugJr v0.1", [new DEBUGMenuItem("Toggle Collisions", function(arg0)
+var _baseoptions = new DEBUGFolder("DebugJr v0.1", [
+new DEBUGMenuItem("Toggle Collisions", function(_option)
 {
     global.visiblesolids = !global.visiblesolids;
-    arg0.open = false;
-}), new DEBUGMenuItem("Toggle Noclip", function(arg0)
+    _option.open = false;
+}), 
+new DEBUGMenuItem("Toggle Noclip", function(_option)
 {
     if (instance_exists(obj_jegplayer))
     {
@@ -152,8 +153,10 @@ var _baseoptions = new DEBUGFolder("DebugJr v0.1", [new DEBUGMenuItem("Toggle Co
             instance_destroy(obj_optionsmenu);
     }
     
-    arg0.open = false;
-}), new DEBUGFolder("Go to Room", _roomoptions), new DEBUGMenuItem("Toggle Debug Camera", function(arg0)
+    _option.open = false;
+}), 
+new DEBUGFolder("Go to Room", _roomoptions), 
+new DEBUGMenuItem("Toggle Debug Camera", function(_option)
 {
     if (obj_drawcontroller.debugcamcontrols)
     {
@@ -172,8 +175,9 @@ var _baseoptions = new DEBUGFolder("DebugJr v0.1", [new DEBUGMenuItem("Toggle Co
             instance_destroy(obj_optionsmenu);
     }
     
-    arg0.open = false;
-}), new DEBUGMenuItem("Lock/Unlock Camera", function(arg0)
+    _option.open = false;
+}), 
+new DEBUGMenuItem("Lock/Unlock Camera", function(_option)
 {
     if (obj_drawcontroller.debugcam && !obj_drawcontroller.debugcamcontrols)
     {
@@ -189,23 +193,27 @@ var _baseoptions = new DEBUGFolder("DebugJr v0.1", [new DEBUGMenuItem("Toggle Co
         obj_drawcontroller.debugcamcontrols = false;
     }
     
-    arg0.open = false;
-}), new DEBUGMenuItem("Reset Player", function(arg0)
+    _option.open = false;
+}), 
+new DEBUGMenuItem("Reset Player", function(_option)
 {
     if (room != Titlescreen)
         player_reset(false);
     
-    arg0.open = false;
-}), new DEBUGMenuItem("Reset Cycle", function(arg0)
+    _option.open = false;
+}), 
+new DEBUGMenuItem("Reset Cycle", function(_option)
 {
     global.game_cycleF = 0;
     global.game_cycleMS = 0;
-    arg0.open = false;
-}), new DEBUGMenuItem("Give Masks", function(arg0)
+    _option.open = false;
+}), 
+new DEBUGMenuItem("Give Masks", function(_option)
 {
     obj_player.hp = 3;
-    arg0.open = false;
-}), new DEBUGMenuItem("Destroy Crates", function(arg0)
+    _option.open = false;
+}), 
+new DEBUGMenuItem("Destroy Crates", function(_option)
 {
     with (obj_destroyablenitroarrow)
     {
@@ -214,66 +222,78 @@ var _baseoptions = new DEBUGFolder("DebugJr v0.1", [new DEBUGMenuItem("Toggle Co
     }
     
     instance_destroy(par_crate);
-    arg0.open = false;
-}), new DEBUGMenuItem("Reveal Map", function(arg0)
+    _option.open = false;
+}), 
+new DEBUGMenuItem("Reveal Map", function(_option)
 {
     for (var i = 0; i < array_length(obj_levelmap.visitedrooms); i++)
         obj_levelmap.visitedrooms[i] = true;
     
-    arg0.open = false;
-}), new DEBUGMenuItem("Toggle GodMode", function(arg0)
+    _option.open = false;
+}), 
+new DEBUGMenuItem("Toggle GodMode", function(_option)
 {
     global.godmode = !global.godmode;
-    arg0.open = false;
-}), new DEBUGMenuItem("Toggle Switches", function(arg0)
+    _option.open = false;
+}), 
+new DEBUGMenuItem("Toggle Switches", function(_option)
 {
     global.switchstate = !global.switchstate;
-    arg0.open = false;
-}), new DEBUGMenuItem("Give All Pumpkins", function(arg0)
+    _option.open = false;
+}), 
+new DEBUGMenuItem("Give All Pumpkins", function(_option)
 {
     global.pumpkintotal = 10;
-    arg0.open = false;
-}), new DEBUGFolder("Kill Player", [new DEBUGMenuItem("Normal Death", function(arg0)
-{
-    with (obj_player)
-        scr_hurtplayer(5);
+    _option.open = false;
+}), 
+new DEBUGFolder("Kill Player", 
+[
+	new DEBUGMenuItem("Normal Death", function(_option)
+	{
+		with (obj_player)
+		    scr_hurtplayer(5);
     
-    arg0.open = false;
+		_option.open = false;
     
-    while (ds_stack_size(arg0.optionstack) > 1)
-        ds_stack_pop(arg0.optionstack);
-}), new DEBUGMenuItem("Explosion Death", function(arg0)
-{
-    scr_hurtplayer(5, playerdeath.gibdeath);
-    instance_create_depth(obj_player.x, obj_player.y, 10, obj_explosion);
-    arg0.open = false;
+		while (ds_stack_size(_option.optionstack) > 1)
+		    ds_stack_pop(_option.optionstack);
+	}), new DEBUGMenuItem("Explosion Death", function(_option)
+	{
+		scr_hurtplayer(5, playerdeath.gibdeath);
+		instance_create_depth(obj_player.x, obj_player.y, 10, obj_explosion);
+		_option.open = false;
     
-    while (ds_stack_size(arg0.optionstack) > 1)
-        ds_stack_pop(arg0.optionstack);
-}), new DEBUGMenuItem("Fire Death", function(arg0)
-{
-    with (obj_player)
-        scr_hurtplayer(5, playerdeath.firedeath);
+		while (ds_stack_size(_option.optionstack) > 1)
+		    ds_stack_pop(_option.optionstack);
+	}), new DEBUGMenuItem("Fire Death", function(_option)
+	{
+		with (obj_player)
+		    scr_hurtplayer(5, playerdeath.firedeath);
     
-    arg0.open = false;
+		_option.open = false;
     
-    while (ds_stack_size(arg0.optionstack) > 1)
-        ds_stack_pop(arg0.optionstack);
-})]), new DEBUGMenuItem("Give Points", function(arg0)
+		while (ds_stack_size(_option.optionstack) > 1)
+		    ds_stack_pop(_option.optionstack);
+	})
+]), 
+new DEBUGMenuItem("Give Points", function(_option)
 {
     global.collect += 1000;
-    arg0.open = false;
-}), new DEBUGMenuItem("Rank Test", function(arg0)
+    _option.open = false;
+}), 
+new DEBUGMenuItem("Rank Test", function(_option)
 {
     room_goto(RankRoom);
     obj_player.state = states.actor;
-    arg0.open = false;
-}), new DEBUGMenuItem("Credits Test", function(arg0)
+    _option.open = false;
+}), 
+new DEBUGMenuItem("Credits Test", function(_option)
 {
     room_goto(Credits);
     obj_player.state = states.actor;
-    arg0.open = false;
-}), new DEBUGMenuItem("Evil Teleport", function(arg0)
+    _option.open = false;
+}), 
+new DEBUGMenuItem("Evil Teleport", function(_option)
 {
     with (obj_deathplatform)
     {
@@ -284,8 +304,10 @@ var _baseoptions = new DEBUGFolder("DebugJr v0.1", [new DEBUGMenuItem("Toggle Co
         obj_player.y = y - 30;
     }
     
-    arg0.open = false;
-})]);
+    _option.open = false;
+})
+
+]);
 #endregion
 
 _baseoptions.jump(id);

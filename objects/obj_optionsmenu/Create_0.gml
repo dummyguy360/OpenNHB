@@ -2,67 +2,50 @@ draw_set_font(global.font);
 depth = -13000;
 optiontip = string_get("menu/options/tips/generic");
 
-function MenuItem(arg0) constructor
+#region Menu Functions
+function MenuItem(_name) constructor
 {
-    static update = function()
-    {
-    };
+    static update = function() { }
+    static highlighted = function(_option) { }
     
-    static highlighted = function(arg0)
-    {
-    };
-    
-    static draw = function(arg0, arg1, arg2)
+    static draw = function(_x, _y, _alpha)
     {
         if (is_string(name))
-            __draw_text_colour_hook(round(arg0), round(arg1), name, c_white, c_white, c_white, c_white, 1 / (2 - arg2));
+            __draw_text_colour_hook(round(_x), round(_y), name, c_white, c_white, c_white, c_white, 1 / (2 - _alpha));
         else if (name != -1)
-            draw_sprite_ext(name, 0, round(arg0), round(arg1), 1, 1, 0, c_white, 1 / (2 - arg2));
+            draw_sprite_ext(name, 0, round(_x), round(_y), 1, 1, 0, c_white, 1 / (2 - _alpha));
     };
     
-    static parented = function()
-    {
-    };
+    static parented = function() { }
     
-    static left_right = function(arg0, arg1)
-    {
-    };
-    
-    static jump = function(arg0)
-    {
-    };
-    
-    static taunt = function(arg0)
-    {
-    };
-    
-    static unlock = function(arg0)
-    {
-    };
+    static left_right = function(_normal_val, _slider_val) { }
+    static jump = function(_selected) { }
+    static taunt = function(_selected) { }
+    static unlock = function(_selected) { }
     
     parent = noone;
     yspacing = 50;
-    name = arg0;
+    name = _name;
     skip = false;
     description = -1;
 }
 
-function Spacer(arg0 = "") : MenuItem(arg0) constructor
+function Spacer(_name = "") : MenuItem(_name) constructor
 {
     skip = true;
 }
 
-function Option(arg0, arg1, arg2, arg3 = [
+function Option(_name, _variable, _section, _selections = [
 	new Selection(string_get("menu/options/generic/no"), false), 
 	new Selection(string_get("menu/options/generic/yes"), true)
-], arg4 = noone, arg5 = false) : MenuItem(arg0) constructor
+], _updateglobals = noone, _auto = false) : MenuItem(_name) constructor
 {
-    static updatevar = function(arg0, arg1 = true)
+    static updatevar = function(_value, _save = true)
     {
-        variable_global_set(variable, arg0);
+        variable_global_set(variable, _value);
         
-        if (arg1)
-            config_set_option(section, variable, arg0);
+        if (_save)
+            config_set_option(section, variable, _value);
         
         if (updateglobals != noone)
             updateglobals();
@@ -70,51 +53,51 @@ function Option(arg0, arg1, arg2, arg3 = [
     
     static update = function()
     {
-        array_foreach(selections, function(arg0, arg1)
+        array_foreach(selections, function(_option, _parent)
         {
-            arg0.update();
+            _option.update();
         });
     };
     
-    static highlighted = function(arg0)
+    static highlighted = function(_option)
     {
-        selections[chosensel].highlighted(arg0);
+        selections[chosensel].highlighted(_option);
     };
     
-    static left_right = function(arg0, arg1)
+    static left_right = function(_normal_val, _slider_val)
     {
         if (!parent.locked && !alone)
-            chosensel = clamp(chosensel + arg0, 0, array_length(selections) - 1);
+            chosensel = clamp(chosensel + _normal_val, 0, array_length(selections) - 1);
         else
-            selections[chosensel].left_right(arg0, arg1);
+            selections[chosensel].left_right(_normal_val, _slider_val);
         
-        if (!alone && auto && arg0 != 0)
+        if (!alone && auto && _normal_val != 0)
         {
             updatevar(selections[chosensel].value);
             event_play_oneshot("event:/sfx/pausemenu/impact");
         }
     };
     
-    static jump = function(arg0)
+    static jump = function(_selected)
     {
-        selections[chosensel].jump(arg0);
+        selections[chosensel].jump(_selected);
     };
     
-    static taunt = function(arg0)
+    static taunt = function(_selected)
     {
-        selections[chosensel].taunt(arg0);
+        selections[chosensel].taunt(_selected);
     };
     
-    static unlock = function(arg0)
+    static unlock = function(_selected)
     {
-        selections[chosensel].unlock(arg0);
+        selections[chosensel].unlock(_selected);
     };
     
-    variable = arg1;
-    section = arg2;
-    selections = arg3;
-    updateglobals = arg4;
-    auto = arg5;
+    variable = _variable;
+    section = _section;
+    selections = _selections;
+    updateglobals = _updateglobals;
+    auto = _auto;
     chosensel = 0;
     alone = array_length(selections) == 1;
     
@@ -130,14 +113,14 @@ function Option(arg0, arg1, arg2, arg3 = [
         }
     }
     
-    array_foreach(selections, function(arg0, arg1)
+    array_foreach(selections, function(_option, _parent)
     {
-        arg0.parent = self;
-        arg0.parented();
+        _option.parent = self;
+        _option.parented();
     });
 }
 
-function Selection(arg0, arg1) : MenuItem(arg0) constructor
+function Selection(_name, _value) : MenuItem(_name) constructor
 {
     static getfolder = function()
     {
@@ -155,9 +138,9 @@ function Selection(arg0, arg1) : MenuItem(arg0) constructor
             return sprite_get_width(name);
     };
     
-    static highlighted = function(arg0)
+    static highlighted = function(_option)
     {
-        arg0.optiontip = string_get(parent.auto ? "menu/options/tips/selectionauto" : "menu/options/tips/selection");
+        _option.optiontip = string_get(parent.auto ? "menu/options/tips/selectionauto" : "menu/options/tips/selection");
     };
     
     static jump = function()
@@ -169,11 +152,11 @@ function Selection(arg0, arg1) : MenuItem(arg0) constructor
         parent.updatevar(value);
     };
     
-    value = arg1;
+    value = _value;
     forcedwidth = -1;
 }
 
-function VideoSelection(arg0) : Selection(-1, arg0) constructor
+function VideoSelection(_value) : Selection(-1, _value) constructor
 {
     static update = function()
     {
@@ -193,19 +176,19 @@ enum sliderval
 	seconds = 7,
 }
 
-function Slider(arg0 = 0, arg1 = 1, arg2 = 0.01, arg3 = sliderval.hidden) : Selection(-1, -1) constructor
+function Slider(_value_min = 0, _value_max = 1, _value_step = 0.01, _visual = sliderval.hidden) : Selection(-1, -1) constructor
 {
     static parented = function()
     {
         value = variable_global_get(parent.variable);
     };
     
-    static highlighted = function(arg0)
+    static highlighted = function(_option)
     {
         if (parent.alone)
-            arg0.optiontip = string_get("menu/options/tips/slideralone");
+            _option.optiontip = string_get("menu/options/tips/slideralone");
         else if (selected)
-            arg0.optiontip = string_get("menu/options/tips/slider");
+            _option.optiontip = string_get("menu/options/tips/slider");
         
         if (slided != prevslided)
         {
@@ -218,7 +201,7 @@ function Slider(arg0 = 0, arg1 = 1, arg2 = 0.01, arg3 = sliderval.hidden) : Sele
         slided = 0;
     };
     
-    static draw = function(arg0, arg1, arg2)
+    static draw = function(_x, _y, _alpha)
     {
         var _midwidth = forcedwidth / 2;
         var _amount = (value - value_min) / (value_max - value_min);
@@ -226,8 +209,8 @@ function Slider(arg0 = 0, arg1 = 1, arg2 = 0.01, arg3 = sliderval.hidden) : Sele
         var _percentalt = lerp(0, value_max * 100, _amount);
         var _percentaltalt = lerp(value_min * 100, value_max * 100, _amount);
         var _text = "";
-        draw_sprite(spr_slidertrack, 0, round(arg0 - _midwidth), round(arg1));
-        draw_sprite(spr_sliderknob, 0, round((arg0 - _midwidth) + (200 * (_percent / 100))), round(arg1));
+        draw_sprite(spr_slidertrack, 0, round(_x - _midwidth), round(_y));
+        draw_sprite(spr_sliderknob, 0, round((_x - _midwidth) + (200 * (_percent / 100))), round(_y));
         
         switch (visual)
         {
@@ -261,7 +244,7 @@ function Slider(arg0 = 0, arg1 = 1, arg2 = 0.01, arg3 = sliderval.hidden) : Sele
                 break;
         }
         
-        __draw_text_colour_hook(arg0, arg1, _text, c_white, c_white, c_white, c_white, 1 / (2 - arg2));
+        __draw_text_colour_hook(_x, _y, _text, c_white, c_white, c_white, c_white, 1 / (2 - _alpha));
     };
     
     static jump = function()
@@ -274,14 +257,14 @@ function Slider(arg0 = 0, arg1 = 1, arg2 = 0.01, arg3 = sliderval.hidden) : Sele
         }
     };
     
-    static left_right = function(arg0, arg1)
+    static left_right = function(_normal_val, _slider_val)
     {
         if (echo == 20)
             rate += lerp(1/15, 1, rate_step);
         
         if (echo == 0 || rate >= 1)
         {
-            value = clamp(value + (arg1 * value_step), value_min, value_max);
+            value = clamp(value + (_slider_val * value_step), value_min, value_max);
             
             if (rate >= 1)
             {
@@ -291,7 +274,7 @@ function Slider(arg0 = 0, arg1 = 1, arg2 = 0.01, arg3 = sliderval.hidden) : Sele
         }
         
         parent.updatevar(value, parent.alone);
-        slided = arg1;
+        slided = _slider_val;
         
         if (echo == 0)
             prevslided = slided;
@@ -299,7 +282,7 @@ function Slider(arg0 = 0, arg1 = 1, arg2 = 0.01, arg3 = sliderval.hidden) : Sele
         echo = min(echo + 1, 20);
     };
     
-    static unlock = function(arg0)
+    static unlock = function(_selected)
     {
         if (selected && !alone)
         {
@@ -310,10 +293,10 @@ function Slider(arg0 = 0, arg1 = 1, arg2 = 0.01, arg3 = sliderval.hidden) : Sele
         }
     };
     
-    value_min = arg0;
-    value_max = arg1;
-    value_step = arg2;
-    visual = arg3;
+    value_min = _value_min;
+    value_max = _value_max;
+    value_step = _value_step;
+    visual = _visual;
     selected = false;
     forcedwidth = 200;
     alone = false;
@@ -324,7 +307,7 @@ function Slider(arg0 = 0, arg1 = 1, arg2 = 0.01, arg3 = sliderval.hidden) : Sele
     rate_step = 0;
 }
 
-function Keybinder(arg0, arg1) : Selection(-1, -1) constructor
+function Keybinder(_player, _filter) : Selection(-1, -1) constructor
 {
     static update = function()
     {
@@ -332,12 +315,12 @@ function Keybinder(arg0, arg1) : Selection(-1, -1) constructor
         forcedwidth = 114;
     };
     
-    static highlighted = function(arg0)
+    static highlighted = function(_option)
     {
-        arg0.optiontip = string_get("menu/options/tips/" + (selected ? "keybinder" : "keyconfig"));
+        _option.optiontip = string_get("menu/options/tips/" + (selected ? "keybinder" : "keyconfig"));
     };
     
-    static draw = function(arg0, arg1, arg2)
+    static draw = function(_x, _y, _alpha)
     {
         draw_set_valign(fa_top);
         draw_set_halign(fa_left);
@@ -345,7 +328,7 @@ function Keybinder(arg0, arg1) : Selection(-1, -1) constructor
         for (var i = 0; i < 3; i++)
         {
             var _perc = i / 3;
-            draw_input(round(arg0 - 16 - (forcedwidth * _perc)), round(arg1 - 16), 1, 0, parent.variable, false, parent.section, i);
+            draw_input(round(_x - 16 - (forcedwidth * _perc)), round(_y - 16), 1, 0, parent.variable, false, parent.section, i);
         }
         
         draw_set_halign(fa_center);
@@ -367,8 +350,18 @@ function Keybinder(arg0, arg1) : Selection(-1, -1) constructor
 					vk_f11, vk_f12, vk_insert, vk_delete, 
 					vk_printscreen, 145, vk_pause, 
 					vk_home, vk_end, vk_pageup, 
-					vk_pagedown, (os_type == os_macosx) ? 92 : 91, 
-					(os_type == os_macosx) ? (((os_type == os_macosx || (os_type == os_ios || os_type == os_tvos)) && (false || os_type == os_gxgames)) ? 93 : 91) : 92, ((os_type == os_macosx || (os_type == os_ios || os_type == os_tvos)) && (false || os_type == os_gxgames)) ? 12 : 144, 
+					vk_pagedown, 
+					(os_type == os_macosx) ? 92 : 91, 
+					(os_type == os_macosx)
+					? (
+						(
+							(os_type == os_macosx || (os_type == os_ios || os_type == os_tvos)) 
+								&& (false || os_type == os_gxgames)
+						)
+						? 93 : 91
+					) 
+					: 92, 
+					((os_type == os_macosx || (os_type == os_ios || os_type == os_tvos)) && (false || os_type == os_gxgames)) ? 12 : 144, 
 					vk_numpad0, vk_numpad1, vk_numpad2, 
 					vk_numpad3, vk_numpad4, vk_numpad5, 
 					vk_numpad6, vk_numpad7, vk_numpad8, 
@@ -376,17 +369,17 @@ function Keybinder(arg0, arg1) : Selection(-1, -1) constructor
 					vk_add, vk_subtract, vk_decimal
 				], undefined, filter, player);
 				
-            input_binding_scan_start(function(arg0)
+            input_binding_scan_start(function(_binding)
             {
                 var _prevbind = input_binding_get(parent.variable, 0, 0, parent.section);
-                input_binding_set(parent.variable, arg0, player, 0, parent.section);
+                input_binding_set(parent.variable, _binding, player, 0, parent.section);
                 
-                if (!struct_equals(arg0, _prevbind))
+                if (!struct_equals(_binding, _prevbind))
                     input_binding_set(parent.variable, _prevbind, player, 1, parent.section);
                 
                 getfolder().locked--;
                 selected = false;
-            }, function(arg0)
+            }, function(_binding)
             {
                 getfolder().locked--;
                 selected = false;
@@ -405,19 +398,19 @@ function Keybinder(arg0, arg1) : Selection(-1, -1) constructor
         }
     };
     
-    player = arg0;
-    filter = arg1;
+    player = _player;
+    filter = _filter;
     selected = false;
 }
 
-function StackedOption(arg0, arg1, arg2, arg3 = [
+function StackedOption(_name, _variable, _section, _selections = [
 	new Selection(string_get("menu/options/generic/off"), false), 
 	new Selection(string_get("menu/options/generic/on"), true)
-], arg4 = noone, arg5 = true) : Option(arg0, arg1, arg2, arg3, arg4, arg5) constructor
+], _updateglobals = noone, _auto = true) : Option(_name, _variable, _section, _selections, _updateglobals, _auto) constructor
 {
-    static draw = function(arg0, arg1, arg2)
+    static draw = function(_x, _y, _alpha)
     {
-        __draw_text_colour_hook(480, arg1, name, c_white, c_white, c_white, c_white, 1 / (2 - arg2));
+        __draw_text_colour_hook(480, _y, name, c_white, c_white, c_white, c_white, 1 / (2 - _alpha));
         var _len = array_length(selections);
         var _maxwidth = 0;
         
@@ -429,37 +422,37 @@ function StackedOption(arg0, arg1, arg2, arg3 = [
         for (var _i = 0; _i < _len; _i++)
         {
             var _offset = ((1 - _len) / 2) + _i;
-            selections[_i].draw(480 + (_maxwidth * _offset), arg1 + 50, chosensel == _i);
+            selections[_i].draw(480 + (_maxwidth * _offset), _y + 50, chosensel == _i);
         }
     };
     
     yspacing = 100;
 }
 
-function SideOption(arg0, arg1, arg2, arg3, arg4 = [
+function SideOption(_name, _description, _variable, _section, _selections = [
 	new Selection(string_get("menu/options/generic/off"), false), 
 	new Selection(string_get("menu/options/generic/on"), true)
-], arg5 = noone, arg6 = true) : Option(arg0, arg2, arg3, arg4, arg5, arg6) constructor
+], _updateglobals = noone, _auto = true) : Option(_name, _description, _variable, _section, _selections, _updateglobals, _auto) constructor
 {
-    static draw = function(arg0, arg1, arg2)
+    static draw = function(_x, _y, _alpha)
     {
         var _sel = selections[chosensel];
         var _margin = 100;
-        __draw_text_colour_hook(round(nameoffset + _margin) + 180, round(arg1), name, c_white, c_white, c_white, c_white, 1 / (2 - arg2));
-        _sel.draw(round(get_game_width() - (_sel.getwidth() / 2) - _margin), round(arg1), true);
+        __draw_text_colour_hook(round(nameoffset + _margin) + 180, round(_y), name, c_white, c_white, c_white, c_white, 1 / (2 - _alpha));
+        _sel.draw(round(get_game_width() - (_sel.getwidth() / 2) - _margin), round(_y), true);
     };
     
     nameoffset = string_width(name) / 2;
-    description = arg1;
+    description = _description;
 }
 
-function Folder(arg0, arg1 = [], arg2 = bg_options, arg3 = false) : MenuItem(arg0) constructor
+function Folder(_name, _options = [], _background = bg_options, _middlealign = false) : MenuItem(_name) constructor
 {
-    static enterfolder = function(arg0)
+    static enterfolder = function(_folder)
     {
         var _memyselfandi = self;
         
-        with (arg0)
+        with (_folder)
         {
             event_play_oneshot("event:/sfx/pausemenu/impact");
             ds_stack_push(optionstack, _memyselfandi);
@@ -469,13 +462,13 @@ function Folder(arg0, arg1 = [], arg2 = bg_options, arg3 = false) : MenuItem(arg
         dofade = false;
     };
     
-    static exitfolder = function(arg0)
+    static exitfolder = function(_folder)
     {
         event_play_oneshot("event:/sfx/pausemenu/rubbersqueak");
-        ds_stack_pop(arg0.optionstack);
+        ds_stack_pop(_folder.optionstack);
         
-        if (ds_stack_empty(arg0.optionstack))
-            instance_destroy(arg0);
+        if (ds_stack_empty(_folder.optionstack))
+            instance_destroy(_folder);
         else
             dofade = true;
     };
@@ -512,34 +505,34 @@ function Folder(arg0, arg1 = [], arg2 = bg_options, arg3 = false) : MenuItem(arg
     
     static update = function()
     {
-        array_foreach(options, function(arg0, arg1)
+        array_foreach(options, function(_option, _parent)
         {
-            arg0.update();
+            _option.update();
         });
     };
     
-    static jump = function(arg0)
+    static jump = function(_selected)
     {
-        enterfolder(arg0);
+        enterfolder(_selected);
     };
     
-    static unlock = function(arg0)
+    static unlock = function(_selected)
     {
-        exitfolder(arg0);
+        exitfolder(_selected);
     };
     
     optionselected = 0;
-    options = arg1;
-    background = arg2;
-    middlealign = arg3;
+    options = _options;
+    background = _background;
+    middlealign = _middlealign;
     locked = 0;
     scroll = 0;
     dofade = false;
     fade = 0;
-    array_foreach(options, function(arg0, arg1)
+    array_foreach(options, function(_option, _parent)
     {
-        arg0.parent = self;
-        arg0.parented();
+        _option.parent = self;
+        _option.parented();
     });
     maxheight = 0;
     
@@ -550,11 +543,11 @@ function Folder(arg0, arg1 = [], arg2 = bg_options, arg3 = false) : MenuItem(arg
     }
 }
 
-function KeyFolder(arg0, arg1 = [], arg2 = bg_options, arg3 = false) : Folder(arg0, arg1, arg2, arg3) constructor
+function KeyFolder(_name, _options = [], _background = bg_options, _middlealign = false) : Folder(_name, _options, _background, _middlealign) constructor
 {
-    static jump = function(arg0)
+    static jump = function(_selected)
     {
-        enterfolder(arg0);
+        enterfolder(_selected);
         
         if (!input_profile_exists(tempprofile))
             input_profile_create(tempprofile);
@@ -563,9 +556,9 @@ function KeyFolder(arg0, arg1 = [], arg2 = bg_options, arg3 = false) : Folder(ar
         input_profile_set(tempprofile);
     };
     
-    static unlock = function(arg0)
+    static unlock = function(_selected)
     {
-        exitfolder(arg0);
+        exitfolder(_selected);
         
         if (input_profile_exists(tempprofile))
             input_profile_destroy(tempprofile);
@@ -575,7 +568,8 @@ function KeyFolder(arg0, arg1 = [], arg2 = bg_options, arg3 = false) : Folder(ar
     
     tempprofile = "pauseprofile";
 }
-
+#endregion
+#region Base Options
 var _resetbindskey = new MenuItem(string_get("menu/options/input/resetbinds"));
 
 _resetbindskey.jump = function()
@@ -594,7 +588,6 @@ _resetbindspad.jump = function()
     scr_tiptext(string_get("tips/menu/options/padbindsreset"), -13500, false);
 };
 
-#region Base Options
 var _baseoptions = new Folder("Base", [
 	// Input Folder
 	new Folder(string_get("menu/options/input/name"), [
@@ -755,16 +748,16 @@ if (room == Titlescreen)
     
     with (_datadel.options[0].selections[0])
     {
-        jump = function(arg0)
+        jump = function(_selected)
         {
             with (getfolder())
-                exitfolder(arg0);
+                exitfolder(_selected);
         };
     }
     
     with (_datadel.options[0].selections[1])
     {
-        jump = function(arg0)
+        jump = function(_selected)
         {
             save_clear();
             save_delete();
@@ -781,7 +774,7 @@ if (room == Titlescreen)
             }
             
             with (getfolder())
-                exitfolder(arg0);
+                exitfolder(_selected);
         };
     }
     
@@ -797,16 +790,16 @@ if (room == Titlescreen)
     
     with (_closegame.options[0].selections[0])
     {
-        jump = function(arg0)
+        jump = function(_selected)
         {
             with (getfolder())
-                exitfolder(arg0);
+                exitfolder(_selected);
         };
     }
     
     with (_closegame.options[0].selections[1])
     {
-        jump = function(arg0)
+        jump = function(_selected)
         {
             game_end();
         };
