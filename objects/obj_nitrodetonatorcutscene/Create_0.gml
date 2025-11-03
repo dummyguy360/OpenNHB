@@ -9,6 +9,6 @@ obj_player.targetdoor = "";
 nextroomtimer = 25;
 explodetime = 10;
 sequencetimer = 0;
-nitro = -4;
+nitro = noone;
 sfxbus = fmod_studio_system_get_bus("bus:/SFX/Pausable");
 stop = false;

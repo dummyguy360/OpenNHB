@@ -56,9 +56,7 @@ if (!obj_drawcontroller.debugcam)
         }
     }
     else
-    {
         window_mouse_set_locked(false);
-    }
 }
 
 cursorind += 0.35;

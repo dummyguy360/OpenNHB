@@ -136,7 +136,7 @@ with (obj_drawcontroller)
             
             if ((player_collideable() || state == states.levelintro || obj_player.state == states.outhouse) && (place_meeting(_meetx, _meety, par_camlock) || place_meeting(_meetx, _meety, obj_lockcamextender)))
             {
-                var _lockid = -4;
+                var _lockid = noone;
                 
                 if (place_meeting(_meetx, _meety, par_camlock))
                     _lockid = instance_place(_meetx, _meety, par_camlock);

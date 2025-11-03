@@ -35,7 +35,7 @@ if (playercollided && obj_player.y > bbox_bottom && !playerfell)
             vsp = -28;
             z = other.z;
             curpalette = other.curpalette;
-            collideables = -4;
+            collideables = noone;
         }
         
         with (instance_create_depth(x, y, depth + 2, obj_playergib))
@@ -45,7 +45,7 @@ if (playercollided && obj_player.y > bbox_bottom && !playerfell)
             vsp = -26;
             z = other.z + 2;
             curpalette = other.curpalette;
-            collideables = -4;
+            collideables = noone;
         }
         
         sprite_index = spr_player_nothing;

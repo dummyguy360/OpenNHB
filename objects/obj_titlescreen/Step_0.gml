@@ -19,9 +19,7 @@ if (!instance_exists(obj_optionsmenu) && !instance_exists(obj_manual) && (!insta
                 _konamied = true;
             }
             else
-            {
                 konamistep = 0;
-            }
         }
         
         if (starexists && input_check_pressed("inv"))

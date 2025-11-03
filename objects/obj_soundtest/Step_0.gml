@@ -24,18 +24,14 @@ if (input_check_pressed("jump"))
             }
         }
         else
-        {
             super = 0;
-        }
     }
     
-    if (muevent != -4 && selected == curmusic)
-    {
+    if (muevent != noone && selected == curmusic)
         fmod_studio_event_instance_set_paused(muevent, !fmod_studio_event_instance_get_paused(muevent));
-    }
     else
     {
-        if (muevent != -4)
+        if (muevent != noone)
             destroy_sounds([muevent]);
         
         curmusic = selected;
@@ -51,15 +47,15 @@ if (input_check_pressed("attack"))
 {
     input_verb_consume(["jump", "attack", "inv"]);
     
-    if (muevent != -4)
+    if (muevent != noone)
     {
         destroy_sounds([muevent]);
-        muevent = -4;
+        muevent = noone;
         flowstate = false;
     }
     else
     {
-        muevent = -4;
+        muevent = noone;
         instance_destroy();
     }
 }
@@ -70,13 +66,11 @@ if (flowspr != spr_soundtestflow && sprite_animation_end(flowspr, flowframe, und
     flowframe = 0;
 }
 else
-{
     flowframe += 0.35;
-}
 
 if (easteregged)
 {
-    if (muevent != -4)
+    if (muevent != noone)
     {
         if (!fmod_studio_event_instance_get_paused(muevent))
         {
@@ -85,7 +79,5 @@ if (easteregged)
         }
     }
     else
-    {
         vinylspin = 0;
-    }
 }

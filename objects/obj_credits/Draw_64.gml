@@ -33,9 +33,7 @@ if (!endshot)
         }
     }
     else
-    {
         __draw_text_hook(_textx, _texty, currname);
-    }
     
     draw_set_halign(fa_left);
     draw_set_font(global.rolefont);

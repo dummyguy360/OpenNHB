@@ -1,5 +1,3 @@
 event_inherited();
 
-vertexCreate = function(arg0)
-{
-};
+vertexCreate = function(arg0) { };

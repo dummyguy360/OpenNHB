@@ -6,7 +6,7 @@ save_dump();
 with (obj_player)
 {
     verticalhallway = false;
-    targetouthouse = -4;
+    targetouthouse = noone;
     outofhallway = false;
     room_goto(targetroom);
     player_reset(undefined, undefined, false);

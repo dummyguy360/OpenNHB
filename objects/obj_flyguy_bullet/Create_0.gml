@@ -1,4 +1,4 @@
 lightlevel = 1;
 z = depth;
 image_speed = 0.35;
-parent = -4;
+parent = noone;

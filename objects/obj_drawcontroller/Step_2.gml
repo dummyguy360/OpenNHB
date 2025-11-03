@@ -135,7 +135,7 @@ if (!debugcam)
     var _preunlockX = camX;
     var _preunlockY = camY;
     
-    if (prevlock != -4)
+    if (prevlock != noone)
     {
         var _lock = lock_cam(_preunlockX, _preunlockY, prevlock, prevlockbboxdata);
         _preunlockX = _lock[0];
@@ -196,7 +196,7 @@ if (!debugcam)
     if (prevlock == noone && curlock != noone)
         offset_camera(_prelockX, _prelockY, camX, camY);
     
-    if ((prevlock != noone && curlock == noone) || (!array_equals(curlockbboxdata, prevlockbboxdata) && curlock != -4))
+    if ((prevlock != noone && curlock == noone) || (!array_equals(curlockbboxdata, prevlockbboxdata) && curlock != noone))
         offset_camera(_preunlockX, _preunlockY, camX, camY);
     
     if (interpplaypos)

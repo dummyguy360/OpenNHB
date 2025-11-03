@@ -40,9 +40,7 @@ for (var i = 0; i < _rolelen; i++)
         rolenames[i] = _realroles;
     }
     else
-    {
         rolenames[i] = string_get(string("credits/role{0}", i));
-    }
 }
 
 currrole = array_shift(roles);

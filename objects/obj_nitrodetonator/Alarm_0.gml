@@ -5,9 +5,7 @@ var _rooms = [];
 for (var i = 0; i < (array_length(global.levelrooms) - 2); i++)
 {
     if (global.levelrooms[i] == room)
-    {
         trace(string("room {0} has the nitro detonator, skipping", room_get_name(global.levelrooms[i])));
-    }
     else
     {
         var _hasnitros = count_in_room(global.levelrooms[i], function(arg0, arg1)

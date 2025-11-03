@@ -9,6 +9,4 @@ if (global.combo >= 5)
     combosparkles();
 }
 else
-{
     value = 10;
-}

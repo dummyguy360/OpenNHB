@@ -159,18 +159,13 @@ if (fade <= 0)
                                 state = states.sprintjump;
                             }
                             else
-                            {
                                 advancetimer = 40;
-                            }
                             
                             break;
                         }
                         else
                         {
-                            instance_create_depth(x, y, depth - 1, obj_rankcrate, 
-                            {
-                                type: _i
-                            });
+                            instance_create_depth(x, y, depth - 1, obj_rankcrate, { type: _i });
                             advancetimer = min(input_check("dash") ? 5 : floor(cratesmashtime), floor(cratesmashtime));
                         }
                     }

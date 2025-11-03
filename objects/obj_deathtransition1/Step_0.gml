@@ -17,22 +17,20 @@ if (start)
         global.combo = 0;
         ds_map_copy(global.respawnroom, _p.currcheckpoint.respawnroom);
         
-        if (_p.currcheckpoint.pumpkins != -4)
+        if (_p.currcheckpoint.pumpkins != noone)
             global.pumpkintotal = _p.currcheckpoint.pumpkins;
         
-        if (_p.currcheckpoint.gems != -4)
+        if (_p.currcheckpoint.gems != noone)
             global.gems = _p.currcheckpoint.gems;
         
-        if (_p.currcheckpoint.saveroom != -4)
+        if (_p.currcheckpoint.saveroom != noone)
             ds_map_copy(global.saveroom, _p.currcheckpoint.saveroom);
         
         with (obj_movingplatformguy)
             landed = false;
         
-        if (_p.currcheckpoint.id != -4)
-        {
+        if (_p.currcheckpoint.id != noone)
             room_goto(_p.currcheckpoint.room);
-        }
         else
         {
             room_goto(_p.firstroom);

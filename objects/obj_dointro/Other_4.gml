@@ -8,7 +8,5 @@ with (obj_player)
         y -= (global.maxscreenheight * 0.75);
     }
     else
-    {
         instance_destroy(other.id);
-    }
 }

@@ -1,6 +1,6 @@
 event_inherited();
 scr_fmod_soundeffectONESHOT("event:/sfx/misc/cratedestroy", x + (sprite_width / 2), y + (sprite_height / 2));
-crateeffect(12464);
+crateeffect(#B03000);
 var _collecttype = irandom(3);
 var _quantity = irandom_range(1, 15);
 

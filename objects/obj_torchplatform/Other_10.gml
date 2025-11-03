@@ -40,9 +40,7 @@ if (!skipfirecycle)
     }
 }
 else if (_firecycle < 200)
-{
     skipfirecycle = false;
-}
 
 if (sprite_index != spr_frogplat_firestart && sprite_index != spr_frogplat_fire)
 {
@@ -71,9 +69,7 @@ if (sprite_animation_end())
 if (sprite_index == spr_frogplat_fire)
 {
     if (!instance_exists(fireid))
-    {
         fireid = instance_create_depth(x, y, depth, obj_torchplatformfire);
-    }
     else
     {
         fireid.x = x;
@@ -81,11 +77,9 @@ if (sprite_index == spr_frogplat_fire)
     }
 }
 else if (instance_exists(fireid))
-{
     instance_destroy(fireid);
-}
 
-if (path != -4)
+if (path != noone)
 {
     var _framestocomplete = floor((path_get_length(path) / abs(movespeed)) * (path_get_closed(path) ? 1 : 2));
     var _cycle = get_cycle(_framestocomplete, cycleoffset);
@@ -104,9 +98,7 @@ if (path != -4)
         var _pathpos;
         
         if (path_get_closed(path))
-        {
             _pathpos = _cycle / _framestocomplete;
-        }
         else
         {
             _pathpos = _cycle / _halftime;

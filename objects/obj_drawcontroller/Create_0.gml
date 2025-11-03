@@ -48,7 +48,7 @@ camYAW = 0;
 camPITCH = 0;
 camXINTERP = 0;
 camYINTERP = 0;
-curlock = -4;
+curlock = noone;
 curlockbboxdata = [];
 prevlock = curlock;
 prevlockbboxdata = curlockbboxdata;
@@ -163,89 +163,89 @@ u_colour = shader_get_uniform(shd_gemshading_gui, "u_Colour");
 u_light = shader_get_uniform(shd_gemshading_gui, "u_Light");
 u_view = shader_get_uniform(shd_gemshading_gui, "u_View");
 
-function lock_cam(arg0, arg1, arg2, arg3)
+function lock_cam(_x, _y, _lock, _lockbboxdata)
 {
     var _camW = get_game_width() * zoom;
     var _camH = get_game_height() * zoom;
     
-    switch (arg2)
+    switch (_lock)
     {
         case obj_lockcamvertical:
-            arg1 = clamp(arg1, arg3[1] + (_camH / 2), arg3[3] - (_camH / 2));
+            _y = clamp(_y, _lockbboxdata[1] + (_camH / 2), _lockbboxdata[3] - (_camH / 2));
             break;
         
         case obj_lockcambottom:
-            arg1 = min(arg1, arg3[3] - (_camH / 2));
+            _y = min(_y, _lockbboxdata[3] - (_camH / 2));
             break;
         
         case obj_lockcamtop:
-            arg1 = max(arg1, arg3[1] + (_camH / 2));
+            _y = max(_y, _lockbboxdata[1] + (_camH / 2));
             break;
         
         case obj_lockcamhorizontal:
-            arg0 = clamp(arg0, arg3[0] + (_camW / 2), arg3[2] - (_camW / 2));
+            _x = clamp(_x, _lockbboxdata[0] + (_camW / 2), _lockbboxdata[2] - (_camW / 2));
             break;
         
         case obj_lockcamright:
-            arg0 = min(arg0, arg3[2] - (_camW / 2));
+            _x = min(_x, _lockbboxdata[2] - (_camW / 2));
             break;
         
         case obj_lockcamleft:
-            arg0 = max(arg0, arg3[0] + (_camW / 2));
+            _x = max(_x, _lockbboxdata[0] + (_camW / 2));
             break;
         
         case obj_lockcamtopright:
-            arg0 = min(arg0, arg3[2] - (_camW / 2));
-            arg1 = max(arg1, arg3[1] + (_camH / 2));
+            _x = min(_x, _lockbboxdata[2] - (_camW / 2));
+            _y = max(_y, _lockbboxdata[1] + (_camH / 2));
             break;
         
         case obj_lockcamtopleft:
-            arg0 = max(arg0, arg3[0] + (_camW / 2));
-            arg1 = max(arg1, arg3[1] + (_camH / 2));
+            _x = max(_x, _lockbboxdata[0] + (_camW / 2));
+            _y = max(_y, _lockbboxdata[1] + (_camH / 2));
             break;
         
         case obj_lockcambottomright:
-            arg0 = min(arg0, arg3[2] - (_camW / 2));
-            arg1 = min(arg1, arg3[3] - (_camH / 2));
+            _x = min(_x, _lockbboxdata[2] - (_camW / 2));
+            _y = min(_y, _lockbboxdata[3] - (_camH / 2));
             break;
         
         case obj_lockcambottomleft:
-            arg0 = max(arg0, arg3[0] + (_camW / 2));
-            arg1 = min(arg1, arg3[3] - (_camH / 2));
+            _x = max(_x, _lockbboxdata[0] + (_camW / 2));
+            _y = min(_y, _lockbboxdata[3] - (_camH / 2));
             break;
         
         case obj_lockcamverticalright:
-            arg0 = min(arg0, arg3[2] - (_camW / 2));
-            arg1 = clamp(arg1, arg3[1] + (_camH / 2), arg3[3] - (_camH / 2));
+            _x = min(_x, _lockbboxdata[2] - (_camW / 2));
+            _y = clamp(_y, _lockbboxdata[1] + (_camH / 2), _lockbboxdata[3] - (_camH / 2));
             break;
         
         case obj_lockcamverticalleft:
-            arg0 = max(arg0, arg3[0] + (_camW / 2));
-            arg1 = clamp(arg1, arg3[1] + (_camH / 2), arg3[3] - (_camH / 2));
+            _x = max(_x, _lockbboxdata[0] + (_camW / 2));
+            _y = clamp(_y, _lockbboxdata[1] + (_camH / 2), _lockbboxdata[3] - (_camH / 2));
             break;
         
         case obj_lockcamhorizontalbottom:
-            arg0 = clamp(arg0, arg3[0] + (_camW / 2), arg3[2] - (_camW / 2));
-            arg1 = min(arg1, arg3[3] - (_camH / 2));
+            _x = clamp(_x, _lockbboxdata[0] + (_camW / 2), _lockbboxdata[2] - (_camW / 2));
+            _y = min(_y, _lockbboxdata[3] - (_camH / 2));
             break;
         
         case obj_lockcamhorizontaltop:
-            arg0 = clamp(arg0, arg3[0] + (_camW / 2), arg3[2] - (_camW / 2));
-            arg1 = max(arg1, arg3[1] + (_camH / 2));
+            _x = clamp(_x, _lockbboxdata[0] + (_camW / 2), _lockbboxdata[2] - (_camW / 2));
+            _y = max(_y, _lockbboxdata[1] + (_camH / 2));
             break;
         
         case obj_lockcamall:
-            arg0 = clamp(arg0, arg3[0] + (_camW / 2), arg3[2] - (_camW / 2));
-            arg1 = clamp(arg1, arg3[1] + (_camH / 2), arg3[3] - (_camH / 2));
+            _x = clamp(_x, _lockbboxdata[0] + (_camW / 2), _lockbboxdata[2] - (_camW / 2));
+            _y = clamp(_y, _lockbboxdata[1] + (_camH / 2), _lockbboxdata[3] - (_camH / 2));
             break;
     }
     
-    return [arg0, arg1];
+    return [_x, _y];
 }
 
-function update_cam(arg0 = true, arg1 = true)
+function update_cam(_calculate_view = true, _set_view = true)
 {
-    if (arg0)
+    if (_calculate_view)
     {
         var _xOff = camX + camshake;
         var _yOff = camY + camshake;
@@ -263,7 +263,7 @@ function update_cam(arg0 = true, arg1 = true)
         proj2D = matrix_build_projection_ortho(_cW, -_cH, 1, 32000);
     }
     
-    if (arg1)
+    if (_set_view)
     {
         camera_set_view_mat(camera, viewMat);
         camera_set_proj_mat(camera, projMat);
@@ -292,7 +292,7 @@ function draw_background()
     switch (room)
     {
         case Titlescreen:
-            bgspr = -4;
+            bgspr = noone;
             bgoceanspr = bg_patch_oceantitle;
             bgmoonframe = 2;
             bgcloudsframe = 2;

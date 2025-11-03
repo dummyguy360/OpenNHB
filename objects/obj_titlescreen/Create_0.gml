@@ -1,8 +1,8 @@
-function Star(arg0, arg1, arg2) constructor
+function Star(_active, _index, arg2) constructor
 {
-    active = arg0;
+    active = _active;
     other.starexists |= active;
-    index = arg1;
+    index = _index;
     description = string_shift(array_get(string_get("special"), arg2), 4299);
 }
 
@@ -34,7 +34,19 @@ palindicatoralpha = 0;
 palindicatoryoff = 0;
 housestretch = 0;
 depth = 2000;
-pumpkins = [[-44, 506, 89], [194, 496, 217], [155, 537, -103], [389, 511, 286], [-69, 565, -254], [540, 567, -74], [1031, 616, 1558], [1281, 459, 1998], [893, 555, 2254], [1250, 695, 954]];
+pumpkins = 
+[
+	[-44, 506, 89], 
+	[194, 496, 217], 
+	[155, 537, -103], 
+	[389, 511, 286], 
+	[-69, 565, -254], 
+	[540, 567, -74], 
+	[1031, 616, 1558], 
+	[1281, 459, 1998], 
+	[893, 555, 2254], 
+	[1250, 695, 954]
+];
 selectedpal = 0;
 
 update_pal = function()
@@ -111,8 +123,10 @@ update_menu = function()
 };
 
 update_menu();
-konamicode_keyboard = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65];
-konamicode_controller = [32781, 32781, 32782, 32782, 32783, 32784, 32783, 32784, 32769, 32770];
+
+// obligatory Konami Code
+konamicode_keyboard = [vk_up, vk_up, vk_down, vk_down, vk_left, vk_right, vk_left, vk_right, ord("B"), ord("A")];
+konamicode_controller = [gp_padu, gp_padu, gp_padd, gp_padd, gp_padl, gp_padr, gp_padl, gp_padr, gp_face1, gp_face2];
 konamilen = array_length(konamicode_keyboard);
 konamistep = 0;
 konamiexplosion = 0;

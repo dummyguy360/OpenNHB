@@ -48,9 +48,7 @@ if (_plr.ondeathplatform != id)
             }
         }
         else if (!(place_meeting(x, y - 1, _plr) && !place_meeting(x, y, _plr) && _plr.grounded && _plr.vsp >= 0))
-        {
             playerstillonplatform = false;
-        }
     }
 }
 else
@@ -101,10 +99,10 @@ else
         z = zstart;
         var _endplat = instance_place(x, y, obj_deathplatformend);
         
-        if (_endplat != -4)
+        if (_endplat != noone)
             add_saveroom(_endplat);
         
-        _plr.ondeathplatform = -4;
+        _plr.ondeathplatform = noone;
         _plr.diddeathroute |= returnTrip;
         _plr.z = _plr.nonplatZ;
         _plr.depth = _plr.nonplatZ;

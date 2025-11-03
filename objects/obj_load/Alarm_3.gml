@@ -20,7 +20,7 @@ if (array_length(maplist) > 0)
             {
                 var _element = _roominfo.layers[i].elements[b];
                 
-                if (_element.type != 5 || string_pos("MAP", _element.name) == 0)
+                if (_element.type != layerelementtype_tilemap || string_pos("MAP", _element.name) == 0)
                     continue;
                 
                 var _tilemw = _element.width;
@@ -40,9 +40,9 @@ if (array_length(maplist) > 0)
                     var _y = floor(c / _tilemw) * _tileh;
                     _x += (roomoffset[r].x * _tilew);
                     _y += (roomoffset[r].y * _tileh);
-                    var _tileid = _tile & 524287;
-                    var _tilexscale = (_tile & 268435456) ? -1 : 1;
-                    var _tileyscale = (_tile & 536870912) ? -1 : 1;
+                    var _tileid = _tile & 0x7FFFF;
+                    var _tilexscale = (_tile & 0x10000000) ? -1 : 1;
+                    var _tileyscale = (_tile & 0x20000000) ? -1 : 1;
                     
                     if (_min.x == -1 || _min.x > _x)
                         _min.x = _x;

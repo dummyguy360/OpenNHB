@@ -39,7 +39,7 @@ if (sequencetimer <= 0)
             explodetime = 15;
         }
         
-        nitro = -4;
+        nitro = noone;
         sequencetimer = nextroomtimer;
     }
 }

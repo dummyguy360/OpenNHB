@@ -1,4 +1,4 @@
 event_inherited();
 model = "GemCOLOURED";
-colour = 10519039;
+colour = #FF81A0;
 gemid = 3;

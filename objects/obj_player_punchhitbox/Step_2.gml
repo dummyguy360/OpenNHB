@@ -8,9 +8,7 @@ if (obj_player.state != states.hitstun)
         sprite_index = spr_player_punchhitbox;
     
     if (obj_player.state != states.punch || (obj_player.state == states.punch && obj_player.image_index <= 3))
-    {
         instance_destroy();
-    }
     else
     {
         var _num = instance_place_list(x, y, [par_enemy, par_destructible, obj_destroyablenitro, obj_destroyablecheckpoint, obj_destroyableflame, obj_destroyabletnt, obj_destroyableswitchcrate], global.instancelist, true);

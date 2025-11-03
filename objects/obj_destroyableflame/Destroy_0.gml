@@ -2,7 +2,7 @@ event_inherited();
 destroy_sounds([loopsnd]);
 instance_destroy(fireid);
 scr_fmod_soundeffectONESHOT("event:/sfx/misc/cratedestroy", x + (sprite_width / 2), y + (sprite_height / 2));
-crateeffect(12464);
+crateeffect(#B03000);
 
 with (instance_create_depth(x + (sprite_width / 2), y + (sprite_height / 2), z + 16, par_collect))
 {

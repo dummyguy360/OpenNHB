@@ -31,14 +31,14 @@ for (var i = 0; i < array_length(musiclist); i++)
     
     __draw_text_colour_hook(20, 70 + (32 * i), _str, _c, _c, _c, _c, _a);
     
-    if (muevent != -4 && curmusic == i)
+    if (muevent != noone && curmusic == i)
         draw_sprite(spr_soundteststatus, !fmod_studio_event_instance_get_paused(muevent), 20 + (string_width(_str) + 30), 70 + (32 * i) + 18);
 }
 
 var _jumptip = string_get("menu/soundtest/tipplay");
 var _attacktip = string_get("menu/soundtest/tipexit");
 
-if (muevent != -4)
+if (muevent != noone)
 {
     _attacktip = string_get("menu/soundtest/tipstop");
     

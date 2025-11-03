@@ -33,9 +33,7 @@ if (!endshot)
                 currname = array_shift(currnamelist);
             }
             else
-            {
                 next = true;
-            }
         }
         
         if (anim2 >= 1)
@@ -192,9 +190,7 @@ if (!endshot)
         }
     }
     else if (namefadeout)
-    {
         namefade = max(namefade - 0.05, 0);
-    }
 }
 else
 {
@@ -233,7 +229,5 @@ if (cursorind >= sprite_get_number(cursorspr))
         cursorind = 0;
     }
     else
-    {
         cursorind %= sprite_get_number(cursorspr);
-    }
 }

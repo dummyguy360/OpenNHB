@@ -1,5 +1,5 @@
 event_inherited();
 firescale = 0;
 fire = false;
-sourceid = -4;
+sourceid = noone;
 image_speed = 0.35;

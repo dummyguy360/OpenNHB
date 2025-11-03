@@ -208,9 +208,7 @@ if (grounded)
     hovered = 0;
 }
 else if (state != states.wall)
-{
     angle = 0;
-}
 
 if (player_collideable() && scr_solid(x, y + 1, obj_movingplatformguy))
     movingplatID = instance_place(x, y + 1, obj_movingplatformguy);

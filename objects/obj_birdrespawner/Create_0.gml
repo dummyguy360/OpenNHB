@@ -1,3 +1,3 @@
 respawntimer = 300;
-path = -4;
+path = noone;
 movespeed = 3;

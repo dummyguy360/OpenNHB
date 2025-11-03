@@ -2,7 +2,7 @@ scale = min(scale + 0.1, 1);
 image_xscale = scale * dir;
 image_yscale = scale;
 
-if (path != -4)
+if (path != noone)
 {
     var _framestocomplete = floor((path_get_length(path) / abs(movespeed)) * (path_get_closed(path) ? 1 : 2));
     var _cycle = get_cycle(_framestocomplete, cycleoffset);
@@ -21,9 +21,7 @@ if (path != -4)
         var _pathpos;
         
         if (path_get_closed(path))
-        {
             _pathpos = _cycle / _framestocomplete;
-        }
         else
         {
             _pathpos = _cycle / _halftime;

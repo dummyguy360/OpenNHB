@@ -1,6 +1,7 @@
 optionstack = ds_stack_create();
 var _debug = false;
 
+#region Check Game Launch Parameters
 for (var i = 0; i < parameter_count(); i++)
 {
     var _param = string_lower(parameter_string(i));
@@ -18,7 +19,8 @@ if (!_debug)
     instance_destroy();
     exit;
 }
-
+#endregion
+#region Debug Menu Functions
 function DEBUGMenuItem(arg0, arg1) constructor
 {
     static draw = function(arg0, arg1, arg2)
@@ -126,7 +128,8 @@ for (var i = 0; room_exists(i); i++)
             ds_stack_pop(arg0.optionstack);
     }));
 }
-
+#endregion
+#region Debug Options
 var _baseoptions = new DEBUGFolder("DebugJr v0.1", [new DEBUGMenuItem("Toggle Collisions", function(arg0)
 {
     global.visiblesolids = !global.visiblesolids;
@@ -283,6 +286,8 @@ var _baseoptions = new DEBUGFolder("DebugJr v0.1", [new DEBUGMenuItem("Toggle Co
     
     arg0.open = false;
 })]);
+#endregion
+
 _baseoptions.jump(id);
 open = false;
 depth = -15500;

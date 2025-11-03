@@ -120,7 +120,7 @@ function scr_player_cartwheel()
     downslide();
     tornadodashcloud2particle();
     
-    if (speedlinesobj == -4)
+    if (speedlinesobj == noone)
         speedlinesobj = instance_create_depth(x, y, z + 1, obj_speedlines);
     
     image_speed = 0.35;

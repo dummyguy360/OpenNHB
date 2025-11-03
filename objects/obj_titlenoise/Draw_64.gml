@@ -19,9 +19,7 @@ if (splatted)
         draw_clear_alpha(c_black, 0);
     }
     else
-    {
         surface_set_target(surf);
-    }
     
     shader_set(shd_smudge_set);
     draw_sprite_stretched_ext(spr_player_hdsplat, 0, _x, _y, _sw * splatscale, (_sh * splatscale) + stretch, c_red, 1);

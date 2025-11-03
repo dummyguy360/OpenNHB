@@ -7,9 +7,7 @@ if (game_paused())
 if (dothing)
 {
     if (image_speed < 1)
-    {
         image_speed += 0.003;
-    }
     else
     {
         vsp -= 0.1;
@@ -28,9 +26,7 @@ if (dothing)
             }
         }
         else
-        {
             doparticle = false;
-        }
     }
     
     if (fmod_studio_system_get_parameter_by_name("bringtorank").final_value == 1)

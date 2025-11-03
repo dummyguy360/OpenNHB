@@ -75,9 +75,7 @@ else
                 }
             }
             else
-            {
                 stepped = false;
-            }
         }
         
         if ((!check_in_rect(obj_player, x - 800, x + 800, y - 600, y + 600) && grounded && vsp >= 0) || !player_collideable())

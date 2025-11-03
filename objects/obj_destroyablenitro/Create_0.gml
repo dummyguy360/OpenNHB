@@ -1,14 +1,14 @@
 event_inherited();
 z = depth;
 squish = 1;
-arrowid = -4;
+arrowid = noone;
 palettespr = spr_nitropal;
 curpalette = 0;
 
 canCollide = function(arg0, arg1, arg2)
 {
     if (arg0.object_index == obj_player)
-        return arg0.ondeathplatform == -4;
+        return arg0.ondeathplatform == noone;
     
     return true;
 };

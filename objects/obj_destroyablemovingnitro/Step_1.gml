@@ -7,9 +7,7 @@ var _halftime = _framestocomplete / 2;
 var _pathpos;
 
 if (path_get_closed(path))
-{
     _pathpos = _cycle / _framestocomplete;
-}
 else
 {
     _pathpos = _cycle / _halftime;

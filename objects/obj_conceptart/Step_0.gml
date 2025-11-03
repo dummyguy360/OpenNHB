@@ -41,9 +41,9 @@ else
     if (sprite_get_height(_asset) > get_game_height())
         _yclamp = sprite_get_height(_asset) - get_game_height();
     
-    var _movedir = input_direction(-4, "left", "right", "up", "down");
+    var _movedir = input_direction(noone, "left", "right", "up", "down");
     
-    if (_movedir != -4)
+    if (_movedir != noone)
     {
         zoomxpan -= lengthdir_x(5 * (1 + input_check("dash")), _movedir);
         zoomypan -= lengthdir_y(5 * (1 + input_check("dash")), _movedir);

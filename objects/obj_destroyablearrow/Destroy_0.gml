@@ -1,6 +1,6 @@
 event_inherited();
 scr_fmod_soundeffectONESHOT("event:/sfx/misc/cratedestroy", x + (sprite_width / 2), y + (sprite_height / 2));
-crateeffect(12464);
+crateeffect(#B03000);
 
 with (instance_create_depth(x + (sprite_width / 2), y + (sprite_height / 2), z + 16 + random_range(-3, 3), par_collect))
 {

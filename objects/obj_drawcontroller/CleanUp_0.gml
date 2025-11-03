@@ -23,6 +23,7 @@ if (surface_exists(outlineSurf))
     surface_free(outlineSurf);
 
 ds_list_destroy(billboardlist);
+
 array_foreach(vBuffTiles, function(arg0, arg1)
 {
     if (!is_undefined(array_get_undefined(vBuffTiles, arg1)) && vBuffTiles[arg1] != -1)

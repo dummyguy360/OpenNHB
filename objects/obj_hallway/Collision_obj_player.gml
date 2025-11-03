@@ -28,9 +28,7 @@ if (!touch && other.outofhallway && other.state != states.fakewalk && player_col
             image_xscale = sign(other.image_xscale);
         }
         else
-        {
             verticalhallwayposoffset = point_distance(x, 0, _doorobj.x, 0) * -sign(_doorobj.x - obj_player.x);
-        }
         
         sendtocheckpoint = false;
         instance_create_depth(0, 0, 0, obj_roomtransition, 

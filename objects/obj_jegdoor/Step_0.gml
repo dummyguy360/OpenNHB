@@ -9,9 +9,7 @@ if (open > 0)
         }
     }
     else
-    {
         open--;
-    }
 }
 
 image_alpha = (open > 0) ? 0.5 : 1;

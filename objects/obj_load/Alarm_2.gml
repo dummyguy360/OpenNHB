@@ -26,7 +26,7 @@ if (array_length(threedeeslist) > 0)
             {
                 var _element = _layer.elements[b];
                 
-                if (_element.type != 5)
+                if (_element.type != layerelementtype_tilemap)
                     continue;
                 
                 if (roomTileset[r] == -1)
@@ -55,11 +55,11 @@ if (array_length(threedeeslist) > 0)
                     if (tile_get_empty(_tile))
                         continue;
                     
-                    var _tileid = _tile & 524287;
+                    var _tileid = _tile & 0x7FFFF;
                     var _x = (c % _tilemw) * _tilew;
                     var _y = floor(c / _tilemw) * _tileh;
-                    var _tilexscale = (_tile & 268435456) ? -1 : 1;
-                    var _tileyscale = (_tile & 536870912) ? -1 : 1;
+                    var _tilexscale = (_tile & 0x10000000) ? -1 : 1;
+                    var _tileyscale = (_tile & 0x20000000) ? -1 : 1;
                     var _reverse = (_tilexscale == -1) ^^ (_tileyscale == -1);
                     vertex_create_face_tile(vBuffTiles[r], _x, _y, _tilemdepth, _tilew, _tileh, _tileinfo.tile_horizontal_separator, _tileinfo.tile_vertical_separator, _tilexscale, _tileyscale, _element.background_index, _tileid, _reverse);
                     

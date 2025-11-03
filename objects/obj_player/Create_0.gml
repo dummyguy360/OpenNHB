@@ -600,15 +600,15 @@ function tornadodashcloud2particle()
     }
 }
 
-function particlewithcooldown(arg0, arg1, arg2, arg3, arg4, arg5, arg6 = 1, arg7 = 1, arg8 = 0, arg9 = 0.35, arg10 = 0, arg11 = 0, arg12 = 0, arg13 = 0, arg14 = 0)
+function particlewithcooldown(_cooldown, _anim_end, _x, _y, _depth, _sprite, _xscale = 1, _yscale = 1, _index = 0, _spd = 0.35, _angle = 0, _grav = 0, _hsp = 0, _vsp = 0, _zsp = 0)
 {
     if (particlecooldown6 > 0)
         particlecooldown6--;
     
     if (particlecooldown6 == 0)
     {
-        particlecooldown6 = arg0;
-        scr_createparticle(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14);
+        particlecooldown6 = _cooldown;
+        scr_createparticle(_anim_end, _x, _y, _depth, _sprite, _xscale, _yscale, _index, _spd, _angle, _grav, _hsp, _vsp, _zsp);
     }
 }
 #endregion

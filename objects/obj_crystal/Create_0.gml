@@ -1,4 +1,4 @@
 event_inherited();
 model = "Crystal";
-colour = 15873776;
+colour = #F036F2;
 gemid = 3;
