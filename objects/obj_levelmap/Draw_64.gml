@@ -161,13 +161,13 @@ if ((openanim + closeanim) > 0)
             var _outhouse = array_shift(outhouse_queue);
             draw_sprite(spr_outhousemarker, 0, _outhouse.x, _outhouse.y);
             
-            if (obj_player.currcheckpoint.id != -4 && obj_player.currcheckpoint.object_index == obj_outhouse && real(obj_player.currcheckpoint.id) == _outhouse.id)
+            if (obj_player.currcheckpoint.id != noone && obj_player.currcheckpoint.object_index == obj_outhouse && real(obj_player.currcheckpoint.id) == _outhouse.id)
                 draw_sprite(spr_outhousemarker_flag, 0, _outhouse.x, _outhouse.y);
         }
         
         if (!outhoused)
         {
-            if (obj_player.currcheckpoint.id != -4 && _checkroomind < (array_length(global.levelrooms) - 1 - 4) && obj_player.currcheckpoint.object_index == obj_destroyablecheckpoint && !roomgreyout[_checkroomind])
+            if (obj_player.currcheckpoint.id != noone && _checkroomind < (array_length(global.levelrooms) - 1 - 4) && obj_player.currcheckpoint.object_index == obj_destroyablecheckpoint && !roomgreyout[_checkroomind])
                 draw_sprite(spr_checkmarker, 0, ((_sw / 2) - _xoff) + ((checkposx + 32 + (roomoffset[_checkroomind].x * 32)) * _scale), ((_sh / 2) - _yoff) + ((checkposy + 32 + (roomoffset[_checkroomind].y * 32)) * _scale));
             
             pal_swap_set(obj_player.palettespr, obj_player.curpalette, false);

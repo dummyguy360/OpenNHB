@@ -40,7 +40,7 @@ function MenuItem(arg0) constructor
     {
     };
     
-    parent = -4;
+    parent = noone;
     yspacing = 50;
     name = arg0;
     skip = false;
@@ -55,7 +55,7 @@ function Spacer(arg0 = "") : MenuItem(arg0) constructor
 function Option(arg0, arg1, arg2, arg3 = [
 	new Selection(string_get("menu/options/generic/no"), false), 
 	new Selection(string_get("menu/options/generic/yes"), true)
-], arg4 = -4, arg5 = false) : MenuItem(arg0) constructor
+], arg4 = noone, arg5 = false) : MenuItem(arg0) constructor
 {
     static updatevar = function(arg0, arg1 = true)
     {
@@ -64,7 +64,7 @@ function Option(arg0, arg1, arg2, arg3 = [
         if (arg1)
             config_set_option(section, variable, arg0);
         
-        if (updateglobals != -4)
+        if (updateglobals != noone)
             updateglobals();
     };
     
@@ -413,7 +413,7 @@ function Keybinder(arg0, arg1) : Selection(-1, -1) constructor
 function StackedOption(arg0, arg1, arg2, arg3 = [
 	new Selection(string_get("menu/options/generic/off"), false), 
 	new Selection(string_get("menu/options/generic/on"), true)
-], arg4 = -4, arg5 = true) : Option(arg0, arg1, arg2, arg3, arg4, arg5) constructor
+], arg4 = noone, arg5 = true) : Option(arg0, arg1, arg2, arg3, arg4, arg5) constructor
 {
     static draw = function(arg0, arg1, arg2)
     {
@@ -439,7 +439,7 @@ function StackedOption(arg0, arg1, arg2, arg3 = [
 function SideOption(arg0, arg1, arg2, arg3, arg4 = [
 	new Selection(string_get("menu/options/generic/off"), false), 
 	new Selection(string_get("menu/options/generic/on"), true)
-], arg5 = -4, arg6 = true) : Option(arg0, arg2, arg3, arg4, arg5, arg6) constructor
+], arg5 = noone, arg6 = true) : Option(arg0, arg2, arg3, arg4, arg5, arg6) constructor
 {
     static draw = function(arg0, arg1, arg2)
     {
@@ -750,7 +750,7 @@ if (room == Titlescreen)
 		new StackedOption(string_get("menu/options/savedelete/question"), "", "", [
 			new Selection(string_get("menu/options/generic/no"), 0), 
 			new Selection(string_get("menu/options/generic/yes"), 0)
-		], -4, false)
+		], noone, false)
 	], bg_delete, true);
     
     with (_datadel.options[0].selections[0])
@@ -792,7 +792,7 @@ if (room == Titlescreen)
 		new StackedOption(string_get("menu/options/closegame/question"), "", "", [
 			new Selection(string_get("menu/options/generic/no"), 0), 
 			new Selection(string_get("menu/options/generic/yes"), 0)
-		], -4, false)
+		], noone, false)
 	], bg_close, true);
     
     with (_closegame.options[0].selections[0])

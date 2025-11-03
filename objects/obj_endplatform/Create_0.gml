@@ -12,7 +12,7 @@ leftkicktriggered = false;
 rightkicktriggered = false;
 leftkicked = false;
 rightkicked = false;
-block = -4;
+block = noone;
 playeron = false;
 
 if (global.pumpkintotal < 5)

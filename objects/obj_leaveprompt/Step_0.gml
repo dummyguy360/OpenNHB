@@ -7,7 +7,7 @@ if (fadein)
     {
         input_verb_consume(["jump", "attack", "down"]);
         fadein = false;
-        obj_endplatplayer.sendtojeg = obj_player.currcheckpoint.id == -4;
+        obj_endplatplayer.sendtojeg = obj_player.currcheckpoint.id == noone;
         obj_endplatplayer.dothing = true;
         obj_drawcontroller.camForward = 0;
         obj_drawcontroller.camUp = 0;

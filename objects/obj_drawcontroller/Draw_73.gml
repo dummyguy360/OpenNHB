@@ -35,7 +35,7 @@ if (_len > 0)
         shader_set_uniform_f(u_tileLightLevel, globallight);
     }
     
-    for (var _i = 0; _i < _len && toshadow[_i] != -4; _i++)
+    for (var _i = 0; _i < _len && toshadow[_i] != noone; _i++)
     {
         var _shadow = toshadow[_i];
         matrix_set(2, matrix_build(_shadow.x, _shadow.y, _shadow.depth, 0, 180, _shadow.angle, -_shadow.size, -_shadow.size, _shadow.size / 2));

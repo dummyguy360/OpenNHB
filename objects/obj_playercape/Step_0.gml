@@ -7,7 +7,7 @@ if (game_paused() || obj_player.state == states.nitrocutscene)
 if (instance_exists(obj_player))
     playid = obj_player.id;
 
-if (playid != -4)
+if (playid != noone)
 {
     if (playid.sprite_index == spr_player_jumppeak || playid.sprite_index == spr_player_jumpend || playid.sprite_index == spr_player_fall || playid.sprite_index == spr_player_crouchjumpend || playid.sprite_index == spr_player_crouchfall || playid.sprite_index == spr_player_fallturn || playid.sprite_index == spr_player_crouchfallturn || playid.sprite_index == spr_player_wallslidecancelup || playid.sprite_index == spr_player_wallslidecanceldown || playid.sprite_index == spr_player_cratebounce || playid.sprite_index == spr_player_crouchfallbunny || playid.sprite_index == spr_player_crouchfallbunnyturn || playid.sprite_index == spr_player_wallrunend)
     {

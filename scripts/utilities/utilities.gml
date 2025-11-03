@@ -523,7 +523,7 @@ function finish_explosion_chains()
                 
                 if (_obj.object_index == obj_destroyablenitro)
                 {
-                    if (_obj.arrowid != -4)
+                    if (_obj.arrowid != noone)
                         add_saveroom(string("{0}_NITRO", real(_obj.arrowid)), global.respawnroom);
                     else
                         add_saveroom(_obj, global.respawnroom);

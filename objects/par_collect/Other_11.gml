@@ -27,5 +27,5 @@ obj_drawcontroller.collectatimer = 120;
 splittimer = splittime;
 splitcounter++;
 
-if (splitcounter >= splitfactor && collectedspr == -4)
+if (splitcounter >= splitfactor && collectedspr == noone)
     instance_destroy();
