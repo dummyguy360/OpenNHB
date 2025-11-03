@@ -6,21 +6,21 @@ squish = 1;
 palettespr = spr_nitroarrowpal;
 curpalette = hp;
 
-canCollide = function(arg0, arg1, arg2)
+canCollide = function(_id, _x, _y)
 {
-    if (arg0.object_index == obj_player)
-        return arg0.ondeathplatform == noone;
+    if (_id.object_index == obj_player)
+        return _id.ondeathplatform == noone;
     
     return true;
 };
 
-bounce_event = function(arg0, arg1)
+bounce_event = function(_id, _v)
 {
-    if (arg1 >= 0)
+    if (_v >= 0)
     {
-        cratebounceeffect(arg0);
+        cratebounceeffect(_id);
         
-        with (arg0)
+        with (_id)
             player_bounce(input_check("jump") ? -18 : -15);
         
         squish = 0.7;

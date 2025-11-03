@@ -1,6 +1,6 @@
 event_inherited();
 
-canCollide = function(arg0, arg1, arg2)
+canCollide = function(_id, _x, _y)
 {
     return visible;
 };

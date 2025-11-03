@@ -5,7 +5,7 @@ in_room = function()
     return room == startingroom || room == targetroom;
 };
 
-canCollide = function(arg0, arg1, arg2)
+canCollide = function(_id, _x, _y)
 {
     return in_room() && (obj_player.diddeathroute || !global.playerhit);
 };

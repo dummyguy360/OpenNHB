@@ -2,21 +2,21 @@ event_inherited();
 z = depth;
 squish = 1;
 
-canCollide = function(arg0, arg1, arg2)
+canCollide = function(_id, _x, _y)
 {
-    if (arg0.object_index == obj_player)
-        return arg0.ondeathplatform == noone;
+    if (_id.object_index == obj_player)
+        return _id.ondeathplatform == noone;
     
     return true;
 };
 
-bounce_event = function(arg0, arg1)
+bounce_event = function(_id, _v)
 {
-    with (arg0)
+    with (_id)
     {
-        if (arg1 >= 0)
+        if (_v >= 0)
         {
-            cratebounceeffect(arg0);
+            cratebounceeffect(_id);
             player_bounce(input_check("jump") ? -18 : -15);
             gamepadvibrate(0.1, 0, 8);
         }

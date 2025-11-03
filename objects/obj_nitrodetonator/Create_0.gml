@@ -5,13 +5,13 @@ squish = 1;
 canCollide = -1;
 lightlevel = 1;
 
-bounce_event = function(arg0, arg1)
+bounce_event = function(_id, _v)
 {
-    if (!activated && arg1 >= 0)
+    if (!activated && _v >= 0)
     {
-        cratebounceeffect(arg0);
+        cratebounceeffect(_id);
         
-        with (arg0)
+        with (_id)
             player_bounce(input_check("jump") ? -13 : -10);
         
         alarm[0] = 30;

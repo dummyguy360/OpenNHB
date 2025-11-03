@@ -170,31 +170,37 @@ function draw_input(_x, _y, _alpha, _angle, _input_verb, _remap_check = true, _p
         {
             var _ind = _icon;
             
+			// Remaps all Direction Icons to use Arrows
             if (_remap_check)
             {
                 switch (_ind)
                 {
-                    case 7:
-                    case 15:
-                    case 20:
+                    case 7: // Left Dpad
+                    case 15: // Left LStick
+                    case 20: // Left RStick
+						// Left Arrow Image Index
                         _ind = 39;
                         break;
                     
-                    case 5:
-                    case 13:
-                    case 18:
+                    case 5: // Right Dpad
+                    case 13: // Right LStick
+                    case 18: // Right RStick
+						// Right Arrow Image Index
                         _ind = 37;
                         break;
                     
+					// I think you get the point
                     case 6:
                     case 14:
                     case 19:
+						// Up Arrow Image Index
                         _ind = 38;
                         break;
                     
                     case 4:
                     case 12:
                     case 17:
+						// Down Arrow Image Index
                         _ind = 36;
                         break;
                 }

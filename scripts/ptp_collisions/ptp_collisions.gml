@@ -458,7 +458,7 @@ function scr_destroybounce(_v, _obj = par_bouncysolid)
     
     var _hitblock = false;
     var _num = instance_place_list(x, y + _v, _obj, il, false);
-    var _closest = [-4, -1];
+    var _closest = [noone, -1];
     
     while (!ds_list_empty(il))
     {

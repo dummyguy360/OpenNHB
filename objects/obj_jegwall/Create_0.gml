@@ -1,6 +1,6 @@
 image_speed = 0;
 
-canCollide = function(arg0, arg1, arg2)
+canCollide = function(_id, _x, _y)
 {
     return true;
 };

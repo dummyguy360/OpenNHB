@@ -1,11 +1,11 @@
 event_inherited();
 
-canCollide = function(arg0, arg1, arg2)
+canCollide = function(_id, _x, _y)
 {
     if (sign(image_yscale > 0))
-        return arg0.bbox_bottom <= bbox_top;
+        return _id.bbox_bottom <= bbox_top;
     else
-        return arg0.bbox_top >= bbox_bottom;
+        return _id.bbox_top >= bbox_bottom;
 };
 
 height = depth;

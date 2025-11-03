@@ -4,25 +4,25 @@ z = depth;
 squish = 1;
 hit = false;
 
-canCollide = function(arg0, arg1, arg2)
+canCollide = function(_id, _x, _y)
 {
-    if (arg0.object_index == obj_player)
-        return arg0.ondeathplatform == noone;
+    if (_id.object_index == obj_player)
+        return _id.ondeathplatform == noone;
     
     return true;
 };
 
-bounce_event = function(arg0, arg1)
+bounce_event = function(_id, _v)
 {
     global.switchstate = !global.switchstate;
     var _ev = scr_fmod_soundeffectONESHOT("event:/sfx/misc/onoffcrate", x + (sprite_width / 2), y + (sprite_height / 2));
     fmod_studio_event_instance_set_parameter_by_name(_ev, "state", global.switchstate);
     
-    with (arg0)
+    with (_id)
     {
-        if (arg1 >= 0)
+        if (_v >= 0)
         {
-            cratebounceeffect(arg0);
+            cratebounceeffect(_id);
             player_bounce(input_check("jump") ? -18 : -15);
             gamepadvibrate(0.1, 0, 8);
         }
