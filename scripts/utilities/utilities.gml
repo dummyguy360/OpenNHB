@@ -63,24 +63,24 @@ function cratebounceeffect(_effect_obj)
 }
 
 #region Models
-function draw_model(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9)
+function draw_model(_model, _x, _y, _z, _xscale, _yscale, _zscale, _xrot, _yrot, _zrot)
 {
-    matrix_set(2, matrix_build(arg1, arg2, arg3, arg7, arg8, arg9, arg4, arg5, arg6));
+    matrix_set(2, matrix_build(_x, _y, _z, _xrot, _yrot, _zrot, _xscale, _yscale, _zscale));
     
-    if (is_array(arg0))
+    if (is_array(_model))
     {
-        for (var i = 0; i < array_length(arg0); i++)
-            model_submit(arg0[i]);
+        for (var i = 0; i < array_length(_model); i++)
+            model_submit(_model[i]);
     }
-    else if (is_string(arg0))
-        model_submit(arg0);
+    else if (is_string(_model))
+        model_submit(_model);
     
     matrix_set(2, matrix_build_identity());
 }
 
-function model_submit(arg0)
+function model_submit(_model)
 {
-    var _altmaterial = variable_struct_get(global.altMaterials, arg0);
+    var _altmaterial = variable_struct_get(global.altMaterials, _model);
     
     if (!is_undefined(_altmaterial))
     {
@@ -89,15 +89,15 @@ function model_submit(arg0)
         _model.Submit();
     }
     else
-        ds_map_find_value(global.loadedModels, arg0).Submit();
+        ds_map_find_value(global.loadedModels, _model).Submit();
 }
 
-function import_material(arg0, arg1)
+function import_material(_lib, _model_file)
 {
-    var _buffer = buffer_load(arg1);
-    var _result = DotobjMaterialLoad(arg0, _buffer, filename_dir(arg1));
+    var _buffer = buffer_load(_model_file);
+    var _result = DotobjMaterialLoad(_lib, _buffer, filename_dir(_model_file));
     var _name = "";
-    var _file = file_text_open_read(arg1);
+    var _file = file_text_open_read(_model_file);
     
     while (!file_text_eof(_file))
     {
@@ -129,44 +129,44 @@ function offset_camera(_x1, _y1, _x2, _y2)
     }
 }
 
-function world_to_screen(arg0, arg1, arg2, arg3, arg4, arg5 = false)
+function world_to_screen(_x, _y, _z, _viewMat, _projMat, _check = false)
 {
     var cx, cy;
     
-    if (arg4[15] == 0)
+    if (_projMat[15] == 0)
     {
-        var w = (arg3[2] * arg0) + (arg3[6] * arg1) + (arg3[10] * arg2) + arg3[14];
+        var w = (_viewMat[2] * _x) + (_viewMat[6] * _y) + (_viewMat[10] * _z) + _viewMat[14];
         
-        if (w <= 0 && arg5)
+        if (w <= 0 && _check)
             return undefined;
         
         if (w == 0)
             return [-1, -1];
         
-        cx = arg4[8] + ((arg4[0] * ((arg3[0] * arg0) + (arg3[4] * arg1) + (arg3[8] * arg2) + arg3[12])) / w);
-        cy = arg4[9] + ((arg4[5] * ((arg3[1] * arg0) + (arg3[5] * arg1) + (arg3[9] * arg2) + arg3[13])) / w);
+        cx = _projMat[8] + ((_projMat[0] * ((_viewMat[0] * _x) + (_viewMat[4] * _y) + (_viewMat[8] * _z) + _viewMat[12])) / w);
+        cy = _projMat[9] + ((_projMat[5] * ((_viewMat[1] * _x) + (_viewMat[5] * _y) + (_viewMat[9] * _z) + _viewMat[13])) / w);
     }
     else
     {
-        cx = arg4[12] + (arg4[0] * ((arg3[0] * arg0) + (arg3[4] * arg1) + (arg3[8] * arg2) + arg3[12]));
-        cy = arg4[13] + (arg4[5] * ((arg3[1] * arg0) + (arg3[5] * arg1) + (arg3[9] * arg2) + arg3[13]));
+        cx = _projMat[12] + (_projMat[0] * ((_viewMat[0] * _x) + (_viewMat[4] * _y) + (_viewMat[8] * _z) + _viewMat[12]));
+        cy = _projMat[13] + (_projMat[5] * ((_viewMat[1] * _x) + (_viewMat[5] * _y) + (_viewMat[9] * _z) + _viewMat[13]));
     }
     
     return [(0.5 + (0.5 * cx)) * get_game_width(), (0.5 + (0.5 * cy)) * get_game_height()];
 }
 
-function screen_to_world(arg0, arg1, arg2, arg3)
+function screen_to_world(_x, _y, _viewMat, _projMat)
 {
-    var mx = (2 * ((arg0 / get_game_width()) - 0.5)) / arg3[0];
-    var my = (2 * ((arg1 / get_game_height()) - 0.5)) / arg3[5];
-    var camX = -((arg2[12] * arg2[0]) + (arg2[13] * arg2[1]) + (arg2[14] * arg2[2]));
-    var camY = -((arg2[12] * arg2[4]) + (arg2[13] * arg2[5]) + (arg2[14] * arg2[6]));
-    var camZ = -((arg2[12] * arg2[8]) + (arg2[13] * arg2[9]) + (arg2[14] * arg2[10]));
+    var mx = (2 * ((_x / get_game_width()) - 0.5)) / _projMat[0];
+    var my = (2 * ((_y / get_game_height()) - 0.5)) / _projMat[5];
+    var camX = -((_viewMat[12] * _viewMat[0]) + (_viewMat[13] * _viewMat[1]) + (_viewMat[14] * _viewMat[2]));
+    var camY = -((_viewMat[12] * _viewMat[4]) + (_viewMat[13] * _viewMat[5]) + (_viewMat[14] * _viewMat[6]));
+    var camZ = -((_viewMat[12] * _viewMat[8]) + (_viewMat[13] * _viewMat[9]) + (_viewMat[14] * _viewMat[10]));
     
-    if (arg3[15] == 0)
-        return [arg2[2] + (mx * arg2[0]) + (my * arg2[1]), arg2[6] + (mx * arg2[4]) + (my * arg2[5]), arg2[10] + (mx * arg2[8]) + (my * arg2[9]), camX, camY, camZ];
+    if (_projMat[15] == 0)
+        return [_viewMat[2] + (mx * _viewMat[0]) + (my * _viewMat[1]), _viewMat[6] + (mx * _viewMat[4]) + (my * _viewMat[5]), _viewMat[10] + (mx * _viewMat[8]) + (my * _viewMat[9]), camX, camY, camZ];
     else
-        return [arg2[2], arg2[6], arg2[10], camX + (mx * arg2[0]) + (my * arg2[1]), camY + (mx * arg2[4]) + (my * arg2[5]), camZ + (mx * arg2[8]) + (my * arg2[9])];
+        return [_viewMat[2], _viewMat[6], _viewMat[10], camX + (mx * _viewMat[0]) + (my * _viewMat[1]), camY + (mx * _viewMat[4]) + (my * _viewMat[5]), camZ + (mx * _viewMat[8]) + (my * _viewMat[9])];
 }
 
 function draw_3d_cone(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)
@@ -268,10 +268,10 @@ function draw_3d_cone(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)
     matrix_set(2, current);
 }
 
-function is_outofview3d(arg0, arg1, arg2, arg3 = 0)
+function is_outofview3d(_x, _y, _z, _size = 0)
 {
-    var _sp = world_to_screen(arg0, arg1, arg2, obj_drawcontroller.viewMat, obj_drawcontroller.projMat);
-    return !point_in_rectangle(_sp[0], _sp[1], -arg3, -arg3, get_game_width() + arg3, get_game_height() + arg3);
+    var _sp = world_to_screen(_x, _y, _z, obj_drawcontroller.viewMat, obj_drawcontroller.projMat);
+    return !point_in_rectangle(_sp[0], _sp[1], -_size, -_size, get_game_width() + _size, get_game_height() + _size);
 }
 
 function set_player_checkpoint(_id = id, _save_score = false)
@@ -380,62 +380,62 @@ function combosparkles()
     }
 }
 
-function draw_texture_radial(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)
+function draw_texture_radial(_tex, _rot, _x1, _y1, _x2, _y2, _col, _alpha)
 {
-    if (arg1 <= 0)
+    if (_rot <= 0)
         exit;
     
-    if (arg1 >= 1)
+    if (_rot >= 1)
     {
-        draw_primitive_begin_texture(pr_trianglelist, arg0);
-        draw_vertex_texture_color(arg2, arg3, 0, 0, arg6, arg7);
+        draw_primitive_begin_texture(pr_trianglelist, _tex);
+        draw_vertex_texture_color(_x1, _y1, 0, 0, _col, _alpha);
         
         repeat (2)
         {
-            draw_vertex_texture_color(arg4, arg3, 1, 0, arg6, arg7);
-            draw_vertex_texture_color(arg2, arg5, 0, 1, arg6, arg7);
+            draw_vertex_texture_color(_x2, _y1, 1, 0, _col, _alpha);
+            draw_vertex_texture_color(_x1, _y2, 0, 1, _col, _alpha);
         }
         
-        draw_vertex_texture_color(arg4, arg5, 1, 1, arg6, arg7);
+        draw_vertex_texture_color(_x2, _y2, 1, 1, _col, _alpha);
         draw_primitive_end();
         exit;
     }
     
-    var _mx = (arg2 + arg4) / 2;
-    var _my = (arg3 + arg5) / 2;
-    draw_primitive_begin_texture(pr_trianglelist, arg0);
-    draw_vertex_texture_color(_mx, _my, 0.5, 0.5, arg6, arg7);
-    draw_vertex_texture_color(_mx, arg3, 0.5, 0, arg6, arg7);
+    var _mx = (_x1 + _x2) / 2;
+    var _my = (_y1 + _y2) / 2;
+    draw_primitive_begin_texture(pr_trianglelist, _tex);
+    draw_vertex_texture_color(_mx, _my, 0.5, 0.5, _col, _alpha);
+    draw_vertex_texture_color(_mx, _y1, 0.5, 0, _col, _alpha);
     
-    if (arg1 >= 0.125)
+    if (_rot >= 0.125)
     {
-        draw_vertex_texture_color(arg4, arg3, 1, 0, arg6, arg7);
-        draw_vertex_texture_color(_mx, _my, 0.5, 0.5, arg6, arg7);
-        draw_vertex_texture_color(arg4, arg3, 1, 0, arg6, arg7);
+        draw_vertex_texture_color(_x2, _y1, 1, 0, _col, _alpha);
+        draw_vertex_texture_color(_mx, _my, 0.5, 0.5, _col, _alpha);
+        draw_vertex_texture_color(_x2, _y1, 1, 0, _col, _alpha);
     }
     
-    if (arg1 >= 0.375)
+    if (_rot >= 0.375)
     {
-        draw_vertex_texture_color(arg4, arg5, 1, 1, arg6, arg7);
-        draw_vertex_texture_color(_mx, _my, 0.5, 0.5, arg6, arg7);
-        draw_vertex_texture_color(arg4, arg5, 1, 1, arg6, arg7);
+        draw_vertex_texture_color(_x2, _y2, 1, 1, _col, _alpha);
+        draw_vertex_texture_color(_mx, _my, 0.5, 0.5, _col, _alpha);
+        draw_vertex_texture_color(_x2, _y2, 1, 1, _col, _alpha);
     }
     
-    if (arg1 >= 0.625)
+    if (_rot >= 0.625)
     {
-        draw_vertex_texture_color(arg2, arg5, 0, 1, arg6, arg7);
-        draw_vertex_texture_color(_mx, _my, 0.5, 0.5, arg6, arg7);
-        draw_vertex_texture_color(arg2, arg5, 0, 1, arg6, arg7);
+        draw_vertex_texture_color(_x1, _y2, 0, 1, _col, _alpha);
+        draw_vertex_texture_color(_mx, _my, 0.5, 0.5, _col, _alpha);
+        draw_vertex_texture_color(_x1, _y2, 0, 1, _col, _alpha);
     }
     
-    if (arg1 >= 0.875)
+    if (_rot >= 0.875)
     {
-        draw_vertex_texture_color(arg2, arg3, 0, 0, arg6, arg7);
-        draw_vertex_texture_color(_mx, _my, 0.5, 0.5, arg6, arg7);
-        draw_vertex_texture_color(arg2, arg3, 0, 0, arg6, arg7);
+        draw_vertex_texture_color(_x1, _y1, 0, 0, _col, _alpha);
+        draw_vertex_texture_color(_mx, _my, 0.5, 0.5, _col, _alpha);
+        draw_vertex_texture_color(_x1, _y1, 0, 0, _col, _alpha);
     }
     
-    var _dir = pi * ((arg1 * 2) - 0.5);
+    var _dir = pi * ((_rot * 2) - 0.5);
     var _dx = cos(_dir);
     var _dy = sin(_dir);
     var _dmax = max(abs(_dx), abs(_dy));
@@ -448,7 +448,7 @@ function draw_texture_radial(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)
     
     _dx = (1 + _dx) / 2;
     _dy = (1 + _dy) / 2;
-    draw_vertex_texture_color(lerp(arg2, arg4, _dx), lerp(arg3, arg5, _dy), _dx, _dy, arg6, arg7);
+    draw_vertex_texture_color(lerp(_x1, _x2, _dx), lerp(_y1, _y2, _dy), _dx, _dy, _col, _alpha);
     draw_primitive_end();
 }
 

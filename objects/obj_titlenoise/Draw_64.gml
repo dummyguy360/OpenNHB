@@ -13,7 +13,7 @@ if (splatted)
     if (!surface_exists(surf))
     {
         surface_depth_disable(true);
-        surf = surface_create(_gw, _gh, surface_fallback(12));
+        surf = surface_create(_gw, _gh, surface_fallback(surface_r8unorm));
         surface_depth_disable(false);
         surface_set_target(surf);
         draw_clear_alpha(c_black, 0);

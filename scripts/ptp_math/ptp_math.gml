@@ -2,11 +2,10 @@ function lerpAngle(arg0, arg1, arg2)
 {
     var _return = arg0 + (angle_difference(arg1, arg0) * arg2);
     
-    while (_return < 0)
-        _return += 360;
-    
-    while (_return > 360)
-        _return -= 360;
+    while (_return < 0) 
+		_return += 360;
+    while (_return > 360) 
+		_return -= 360;
     
     return _return;
 }

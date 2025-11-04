@@ -28,7 +28,7 @@ if ((openanim + closeanim) > 0)
         for (var _s = 0; _s < array_length(map_surf); _s++)
         {
             if (!surface_exists(map_surf[_s]))
-                map_surf[_s] = surface_create(_gw + 8, _gh + 8, surface_fallback(6));
+                map_surf[_s] = surface_create(_gw + 8, _gh + 8, surface_fallback(surface_rgba8unorm));
             else if (surface_get_width(map_surf[_s]) != (_gw + 8) || surface_get_height(map_surf[_s]) != (_gh + 8))
                 surface_resize(map_surf[_s], _gw + 8, _gh + 8);
             

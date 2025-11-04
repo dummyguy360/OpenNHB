@@ -88,7 +88,7 @@ function define_font_globals()
 		["c_aqua", c_aqua], 
 		["c_black", c_black], 
 		["c_blue", c_blue], 
-		["c_dkgrey", 4210752], 
+		["c_dkgrey", c_dkgrey], 
 		["c_fuchsia", c_fuchsia], 
 		["c_grey", c_grey], 
 		["c_green", c_green], 

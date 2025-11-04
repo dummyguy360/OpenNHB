@@ -18,28 +18,28 @@ if (global.mapOpen)
     for (var i = 0; i < array_length(roomoffset); i++)
     {
         var _room = global.levelrooms[i];
-        roominfo_pumpkins[i] = count_in_room(_room, function(arg0, arg1)
+        roominfo_pumpkins[i] = count_in_room(_room, function(_room_inst, _index)
         {
-            return !in_saveroom(arg0.id) && asset_get_index(arg0.object_index) == obj_pumpkin;
+            return !in_saveroom(_room_inst.id) && asset_get_index(_room_inst.object_index) == obj_pumpkin;
         });
-        roominfo_crates[i] = count_in_room(_room, function(arg0, arg1)
+        roominfo_crates[i] = count_in_room(_room, function(_room_inst, _index)
         {
-            var _obj = asset_get_index(arg0.object_index);
+            var _obj = asset_get_index(_room_inst.object_index);
             
             if (_obj == obj_destroyablenitroarrow)
-                return !in_saveroom(string("{0}_ARROW", real(arg0.id)), global.respawnroom);
+                return !in_saveroom(string("{0}_ARROW", real(_room_inst.id)), global.respawnroom);
             else
-                return !in_saveroom(arg0.id, global.respawnroom) && object_is_ancestor(_obj, par_crate) && _obj != obj_destroyablenitro;
+                return !in_saveroom(_room_inst.id, global.respawnroom) && object_is_ancestor(_obj, par_crate) && _obj != obj_destroyablenitro;
         });
-        roominfo_nitros[i] = count_in_room(_room, function(arg0, arg1)
+        roominfo_nitros[i] = count_in_room(_room, function(_room_inst, _index)
         {
-            var _obj = asset_get_index(arg0.object_index);
+            var _obj = asset_get_index(_room_inst.object_index);
             
             if (_obj == obj_destroyablenitroarrow)
-                return in_saveroom(string("{0}_ARROW", real(arg0.id)), global.respawnroom) && !in_saveroom(string("{0}_NITRO", real(arg0.id)), global.respawnroom);
+                return in_saveroom(string("{0}_ARROW", real(_room_inst.id)), global.respawnroom) && !in_saveroom(string("{0}_NITRO", real(_room_inst.id)), global.respawnroom);
             
             if (_obj == obj_destroyablenitro)
-                return !in_saveroom(arg0.id, global.respawnroom);
+                return !in_saveroom(_room_inst.id, global.respawnroom);
             
             return false;
         });

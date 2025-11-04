@@ -43,14 +43,14 @@ function Option(_name, _variable, _section, _selections = [
     static updatevar = function(_value, _save = true)
     {
         variable_global_set(variable, _value);
-        
+
         if (_save)
             config_set_option(section, variable, _value);
-        
+
         if (updateglobals != noone)
             updateglobals();
     };
-    
+
     static update = function()
     {
         array_foreach(selections, function(_option, _parent)
@@ -58,41 +58,41 @@ function Option(_name, _variable, _section, _selections = [
             _option.update();
         });
     };
-    
+
     static highlighted = function(_option)
     {
         selections[chosensel].highlighted(_option);
     };
-    
+
     static left_right = function(_normal_val, _slider_val)
     {
         if (!parent.locked && !alone)
             chosensel = clamp(chosensel + _normal_val, 0, array_length(selections) - 1);
         else
             selections[chosensel].left_right(_normal_val, _slider_val);
-        
+
         if (!alone && auto && _normal_val != 0)
         {
             updatevar(selections[chosensel].value);
             event_play_oneshot("event:/sfx/pausemenu/impact");
         }
     };
-    
+
     static jump = function(_selected)
     {
         selections[chosensel].jump(_selected);
     };
-    
+
     static taunt = function(_selected)
     {
         selections[chosensel].taunt(_selected);
     };
-    
+
     static unlock = function(_selected)
     {
         selections[chosensel].unlock(_selected);
     };
-    
+
     variable = _variable;
     section = _section;
     selections = _selections;
@@ -100,8 +100,8 @@ function Option(_name, _variable, _section, _selections = [
     auto = _auto;
     chosensel = 0;
     alone = array_length(selections) == 1;
-    
-    if (variable != "")
+	
+	if (variable != "")
     {
         for (var i = 0; i < array_length(selections); i++)
         {
@@ -112,7 +112,7 @@ function Option(_name, _variable, _section, _selections = [
             }
         }
     }
-    
+
     array_foreach(selections, function(_option, _parent)
     {
         _option.parent = self;
@@ -432,7 +432,7 @@ function StackedOption(_name, _variable, _section, _selections = [
 function SideOption(_name, _description, _variable, _section, _selections = [
 	new Selection(string_get("menu/options/generic/off"), false), 
 	new Selection(string_get("menu/options/generic/on"), true)
-], _updateglobals = noone, _auto = true) : Option(_name, _description, _variable, _section, _selections, _updateglobals, _auto) constructor
+], _updateglobals = noone, _auto = true) : Option(_name, _variable, _section, _selections, _updateglobals, _auto) constructor
 {
     static draw = function(_x, _y, _alpha)
     {
