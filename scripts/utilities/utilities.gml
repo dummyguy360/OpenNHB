@@ -78,9 +78,9 @@ function draw_model(_model, _x, _y, _z, _xscale, _yscale, _zscale, _xrot, _yrot,
     matrix_set(2, matrix_build_identity());
 }
 
-function model_submit(_model)
+function model_submit(_material)
 {
-    var _altmaterial = variable_struct_get(global.altMaterials, _model);
+    var _altmaterial = variable_struct_get(global.altMaterials, _material);
     
     if (!is_undefined(_altmaterial))
     {
@@ -89,7 +89,7 @@ function model_submit(_model)
         _model.Submit();
     }
     else
-        ds_map_find_value(global.loadedModels, _model).Submit();
+        ds_map_find_value(global.loadedModels, _material).Submit();
 }
 
 function import_material(_lib, _model_file)
