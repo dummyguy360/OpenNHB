@@ -1,3 +1,4 @@
+#region Effects and HUD
 function scr_createparticle(_anim_end = true, _x, _y, _depth, _sprite, _xscale = 1, _yscale = 1, 
 	_index = 0, _speed = 0.5, _angle = 0, _grav = 0, _hsp = 0, _vsp = 0, _zsp = 0, _blend = undefined
 )
@@ -61,7 +62,7 @@ function cratebounceeffect(_effect_obj)
     with (_effect_obj)
         scr_createparticle(true, x, bbox_bottom, z + 4, spr_cratebounceeffect, 1, 1, 0, 0.5);
 }
-
+#endregion
 #region Models
 function draw_model(_model, _x, _y, _z, _xscale, _yscale, _zscale, _xrot, _yrot, _zrot)
 {
@@ -119,7 +120,7 @@ function import_material(_lib, _model_file)
     return _name;
 }
 #endregion
-
+#region Camera/Screen
 function offset_camera(_x1, _y1, _x2, _y2)
 {
     with (obj_drawcontroller)
@@ -169,11 +170,11 @@ function screen_to_world(_x, _y, _viewMat, _projMat)
         return [_viewMat[2], _viewMat[6], _viewMat[10], camX + (mx * _viewMat[0]) + (my * _viewMat[1]), camY + (mx * _viewMat[4]) + (my * _viewMat[5]), camZ + (mx * _viewMat[8]) + (my * _viewMat[9])];
 }
 
-function draw_3d_cone(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)
+function draw_3d_cone(_x1, _y1, _z1, _x2, _y2, _z2, _sprite, _modify)
 {
-    static vertex = function(_vbuff, _x, _y, _z, arg4, arg5, arg6, _u, _v, arg9, arg10)
+    static vertex = function(_vbuff, _x1, _y1, _z1, _x2, _y2, _z2, _u, _v, _col, _alpha)
     {
-        vertex_position_3d(_vbuff, _x, _y, _z);
+        vertex_position_3d(_vbuff, _x1, _y1, _z1);
         vertex_texcoord(_vbuff, _u, _v);
         vertex_float1(_vbuff, false);
     };
@@ -185,7 +186,7 @@ function draw_3d_cone(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)
     static nr = -r;
     static steps = 32;
     
-    if (arg6 != prevspr)
+    if (_sprite != prevspr)
     {
         if (!is_undefined(vb))
             vertex_delete_buffer(vb);
@@ -197,11 +198,11 @@ function draw_3d_cone(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)
         vb_bottom = undefined;
     }
     
-    var tex = sprite_get_texture(arg6, 0);
+    var tex = sprite_get_texture(_sprite, 0);
     
     if (vb == undefined)
     {
-        var uvs = sprite_get_uvs(arg6, 0);
+        var uvs = sprite_get_uvs(_sprite, 0);
         var format = global.vFormat;
         vb = vertex_create_buffer();
         vertex_begin(vb, format);
@@ -247,20 +248,20 @@ function draw_3d_cone(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)
         vertex_freeze(vb_bottom);
     }
     
-    var sx = arg3 - arg0;
-    var sy = arg4 - arg1;
-    var sz = arg5 - arg2;
-    var cx = mean(arg0, arg3);
-    var cy = mean(arg1, arg4);
-    var cz = mean(arg2, arg5);
+    var sx = _x2 - _x1;
+    var sy = _y2 - _y1;
+    var sz = _z2 - _z1;
+    var cx = mean(_x1, _x2);
+    var cy = mean(_y1, _y2);
+    var cz = mean(_z1, _z2);
     var transform = matrix_build(cx, cy, cz, 0, 0, 0, sx, sy, sz);
     var current = matrix_get(2);
     matrix_set(2, matrix_multiply(transform, current));
     vertex_submit(vb, pr_trianglestrip, tex);
     
-    if (arg7)
+    if (_modify)
     {
-        transform = matrix_build(cx, arg1, cz, 0, 0, 0, sx, 1, sz);
+        transform = matrix_build(cx, _y1, cz, 0, 0, 0, sx, 1, sz);
         matrix_set(2, matrix_multiply(transform, current));
         vertex_submit(vb_bottom, pr_trianglelist, tex);
     }
@@ -273,6 +274,7 @@ function is_outofview3d(_x, _y, _z, _size = 0)
     var _sp = world_to_screen(_x, _y, _z, obj_drawcontroller.viewMat, obj_drawcontroller.projMat);
     return !point_in_rectangle(_sp[0], _sp[1], -_size, -_size, get_game_width() + _size, get_game_height() + _size);
 }
+#endregion
 
 function set_player_checkpoint(_id = id, _save_score = false)
 {
@@ -311,6 +313,7 @@ function set_player_checkpoint(_id = id, _save_score = false)
     }
 }
 
+#region Gems
 function get_gem(_gem)
 {
     global.gems = bit_set(global.gems, _gem);
@@ -320,8 +323,9 @@ function has_gem(_gem)
 {
     return bit_get(global.gems, _gem);
 }
-
-function lighting_set(arg0, arg1, arg2, arg3 = 1, arg4 = c_white, arg5 = 0, arg6 = 1, arg7 = false, arg8 = false)
+#endregion
+#region Lighting
+function lighting_set(_x, _y, _z, _light_lv = 1, _col = c_white, _alpha = 0, _shade = 1, _bscale = false, _using_pal = false)
 {
     var _shd = shd_basiclighting;
     var u_light = shader_get_uniform(_shd, "u_Light");
@@ -331,30 +335,35 @@ function lighting_set(arg0, arg1, arg2, arg3 = 1, arg4 = c_white, arg5 = 0, arg6
     var u_time = shader_get_uniform(_shd, "u_Time");
     var u_boilscale = shader_get_uniform(_shd, "u_BoilScale");
     var u_paletted = shader_get_uniform(_shd, "u_Paletted");
+	
     shader_set(_shd);
-    shader_set_uniform_f(u_light, arg0, arg1, arg2);
-    shader_set_uniform_f(u_flashcol, colour_get_red(arg4) / 255, colour_get_green(arg4) / 255, colour_get_blue(arg4) / 255, arg5);
-    shader_set_uniform_f(u_shadingmul, arg6);
-    shader_set_uniform_f(u_lightlevel, arg3);
+    shader_set_uniform_f(u_light, _x, _y, _z);
+    shader_set_uniform_f(u_flashcol, colour_get_red(_col) / 255, colour_get_green(_col) / 255, colour_get_blue(_col) / 255, _alpha);
+    shader_set_uniform_f(u_shadingmul, _shade);
+    shader_set_uniform_f(u_lightlevel, _light_lv);
     shader_set_uniform_f(u_time, floor((current_time * 60) / 350));
-    shader_set_uniform_f(u_boilscale, arg7);
+    shader_set_uniform_f(u_boilscale, _bscale);
+	
     var u_outlining = shader_get_uniform(_shd, "u_Outlining");
     shader_set_uniform_i(u_outlining, global.outlineDrawing);
-    shader_set_uniform_i(u_paletted, arg8);
+    shader_set_uniform_i(u_paletted, _using_pal);
     
-    if (arg8)
+    if (_using_pal)
     {
         var u_pixelsize = shader_get_uniform(_shd, "u_pixelSize");
         var u_uvs = shader_get_uniform(_shd, "u_Uvs");
         var u_paletteid = shader_get_uniform(_shd, "u_paletteId");
         var u_paltexture = shader_get_sampler_index(_shd, "u_palTexture");
+		
         var _tex = sprite_get_texture(palettespr, 0);
         var _UVs = sprite_get_uvs(palettespr, 0);
         texture_set_stage(u_paltexture, _tex);
+		
         var _texel_x = texture_get_texel_width(_tex);
         var _texel_y = texture_get_texel_height(_tex);
         var _texel_hx = _texel_x * 0.5;
         var _texel_hy = _texel_y * 0.5;
+		
         shader_set_uniform_f(u_pixelsize, _texel_x, _texel_y);
         shader_set_uniform_f(u_uvs, _UVs[0] + _texel_hx, _UVs[1] + _texel_hy, _UVs[2], _UVs[3]);
         shader_set_uniform_f(u_paletteid, curpalette);
@@ -365,7 +374,8 @@ function lighting_end()
 {
     shader_reset();
 }
-
+#endregion
+#region Combo
 function combo()
 {
     global.combo = approach(global.combo, 10, 1);
@@ -379,7 +389,8 @@ function combosparkles()
         sparkletimer = 5;
     }
 }
-
+#endregion
+#region Draw Sprite
 function draw_texture_radial(_tex, _rot, _x1, _y1, _x2, _y2, _col, _alpha)
 {
     if (_rot <= 0)
@@ -452,29 +463,30 @@ function draw_texture_radial(_tex, _rot, _x1, _y1, _x2, _y2, _col, _alpha)
     draw_primitive_end();
 }
 
-function draw_sprite_radial(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9 = true)
+function draw_sprite_radial(_sprite, _index, _rot, xx1, yy1, xx2, yy2, _col, _alpha, _calc_bbox = true)
 {
     var _x1, _y1, _x2, _y2;
     
-    if (arg9)
+    if (_calc_bbox)
     {
-        var _ox = sprite_get_xoffset(arg0);
-        var _oy = sprite_get_yoffset(arg0);
-        _x1 = arg3 + (arg5 * (sprite_get_bbox_left(arg0) - _ox));
-        _x2 = arg3 + (arg5 * ((sprite_get_bbox_right(arg0) + 1) - _ox));
-        _y1 = arg4 + (arg6 * (sprite_get_bbox_top(arg0) - _oy));
-        _y2 = arg4 + (arg6 * ((sprite_get_bbox_bottom(arg0) + 1) - _oy));
+        var _ox = sprite_get_xoffset(_sprite);
+        var _oy = sprite_get_yoffset(_sprite);
+        _x1 = xx1 + (xx2 * (sprite_get_bbox_left(_sprite) - _ox));
+        _x2 = xx1 + (xx2 * ((sprite_get_bbox_right(_sprite) + 1) - _ox));
+        _y1 = yy1 + (yy2 * (sprite_get_bbox_top(_sprite) - _oy));
+        _y2 = yy1 + (yy2 * ((sprite_get_bbox_bottom(_sprite) + 1) - _oy));
     }
     else
     {
-        _x1 = arg3 - (arg5 * sprite_get_xoffset(arg0));
-        _x2 = _x1 + (arg5 * sprite_get_width(arg0));
-        _y1 = arg4 - (arg6 * sprite_get_yoffset(arg0));
-        _y2 = _y1 + (arg6 * sprite_get_height(arg0));
+        _x1 = xx1 - (xx2 * sprite_get_xoffset(_sprite));
+        _x2 = _x1 + (xx2 * sprite_get_width(_sprite));
+        _y1 = yy1 - (yy2 * sprite_get_yoffset(_sprite));
+        _y2 = _y1 + (yy2 * sprite_get_height(_sprite));
     }
     
-    draw_texture_radial(sprite_get_texture(arg0, arg1), arg2, _x1, _y1, _x2, _y2, arg7, arg8);
+    draw_texture_radial(sprite_get_texture(_sprite, _index), _rot, _x1, _y1, _x2, _y2, _col, _alpha);
 }
+#endregion
 
 function wall_behind(xx = x, yy = y, _depth = depth)
 {
@@ -608,26 +620,26 @@ function deathplat_camupdate()
     }
 }
 
-function get_rank(arg0, arg1, arg2, arg3)
+function get_rank(_candy, _pumpkins, _crates, _gems)
 {
     var _workingrank = Rank.Perfect;
-    var _gemcount = bit_count(arg3);
+    var _gemcount = bit_count(_gems);
     
     if (_workingrank == Rank.Perfect)
     {
-        if (arg0 < 8000 || arg1 < 10 || arg2 < global.cratecount || _gemcount < 3)
+        if (_candy < 8000 || _pumpkins < 10 || _crates < global.cratecount || _gemcount < 3)
             _workingrank = Rank.Good;
     }
     
     if (_workingrank == Rank.Good)
     {
-        if (arg0 < 4000 || arg1 < 9 || arg2 < 250 || _gemcount < 2)
+        if (_candy < 4000 || _pumpkins < 9 || _crates < 250 || _gemcount < 2)
             _workingrank = Rank.Meh;
     }
     
     if (_workingrank == Rank.Meh)
     {
-        if (arg0 < 2000 || arg1 < 7 || arg2 < 250 || _gemcount < 1)
+        if (_candy < 2000 || _pumpkins < 7 || _crates < 250 || _gemcount < 1)
             _workingrank = Rank.Shit;
     }
     
@@ -644,22 +656,22 @@ function in_perilousroute()
     return room == PatchPerilousRoute;
 }
 
-function get_cycleind(arg0, arg1)
+function get_cycleind(_spr, _val)
 {
-    var _num = sprite_get_number(arg0);
-    var _ind = (get_cycle(_num / arg1) / (_num / arg1)) * _num;
+    var _num = sprite_get_number(_spr);
+    var _ind = (get_cycle(_num / _val) / (_num / _val)) * _num;
     return _ind;
 }
 
-function save_easteregg(arg0)
+function save_easteregg(_str)
 {
     var _update = false;
     save_open();
     
-    if (!has_easteregg(arg0))
+    if (!has_easteregg(_str))
         _update = true;
     
-    ini_write_real("ObtuseAndFranklyUnnecessary", arg0, 1);
+    ini_write_real("ObtuseAndFranklyUnnecessary", _str, 1);
     save_close();
     save_dump();
     
@@ -675,17 +687,17 @@ function save_easteregg(arg0)
     }
 }
 
-function has_easteregg(arg0)
+function has_easteregg(_str)
 {
-    return bool(ini_read_real("ObtuseAndFranklyUnnecessary", arg0, 0));
+    return bool(ini_read_real("ObtuseAndFranklyUnnecessary", _str, 0));
 }
 
-function string_shift(arg0, arg1)
+function string_shift(_str, _val)
 {
     var _newstr = "";
     
-    for (var _i = 1; _i <= string_length(arg0); _i++)
-        _newstr += chr(ord(string_char_at(arg0, _i)) - arg1);
+    for (var _i = 1; _i <= string_length(_str); _i++)
+        _newstr += chr(ord(string_char_at(_str, _i)) - _val);
     
     return _newstr;
 }

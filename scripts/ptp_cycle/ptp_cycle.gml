@@ -13,12 +13,12 @@ function update_cycle()
     global.game_cycleF++;
 }
 
-function get_cycle(arg0, arg1 = 0)
+function get_cycle(_val, _add_fval = 0)
 {
-    return (global.game_cycleF + arg1) % arg0;
+    return (global.game_cycleF + _add_fval) % _val;
 }
 
-function get_cycle_region(arg0, arg1, arg2, arg3)
+function get_cycle_region(_val, _sub, _min, _max)
 {
-    return clamp(arg0 - arg1, arg2, arg3);
+    return clamp(_val - _sub, _min, _max);
 }

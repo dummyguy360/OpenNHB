@@ -475,11 +475,11 @@ function dive()
     }
 }
 
-function wallslide(arg0)
+function wallslide(_x)
 {
-    if ((sign(arg0) == sign(image_xscale) || (sign(arg0) == move && !canchangedir)) && !scr_solid(x + arg0, y, obj_nostickwall) && !scr_solid(x, y + 1, [obj_slope, obj_slopePlatform]) && ((move == image_xscale && state != states.sprint) || state == states.sprint || (state == states.jump && !canchangedir)) && !grounded && dontcling == 0)
+    if ((sign(_x) == sign(image_xscale) || (sign(_x) == move && !canchangedir)) && !scr_solid(x + _x, y, obj_nostickwall) && !scr_solid(x, y + 1, [obj_slope, obj_slopePlatform]) && ((move == image_xscale && state != states.sprint) || state == states.sprint || (state == states.jump && !canchangedir)) && !grounded && dontcling == 0)
     {
-        image_xscale = sign(arg0);
+        image_xscale = sign(_x);
         state = states.wallslide;
         wallslidecanceltimer = 10;
         

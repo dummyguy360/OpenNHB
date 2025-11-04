@@ -1,6 +1,6 @@
-function lerpAngle(arg0, arg1, arg2)
+function lerpAngle(_angleA, _angleB, _amount)
 {
-    var _return = arg0 + (angle_difference(arg1, arg0) * arg2);
+    var _return = _angleA + (angle_difference(_angleB, _angleA) * _amount);
     
     while (_return < 0) 
 		_return += 360;
@@ -10,38 +10,38 @@ function lerpAngle(arg0, arg1, arg2)
     return _return;
 }
 
-function wrap(arg0, arg1, arg2)
+function wrap(_val, _min, _max)
 {
-    var range = (arg2 + 1) - arg1;
-    var _wrapped = ((((arg0 - arg1) % range) + range) % range) + arg1;
+    var range = (_max + 1) - _min;
+    var _wrapped = ((((_val - _min) % range) + range) % range) + _min;
     
-    if (_wrapped > arg2)
-        _wrapped = arg1 + frac(_wrapped);
+    if (_wrapped > _max)
+        _wrapped = _min + frac(_wrapped);
     
     return _wrapped;
 }
 
-function approach(arg0, arg1, arg2)
+function approach(_value1, _value2, _amount)
 {
-    return median(arg0 - arg2, arg1, arg0 + arg2);
+    return median(_value1 - _amount, _value2, _value1 + _amount);
 }
 
-function wave(arg0, arg1, arg2, arg3 = 0, arg4 = current_time)
+function wave(_min, _max, _wavelength, _offset = 0, _time = current_time)
 {
-    var _half = (arg1 - arg0) * 0.5;
-    return arg0 + _half + (sin(((((arg4 + arg3) * 0.001) + arg2) / arg2) * (2 * pi)) * _half);
+    var _half = (_max - _min) * 0.5;
+    return _min + _half + (sin(((((_time + _offset) * 0.001) + _wavelength) / _wavelength) * (2 * pi)) * _half);
 }
 
-function easy_sin(arg0)
+function easy_sin(_val)
 {
-    return sin(arg0 * pi);
+    return sin(_val * pi);
 }
 
-function calculate_projectile_motion(arg0, arg1, arg2, arg3, arg4, arg5)
+function calculate_projectile_motion(_startX, _startY, _targetX, _targetY, _grav, _time)
 {
-    arg3 = arg1 - (arg3 - arg1);
-    var _hsp = (arg2 - arg0) / arg5;
-    var _vsp = ((arg3 - arg1) + (0.5 * arg4 * sqr(arg5))) / arg5;
+    _targetY = _startY - (_targetY - _startY);
+    var _hsp = (_targetX - _startX) / _time;
+    var _vsp = ((_targetY - _startY) + (0.5 * _grav * sqr(_time))) / _time;
     return 
     {
         hsp: _hsp,
@@ -49,12 +49,12 @@ function calculate_projectile_motion(arg0, arg1, arg2, arg3, arg4, arg5)
     };
 }
 
-function calculate_jump(arg0, arg1)
+function calculate_jump(_value1, _value2)
 {
-    return -sqrt(2 * arg1 * arg0);
+    return -sqrt(2 * _value2 * _value1);
 }
 
-function calculate_jump_height(arg0, arg1)
+function calculate_jump_height(_value1, _value2)
 {
-    return sqr(arg0) / (2 * arg1);
+    return sqr(_value1) / (2 * _value2);
 }

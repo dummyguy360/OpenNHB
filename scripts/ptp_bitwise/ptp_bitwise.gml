@@ -1,38 +1,34 @@
-function bit_set(arg0, arg1, arg2 = false)
+function bit_set(_bit, _pos, _clear_bit = false)
 {
-    if (arg2)
-        return arg0 & ~(1 << arg1);
-    
-    if (!arg2)
-        return arg0 | (1 << arg1);
+    if (_clear_bit) return _bit & ~(1 << _pos);
+    if (!_clear_bit) return _bit | (1 << _pos);
 }
 
-function bit_get(arg0, arg1)
+function bit_get(_bit, _pos)
 {
-    return (arg0 >> arg1) & 1;
+    return (_bit >> _pos) & 1;
 }
 
-function bit_toggle(arg0, arg1)
+function bit_toggle(_bit, _pos)
 {
-    return arg0 ^ (1 << arg1);
+    return _bit ^ (1 << _pos);
 }
 
-function bit_flip(arg0)
+function bit_flip(_bit)
 {
-    return ~arg0;
+    return ~_bit;
 }
 
-function bit_mask(arg0, arg1)
+function bit_mask(_bit, _mask)
 {
-    return arg1 & arg0;
+    return _mask & _bit;
 }
 
-function bit_count(arg0)
+function bit_count(_bit)
 {
-    var _ones;
-    
-    for (_ones = 0; arg0 != 0; _ones++)
-        arg0 &= (arg0 - 1);
+	var _ones = 0;
+    for (; _bit != 0; _ones++)// because its spooky season kinda not really
+        _bit &= (_bit - 1);
     
     return _ones;
 }

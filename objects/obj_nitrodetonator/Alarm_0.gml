@@ -8,9 +8,9 @@ for (var i = 0; i < (array_length(global.levelrooms) - 2); i++)
         trace(string("room {0} has the nitro detonator, skipping", room_get_name(global.levelrooms[i])));
     else
     {
-        var _hasnitros = count_in_room(global.levelrooms[i], function(arg0, arg1)
+        var _hasnitros = count_in_room(global.levelrooms[i], function(_room_inst, _index)
         {
-            return (arg0.object_index == "obj_destroyablenitro" && !in_saveroom(arg0.id, global.respawnroom)) || (arg0.object_index == "obj_destroyablenitroarrow" && in_saveroom(string("{0}_ARROW", real(arg0.id)), global.respawnroom) && !in_saveroom(string("{0}_NITRO", real(arg0.id)), global.respawnroom));
+            return (_room_inst.object_index == "obj_destroyablenitro" && !in_saveroom(_room_inst.id, global.respawnroom)) || (_room_inst.object_index == "obj_destroyablenitroarrow" && in_saveroom(string("{0}_ARROW", real(_room_inst.id)), global.respawnroom) && !in_saveroom(string("{0}_NITRO", real(_room_inst.id)), global.respawnroom));
         }) > 0;
         
         if (!_hasnitros)

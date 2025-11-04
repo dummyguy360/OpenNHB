@@ -24,8 +24,8 @@ if (surface_exists(outlineSurf))
 
 ds_list_destroy(billboardlist);
 
-array_foreach(vBuffTiles, function(arg0, arg1)
+array_foreach(vBuffTiles, function(_vbuffs, _vbuff_index)
 {
-    if (!is_undefined(array_get_undefined(vBuffTiles, arg1)) && vBuffTiles[arg1] != -1)
-        vertex_delete_buffer(vBuffTiles[arg1]);
+    if (!is_undefined(array_get_undefined(vBuffTiles, _vbuff_index)) && vBuffTiles[_vbuff_index] != -1)
+        vertex_delete_buffer(vBuffTiles[_vbuff_index]);
 });

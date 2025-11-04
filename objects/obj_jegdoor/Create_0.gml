@@ -15,7 +15,7 @@ interact = function()
     open = 180;
 };
 
-build = function(arg0)
+build = function(_vbuff)
 {
     var _xstart = (image_xscale < 0) ? bbox_right : bbox_left;
     var _xend = (image_xscale < 0) ? bbox_left : bbox_right;

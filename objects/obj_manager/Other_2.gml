@@ -4,9 +4,9 @@ global.collect = 0;
 global.combo = 0;
 var _validcrates = [];
 array_copy(_validcrates, 0, global.levelrooms, 0, array_length(global.levelrooms) - 2);
-global.cratecount = count_in_room(_validcrates, function(arg0, arg1)
+global.cratecount = count_in_room(_validcrates, function(_room_inst, _index)
 {
-    return object_is_ancestor(asset_get_index(arg0.object_index), par_crate) || arg0.object_index == object_get_name(obj_destroyablenitroarrow);
+    return object_is_ancestor(asset_get_index(_room_inst.object_index), par_crate) || _room_inst.object_index == object_get_name(obj_destroyablenitroarrow);
 });
 global.destroyedcount = 0;
 global.gems = 0;
