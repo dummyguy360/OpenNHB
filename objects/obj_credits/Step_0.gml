@@ -78,7 +78,7 @@ if (!endshot)
                 
                 for (var _i = 0; _i < _num; _i++)
                 {
-                    var _inst = ds_list_find_value(_il, _i);
+                    var _inst = _il[| _i];
                     
                     switch (_inst.object_index)
                     {

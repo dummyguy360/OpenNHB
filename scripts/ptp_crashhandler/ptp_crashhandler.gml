@@ -13,12 +13,12 @@ exception_unhandled_handler(function(_ex)
     var _hardwareinfo = os_get_info();
     var _memory = os_get_installed_memory();
     var _processor = os_get_processor_info();
-    var _graphicsdevice = ds_map_find_value(_hardwareinfo, "video_adapter_description");
-    var _videomemory = ds_map_find_value(_hardwareinfo, "video_adapter_dedicatedvideomemory");
+    var _graphicsdevice = _hardwareinfo[? "video_adapter_description"];
+    var _videomemory = _hardwareinfo[? "video_adapter_dedicatedvideomemory"];
     
     if (os_type == os_linux || os_type == os_macosx)
     {
-        _graphicsdevice = ds_map_find_value(_hardwareinfo, "gl_renderer_string");
+        _graphicsdevice = _hardwareinfo[? "gl_renderer_string"];
         _videomemory = -1;
     }
     

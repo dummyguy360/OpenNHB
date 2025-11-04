@@ -546,9 +546,9 @@ function draw_text_fancy(_x, _y, _str, _color = c_white, _alpha = 1, _remapkeys 
                         if (_rotwave)
                             _rotoff = wave(-12, 12, 1, ((i - 1) * 50));
                     }
-                    if !is_undefined(ds_map_find_value(global.inputs, _input))
+                    if !is_undefined(global.inputs[? _input])
                     {
-                        var _verb = ds_map_find_value(global.inputs, _input);
+                        var _verb = global.inputs[? _input];
                         array_push(_drawinputs, [round(_x + global.FONTEXTRA[_font][5] + _xoff), round(_y + global.FONTEXTRA[_font][6] + _yoff), _rotoff, _verb, _font]);
                         _x += global.FONTEXTRA[_font][4];
                         i += 2;

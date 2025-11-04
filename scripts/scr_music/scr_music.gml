@@ -19,7 +19,7 @@ function add_music(_rm, _music, _is_continuous, _func = noone)
         }
     }
     
-    ds_map_set(musicmap, _rm, musicstruct);
+    musicmap[? _rm] = musicstruct;
 }
 
 function stop_music()
@@ -45,7 +45,7 @@ function timeline_wrapauto(_pos, _length, event_inst)
 
 function play_music(_rm, _stop_music = true)
 {
-    var mu = ds_map_find_value(musicmap, _rm);
+    var mu = musicmap[? _rm];
     
     if (!is_undefined(mu))
     {

@@ -105,14 +105,14 @@ function destroy_sounds(event_inst_arr)
 
 function event_replay(event_inst_arr, xx, yy, zz = 0)
 {
-    if (ds_map_find_value(global.sound_map, event_inst_arr) == undefined)
-        ds_map_set(global.sound_map, event_inst_arr, ds_list_create());
+    if (global.sound_map[? event_inst_arr] == undefined)
+        global.sound_map[? event_inst_arr] = ds_list_create();
     
-    var _list = ds_map_find_value(global.sound_map, event_inst_arr);
+    var _list = global.sound_map[? event_inst_arr];
     
     for (var i = 0; i < ds_list_size(_list); i++)
     {
-        b = ds_list_find_value(_list, i);
+        b = _list[| i];
         event_stop(b, 0);
         fmod_studio_event_instance_release(b);
     }

@@ -15,7 +15,7 @@ if (obj_player.state != states.hitstun)
         
         for (var _i = 0; _i < _num; _i++)
         {
-            with (ds_list_find_value(global.instancelist, _i))
+            with (global.instancelist[| _i])
                 event_user(15);
         }
         

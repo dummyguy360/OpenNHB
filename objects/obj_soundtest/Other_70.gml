@@ -1,7 +1,7 @@
-if (ds_map_find_value(async_load, "type") != "fmod_studio_event_description_set_callback")
+if (async_load[? "type"] != "fmod_studio_event_description_set_callback")
     exit;
 
-if (ds_map_find_value(async_load, "kind") != FMOD_STUDIO_EVENT_CALLBACK.TIMELINE_BEAT)
+if (async_load[? "kind"] != FMOD_STUDIO_EVENT_CALLBACK.TIMELINE_BEAT)
     exit;
 
 flowstate = !flowstate;

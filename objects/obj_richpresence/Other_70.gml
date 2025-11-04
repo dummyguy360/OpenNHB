@@ -1,6 +1,6 @@
 /// @description Capture async events from NekoPresence.
 
-var ev_type = ds_map_find_value(async_load, "event_type");
+var ev_type = async_load[? "event_type"];
 
 if (ev_type == "DiscordReady")
 {

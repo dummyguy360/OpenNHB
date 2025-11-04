@@ -3,7 +3,7 @@ var _ind = 0;
 
 for (var i = 0; i < _num; i++)
 {
-    with (ds_list_find_value(billboardlist, i))
+    with (billboardlist[| i])
     {
         if (!visible)
             continue;

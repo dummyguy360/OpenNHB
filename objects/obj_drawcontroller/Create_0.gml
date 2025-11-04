@@ -391,7 +391,7 @@ function draw_models()
     
     for (var i = 0; i < _num; i++)
     {
-        with (ds_list_find_value(global.instancelist, i))
+        with (global.instancelist[| i])
         {
             if (!visible)
                 continue;

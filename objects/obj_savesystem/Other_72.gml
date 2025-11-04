@@ -1,4 +1,4 @@
-var _id = ds_map_find_value(async_load, "id");
+var _id = async_load[? "id"];
 
 switch (savestate)
 {
@@ -7,7 +7,7 @@ switch (savestate)
         {
             buffer_delete(savebuff);
             savestate = save_state.idle;
-            trace("Game Save Status: ", ds_map_find_value(async_load, "status"));
+            trace("Game Save Status: ", async_load[? "status"]);
         }
         
         break;
@@ -20,7 +20,7 @@ switch (savestate)
             savestr = ini_close();
             buffer_delete(loadbuff);
             savestate = save_state.idle;
-            trace("Game Load Status: ", ds_map_find_value(async_load, "status"));
+            trace("Game Load Status: ", async_load[? "status"]);
         }
         
         break;
@@ -30,7 +30,7 @@ switch (savestate)
         {
             buffer_delete(configsavebuff);
             savestate = save_state.idle;
-            trace("Config Save Status: ", ds_map_find_value(async_load, "status"));
+            trace("Config Save Status: ", async_load[? "status"]);
         }
         
         break;

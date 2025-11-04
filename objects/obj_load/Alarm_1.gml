@@ -16,9 +16,9 @@ if (array_length(modellist) > 0)
             
             if (_i <= 0)
             {
-                ds_map_set(global.loadedModels, _basename, DotobjModelLoadFile(working_directory + "Data/ModelData/" + _basename + ".obj"));
-                ds_map_find_value(global.loadedModels, _basename).Freeze();
-                var _mat = array_get(ds_map_find_value(global.loadedModels, _basename).GetMaterials(), 0);
+                global.loadedModels[? _basename] = DotobjModelLoadFile(working_directory + "Data/ModelData/" + _basename + ".obj");
+                global.loadedModels[? _basename].Freeze();
+                var _mat = array_get(global.loadedModels[? _basename].GetMaterials(), 0);
                 _name = _mat.name;
                 _library = _mat.library;
                 trace(string("Phase 2: Loaded Model {0}", _basename));
@@ -42,8 +42,8 @@ if (array_length(modellist) > 0)
     }
     else
     {
-        ds_map_set(global.loadedModels, _modelname, DotobjModelLoadFile(working_directory + "Data/ModelData/" + _modelname + ".obj"));
-        ds_map_find_value(global.loadedModels, _modelname).Freeze();
+        global.loadedModels[? _modelname] = DotobjModelLoadFile(working_directory + "Data/ModelData/" + _modelname + ".obj");
+        global.loadedModels[? _modelname].Freeze();
         trace(string("Phase 2: Loaded Model {0}", _modelname));
     }
     

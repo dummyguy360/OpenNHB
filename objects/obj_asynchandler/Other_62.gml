@@ -1,10 +1,10 @@
-if (ds_map_find_value(async_load, "id") == ASYNCID_version)
+if (async_load[? "id"] == ASYNCID_version)
 {
-    var _status = ds_map_find_value(async_load, "status");
+    var _status = async_load[? "status"];
     
     if (_status == 0)
     {
-        var _md = ds_map_find_value(async_load, "result");
+        var _md = async_load[? "result"];
         global.changelogs = string_split(_md, "#", true);
         
         for (var i = 0; i < array_length(global.changelogs); i++)
@@ -26,12 +26,12 @@ if (ds_map_find_value(async_load, "id") == ASYNCID_version)
     }
 }
 
-if (ds_map_find_value(async_load, "id") == ASYNCID_itchname)
+if (async_load[? "id"] == ASYNCID_itchname)
 {
-    var _status = ds_map_find_value(async_load, "status");
+    var _status = async_load[? "status"];
     
     if (_status == 0)
-        global.itchname = ds_map_find_value(async_load, "result");
+        global.itchname = async_load[? "result"];
     else if (_status < 0)
         trace(string("Async HTTP Error {0}: Failed to get itch.io account name, defaulting to \"ptpteam-jr\".", _status));
 }

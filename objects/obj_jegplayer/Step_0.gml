@@ -78,7 +78,7 @@ repeat (abs(_vsp))
     
     for (var _i = 0; _i < _l; _i++)
     {
-        if (ds_list_find_value(collided, _i).canCollide(id, x, y))
+        if (collided[| _i].canCollide(id, x, y))
         {
             _success = false;
             break;
@@ -108,7 +108,7 @@ repeat (abs(_hsp))
     
     for (var _i = 0; _i < _l; _i++)
     {
-        if (ds_list_find_value(collided, _i).canCollide(id, x, y))
+        if (collided[| _i].canCollide(id, x, y))
         {
             _success = false;
             break;

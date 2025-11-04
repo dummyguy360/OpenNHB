@@ -85,12 +85,12 @@ function model_submit(_material)
     
     if (!is_undefined(_altmaterial))
     {
-        var _model = ds_map_find_value(global.loadedModels, _altmaterial.model);
+        var _model = global.loadedModels[? _altmaterial.model];
         _model.SetMaterialForMeshes(_altmaterial.library, _altmaterial.material);
         _model.Submit();
     }
     else
-        ds_map_find_value(global.loadedModels, _material).Submit();
+        global.loadedModels[? _material].Submit();
 }
 
 function import_material(_lib, _model_file)

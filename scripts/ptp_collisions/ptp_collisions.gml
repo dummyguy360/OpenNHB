@@ -267,7 +267,7 @@ function scr_solid(_x, _y, _obj_array = [obj_solid, obj_slope, obj_slopePlatform
     
     for (var i = 0; i < num; i++)
     {
-        var b = ds_list_find_value(il, i);
+        var b = il[| i];
         var obj = b.object_index;
         
         if (b.canCollide != -1 && !b.canCollide(id, old_x, old_y))
@@ -376,7 +376,7 @@ function scr_destroy_horizontal(_h, _obj_array = [par_destructible, obj_destroya
         
         while (!ds_list_empty(il))
         {
-            var _inst = ds_list_find_value(il, 0);
+            var _inst = il[| 0];
             ds_list_delete(il, 0);
             
             if (variable_instance_exists(_inst, "canCollide"))
@@ -420,7 +420,7 @@ function scr_destroy_vertical(_v, _obj_array = [par_destructible, obj_destroyabl
         
         while (!ds_list_empty(il))
         {
-            var _inst = ds_list_find_value(il, 0);
+            var _inst = il[| 0];
             ds_list_delete(il, 0);
             
             if (variable_instance_exists(_inst, "canCollide"))
@@ -462,7 +462,7 @@ function scr_destroybounce(_v, _obj = par_bouncysolid)
     
     while (!ds_list_empty(il))
     {
-        var _inst = ds_list_find_value(il, 0);
+        var _inst = il[| 0];
         ds_list_delete(il, 0);
         
         if (variable_instance_exists(_inst, "canCollide"))
@@ -584,7 +584,7 @@ function fast_ray(_x1, _y1, _x2, _y2, _obj_array = [obj_solid, obj_slope, obj_sl
     
     for (var _i = 0; _i < _num; _i++)
     {
-        var _instance = ds_list_find_value(_il, _i);
+        var _instance = _il[| _i];
         var _sidecheck = false;
         
         if (_up)

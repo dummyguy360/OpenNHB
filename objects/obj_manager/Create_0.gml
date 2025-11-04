@@ -30,20 +30,20 @@ define_font_globals();
 #endregion
 #region Input
 global.inputs = ds_map_create();
-ds_map_set(global.inputs, "[U]", "up");
-ds_map_set(global.inputs, "[D]", "down");
-ds_map_set(global.inputs, "[L]", "left");
-ds_map_set(global.inputs, "[R]", "right");
-ds_map_set(global.inputs, "[J]", "jump");
-ds_map_set(global.inputs, "[A]", "attack");
-ds_map_set(global.inputs, "[M]", "dash");
-ds_map_set(global.inputs, "[S]", "slide");
-ds_map_set(global.inputs, "[I]", "inv");
-ds_map_set(global.inputs, "[P]", "pause");
-ds_map_set(global.inputs, "[B]", "map");
-ds_map_set(global.inputs, "[Z]", "zoomin");
-ds_map_set(global.inputs, "[X]", "zoomout");
-ds_map_set(global.inputs, "[?]", "any");
+global.inputs[? "[U]"] = "up";
+global.inputs[? "[D]"] = "down";
+global.inputs[? "[L]"] = "left";
+global.inputs[? "[R]"] = "right";
+global.inputs[? "[J]"] = "jump";
+global.inputs[? "[A]"] = "attack";
+global.inputs[? "[M]"] = "dash";
+global.inputs[? "[S]"] = "slide";
+global.inputs[? "[I]"] = "inv";
+global.inputs[? "[P]"] = "pause";
+global.inputs[? "[B]"] = "map";
+global.inputs[? "[Z]"] = "zoomin";
+global.inputs[? "[X]"] = "zoomout";
+global.inputs[? "[?]"] = "any";
 #endregion
 
 global.visiblesolids = true;
