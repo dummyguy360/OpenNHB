@@ -12,6 +12,6 @@ Packages Imported
 - Easings
 
 ### NOTES
-- A FMOD project recreation is included, but is currently unfinished and untested
+- A FMOD project recreation is included, but is currently unfinished and has some minor issues
 
 Decompilation made by burnedpopcorn180
