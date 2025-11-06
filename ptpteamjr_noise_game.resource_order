@@ -307,7 +307,7 @@
     {"name":"spr_groundpoundlines","order":17,"path":"sprites/spr_groundpoundlines/spr_groundpoundlines.yy",},
     {"name":"__input_class_vibration_curve","order":17,"path":"scripts/__input_class_vibration_curve/__input_class_vibration_curve.yy",},
     {"name":"input_player_using_touch","order":16,"path":"scripts/input_player_using_touch/input_player_using_touch.yy",},
-    {"name":"obj_torchplatform","order":12,"path":"objects/obj_torchplatform/obj_torchplatform.yy",},
+    {"name":"obj_torchplatform","order":7,"path":"objects/obj_torchplatform/obj_torchplatform.yy",},
     {"name":"input_cursor_mouse_enabled_get","order":6,"path":"scripts/input_cursor_mouse_enabled_get/input_cursor_mouse_enabled_get.yy",},
     {"name":"pth_5","order":43,"path":"paths/pth_5/pth_5.yy",},
     {"name":"shd_billboard_paletted","order":1,"path":"shaders/shd_billboard_paletted/shd_billboard_paletted.yy",},
